@@ -2,25 +2,25 @@
 <h6 class="navbar-heading text-muted">Gestionar Datos</h6>
 <ul class="navbar-nav">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">
+    <a class="nav-link" href="#">
       <i class="ni ni-tv-2 text-red"></i> Dashboard
     </a>
   </li>
-  <!-- <li class="nav-item">
-    <a class="nav-link" href="./examples/icons.html">
-      <i class="ni ni-planet text-blue"></i> Especialidades
-    </a>
-  </li> -->
   <li class="nav-item">
-    <a class="nav-link" href="./examples/maps.html">
-      <i class="ni ni-single-02 text-orange"></i> Medicos
+    <a class="nav-link" href="/rols">
+      <i class="ni ni-planet text-blue"></i> Roles
     </a>
-  <!-- </li>
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="./examples/profile.html">
+    <a class="nav-link" href="/doctores">
+      <i class="ni ni-single-02 text-orange"></i> Usuarios
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/patients">
       <i class="ni ni-satisfied text-info"></i> Pacientes
     </a>
-  </li> -->
+  </li>
   <!-- <li class="nav-item">
     <a class="nav-link" href="./examples/tables.html">
       <i class="ni ni-bullet-list-67 text-red"></i> Tables
@@ -43,13 +43,13 @@
 <h6 class="navbar-heading text-muted">Reporte</h6>
 <!-- Navigation -->
 <ul class="navbar-nav mb-md-3">
-  <li class="nav-item">
-    <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
+  <!-- <li class="nav-item">
+    <a class="nav-link" href="#">
       <i class="ni ni-sound-wave text-yellow"></i> Frecuencia de Citas
     </a>
-  </li>
+  </li> -->
   <li class="nav-item">
-    <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
+    <a class="nav-link" href="#">
       <i class="ni ni-spaceship text-orange"></i> Medicos Activos
     </a>
   </li>
