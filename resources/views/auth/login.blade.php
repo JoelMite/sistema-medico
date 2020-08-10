@@ -77,9 +77,11 @@
         <div class="col-6">
           <a href="{{ route('password.request') }}" class="text-light"><small>Olvidaste tu contraseña?</small></a>
         </div>
-        <div class="col-6 text-right">
+        <!--Esta parte le omiti porque el unico que va a registrar un nuevo usuario sera un doctor o admin-->
+        
+        <!-- <div class="col-6 text-right">
           <a href="{{ route('register') }}" class="text-light"><small>Aún no te has registrado?</small></a>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

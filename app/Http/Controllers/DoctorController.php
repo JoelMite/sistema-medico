@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\user;
 use App\rol;
+use App\person;
 class DoctorController extends Controller
 {
 
@@ -43,13 +44,28 @@ class DoctorController extends Controller
        //  Validar a los datos del formulario doctor a nivel de servidor
        $rules = [
          'name' => 'required',
+         'lastname' => 'required',
          'email' => 'required|email',
-         'password' => 'required'
+         'password' => 'required',
+         'phone' => 'required',
+         'address' => 'required',
+         'city' => 'required',
+         'age' => 'required',
+         'etnia' => 'required',
+         'sex' => 'required'
+
        ];
        $messages = [
-         'name.required' => 'Es necesario ingresar un nombre.',
+         'name.required' => 'Es necesario ingresar los nombres.',
+         'lastname.required' => 'Es necesario ingresar los apellidos.',
          'email.required' => 'Es necesario ingresar un correo.',
-         'password.required' => 'Es necesario ingresar una contraseña.'
+         'password.required' => 'Es necesario ingresar una contraseña.',
+         'phone.required' => 'Es necesario ingresar un telefono.',
+         'address.required' => 'Es necesario ingresar una direccion.',
+         'city.required' => 'Es necesario ingresar una ciudad.',
+         'age.required' => 'Es necesario ingresar un año.',
+         'etnia.required' => 'Es necesario ingresar una etnia.',
+         'sex.required' => 'Es necesario ingresar un sexo.'
        ];
        $this->validate($request, $rules, $messages);
      }
@@ -60,13 +76,47 @@ class DoctorController extends Controller
       //  Insertar Doctor o Usuario
       // Nos aseguramos de capturar solamente la informacion que se espera del formulario
       $user = User::create(
-        $request->only('name','email')
+        $request->only('email')
         + [
             'password'=>bcrypt($request->input('password'))
         ]
       );
 
       $user->rols()->attach($request->input('rols'));
+
+      $user->persons()->create([
+        'name' => $request['name'],
+        'lastname' => $request['lastname'],
+        'phone' => $request['phone'],
+        'address' => $request['address'],
+        'city' => $request['city'],
+        'age' => $request['age'],
+        'etnia' => $request['etnia'],
+        'sex' => $request['sex'],
+      ]);
+
+      // Person::create([
+      //   'name' => $request['name'],
+      //   'lastname' => $request['lastname'],
+      //   'phone' => $request['phone'],
+      //   'address' => $request['address'],
+      //   'city' => $request['city'],
+      //   'age' => $request['age'],
+      //   'etnia' => $request['etnia'],
+      //   'sex' => $request['sex'],
+      //   'user_id' => $user->id,
+      // ]);
+
+      // $person = new Person();
+      // $person->name = $request->input('name');
+      // $person->lastname = $request->input('lastname');
+      // $person->phone = $request->input('phone');
+      // $person->address = $request->input('address');
+      // $person->city = $request->input('city');
+      // $person->age = $request->input('age');
+      // $person->etnia = $request->input('etnia');
+      // $person->sex = $request->input('sex');
+      // $person->save(); // Insertar
 
       // $user = new User();
       // $user->name = $request->input('name');

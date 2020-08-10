@@ -103,7 +103,7 @@
         <table class="table align-items-center table-flush">
           <thead class="thead-light">
             <tr>
-              <th scope="col">Nombre</th>
+              <!-- <th scope="col">Nombre</th> -->
               <th scope="col">Email</th>
               <th scope="col">Opciones</th>
             </tr>
@@ -111,9 +111,9 @@
           <tbody>
             @foreach ($doctores as $doctor)
             <tr>
-              <th scope="row">
+              <!-- <th scope="row">
                 {{ $doctor->name }}
-              </th>
+              </th> -->
               <td>
                 {{ $doctor->email }}
               </td>

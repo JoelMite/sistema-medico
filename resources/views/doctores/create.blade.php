@@ -33,8 +33,12 @@
           <form action="{{url('doctores')}}" method="post">
             @csrf
             <div class="form-group">
-              <label for="name">Nombre</label>
+              <label for="name">Nombres</label>
               <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
+            </div>
+            <div class="form-group">
+              <label for="name">Apellidos</label>
+              <input type="text" name="lastname" class="form-control" value="{{ old('lastname') }}" required>
             </div>
             <div class="form-group">
               <label for="email">Email</label>
@@ -45,7 +49,35 @@
               <input type="password" name="password" class="form-control" value="{{ old('password') }}" required>
             </div>
             <div class="form-group">
-              <label for="rols">Roles</label>
+              <label for="name">Telefono</label>
+              <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" required>
+            </div>
+            <div class="form-group">
+              <label for="name">Direccion</label>
+              <input type="text" name="address" class="form-control" value="{{ old('address') }}" required>
+            </div>
+            <div class="form-group">
+              <label for="name">Ciudad</label>
+              <input type="text" name="city" class="form-control" value="{{ old('city') }}" required>
+            </div>
+            <div class="form-group">
+              <label for="name">Edad</label>
+              <input type="text" name="age" class="form-control" value="{{ old('age') }}" required>
+            </div>
+            <div class="form-group">
+              <label for="name">Etnia</label>
+              <input type="text" name="etnia" class="form-control" value="{{ old('etnia') }}" required>
+            </div>
+            <div class="form-group">
+              <label for="name">Sexo</label>
+              <input type="text" name="sex" class="form-control" value="{{ old('sex') }}" required>
+            </div>
+            <!-- <div class="form-group">
+              <label for="datebirth">Fecha de Nacimento</label>
+              <input type="date" name="datebirth" class="form-control" value="{{ old('datebirth') }}" required>
+            </div> -->
+            <div class="form-group">
+              <label for="rols">Rol</label>
               <select class="form-control selectpicker" name="rols" id="rols" data-style="btn-secondary">
                 @foreach ($rols as $rol)
                   <option value="{{ $rol->id }}">{{ $rol->name }}</option>
