@@ -33,6 +33,7 @@
           <form action="{{url('doctores')}}" method="post">
             @csrf
             <div class="form-group">
+              <h6 class="heading-small text-muted mb-4">Datos Personales</h6>
               <label for="name">Nombres</label>
               <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
             </div>
@@ -40,6 +41,9 @@
               <label for="name">Apellidos</label>
               <input type="text" name="lastname" class="form-control" value="{{ old('lastname') }}" required>
             </div>
+
+            <hr class="my-4" />
+            <h6 class="heading-small text-muted mb-4">Datos de Usuario</h6>
             <div class="form-group">
               <label for="email">Email</label>
               <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
@@ -48,6 +52,9 @@
               <label for="contraseña">Contraseña</label>
               <input type="password" name="password" class="form-control" value="{{ old('password') }}" required>
             </div>
+
+            <hr class="my-4" />
+            <h6 class="heading-small text-muted mb-4">Datos Adicionales</h6>
             <div class="form-group">
               <label for="name">Telefono</label>
               <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" required>

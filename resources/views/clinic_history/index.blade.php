@@ -79,13 +79,13 @@
       <div class="card-header border-0">
         <div class="row align-items-center">
           <div class="col">
-            <h3 class="mb-0">Usuarios</h3>
+            <h3 class="mb-0">Historia Clinica</h3>
           </div>
-          <div class="col text-right">
-            <a href="{{url('doctores/create')}}" class="btn btn-sm btn-success">
+          <!-- <div class="col text-right">
+            <a href="{{url('clinic_history/create')}}" class="btn btn-sm btn-success">
               Nuevo Usuario
             </a>
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -104,28 +104,40 @@
           <thead class="thead-light">
             <tr>
               <!-- <th scope="col">Nombre</th> -->
-              <th scope="col">Email</th>
+              <th scope="col">Nombres</th>
+              <th scope="col">Apellidos</th>
               <th scope="col">Opciones</th>
             </tr>
           </thead>
           <tbody>
-            @foreach ($doctores as $doctor)
-            <tr>
-              <!-- <th scope="row">
-                {{ $doctor->name }}
-              </th> -->
-              <td>
-                {{ $doctor->email }}
-              </td>
-              <td>
-                <!-- <a href="#" class="btn btn-sm btn-primary">Activar</a> -->
-                <!-- <a href="{{ url('/doctores/'.$doctor->id.'/edit') }}" class="btn btn-sm btn-primary">Activar</a> -->
-                <!-- <a href="#" class="btn btn-sm btn-danger">Banear</a> -->
-                <a href="#" class="btn btn-sm btn-primary">Editar</a>
-                <a href="{{ url('/doctores/'.$doctor->id) }}" class="btn btn-sm btn-warning">Ver</a>
 
-              </td>
-            </tr>
+            @foreach ($histories as $history)
+                <tr>
+                  <td>
+                    {{ $history->person->name }}
+                  </td>
+                  <td>
+                    {{ $history->person->lastname }}
+                  </td>
+                  <td>
+                    <a href="#" class="btn btn-sm btn-primary">Editar HC</a>
+                    <a href="{{ url('/histories/'.$history->id) }}" class="btn btn-sm btn-warning">Ver HC</a>
+                  </td>
+                </tr>
+            @endforeach
+
+            @foreach ($nohavePersonHistory as $person)
+                  <tr>
+                    <td>
+                      {{ $person->name }}
+                    </td>
+                    <td>
+                      {{ $person->lastname }}
+                    </td>
+                    <td>
+                      <a href="{{ url('histories/'.$person->user->id.'/create') }}" class="btn btn-sm btn-success">Crear HC</a>
+                    </td>
+                  </tr>
             @endforeach
           </tbody>
         </table>

@@ -2,13 +2,13 @@
 <h6 class="navbar-heading text-muted">Gestionar Datos</h6>
 <ul class="navbar-nav">
   <li class="nav-item">
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="/home">
       <i class="ni ni-tv-2 text-red"></i> Dashboard
     </a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="/rols">
-      <i class="ni ni-planet text-blue"></i> Roles
+      <i class="ni ni-badge text-blue"></i> Roles
     </a>
   </li>
   <li class="nav-item">
@@ -17,8 +17,23 @@
     </a>
   </li>
   <li class="nav-item">
+    <a class="nav-link" href="/histories">
+      <i class="ni ni-collection text-default"></i> Historia Clinica
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">
+      <i class="ni ni-single-copy-04 text-green"></i> Consulta Medica
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">
+      <i class="ni ni-ruler-pencil text-purple"></i> Cita Medica
+    </a>
+  </li>
+  <li class="nav-item">
     <a class="nav-link" href="/patients">
-      <i class="ni ni-satisfied text-info"></i> Pacientes
+      <i class="ni ni-satisfied text-yellow"></i> Pacientes
     </a>
   </li>
   <!-- <li class="nav-item">

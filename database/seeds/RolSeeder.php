@@ -12,15 +12,29 @@ class RolSeeder extends Seeder
      */
     public function run()
     {
-        $rols = [
-          'Administrador',
-          'Medico'
-        ];
+        // $rols = [
+        //   'Administrador',
+        //   'Medico'
+        // ];
+        //
+        // foreach ($rols as $rol) {
+        //   Rol::create([
+        //     'name' => $rol
+        //   ]);
+        // }
+        Rol::create([
+          'name' => 'Administrador',
+          'description' => 'Se encargara de gestionar los roles y usuarios',
+        ]);
 
-        foreach ($rols as $rol) {
-          Rol::create([
-            'name' => $rol
-          ]);
-        }
+        Rol::create([
+          'name' => 'Medico',
+          'description' => 'Se encargara de gestionar las historias clinicas, consultas medicas, citas medicas y pacientes',
+        ]);
+
+        Rol::create([
+          'name' => 'Paciente',
+          'description' => 'Se encargara de gestionar sus citas medicas',
+        ]);
       }
 }

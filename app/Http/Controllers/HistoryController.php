@@ -3,21 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\user;
-use App\rol;
+use App\history;
 use App\person;
-class DoctorController extends Controller
-{
+use App\user;
 
-//  Verificar que ha iniciado sesion
+class HistoryController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
      public function __construct(){
        $this->middleware('auth');
      }
 
-//  Metodo GET Mostrar todos los Usuarios
-    public function index(){
-        $doctores = User::all();
-        return view('doctores.index', compact('doctores'));
+    public function index()
+    {
+      // $doctores = User::all();
+      $persons = Person::all();
+      $histories = History::all();
+      $nohavePersonHistory = Person::doesntHave('history')->get(); // Este metodo me retorna las personas que no tienen una historia clinica
+      return view('clinic_history.index', compact('persons', 'histories', 'nohavePersonHistory'));
     }
 
     /**
@@ -25,12 +32,12 @@ class DoctorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-//  Metodo GET Abrir Formulario para Crear Nuevos Usuarios (Esencialmente Medicos y Administradores)
-     public function create(){
-       $rols = Rol::all();
-       return view('doctores.create', compact('rols'));
-     }
+    public function create($id)
+    {
+      $doctor = User::findOrfail($id);
+      $persons = $doctor->persons;
+      return view('clinic_history.create', compact('persons'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -39,61 +46,51 @@ class DoctorController extends Controller
      * @return \Illuminate\Http\Response
      */
 
- //  Metodo Validacion
+//  Metodo Validacion
      private function validation(Request $request){
        //  Validar a los datos del formulario doctor a nivel de servidor
        $rules = [
-         'name' => 'required',
-         'lastname' => 'required',
-         'email' => 'required|email',
-         'password' => 'required',
-         'phone' => 'required',
-         'address' => 'required',
-         'city' => 'required',
-         'age' => 'required',
-         'etnia' => 'required',
-         'sex' => 'required'
-
+         'personal_history' => 'required',
+         'family_background' => 'required',
+         'current_illness' => 'required'
        ];
        $messages = [
-         'name.required' => 'Es necesario ingresar los nombres.',
-         'lastname.required' => 'Es necesario ingresar los apellidos.',
-         'email.required' => 'Es necesario ingresar un correo.',
-         'password.required' => 'Es necesario ingresar una contraseña.',
-         'phone.required' => 'Es necesario ingresar un telefono.',
-         'address.required' => 'Es necesario ingresar una direccion.',
-         'city.required' => 'Es necesario ingresar una ciudad.',
-         'age.required' => 'Es necesario ingresar un año.',
-         'etnia.required' => 'Es necesario ingresar una etnia.',
-         'sex.required' => 'Es necesario ingresar un sexo.'
+         'personal_history.required' => 'Es necesario ingresar los antecedentes personales.',
+         'family_background.required' => 'Es necesario ingresar los antecedentes familiares.',
+         'current_illness.required' => 'Es necesario ingresar la enfermedad actual.'
        ];
        $this->validate($request, $rules, $messages);
      }
-
-    public function store(Request $request){
+    public function store(Request $request)
+    {
       $this->validation($request);
 
       //  Insertar Doctor o Usuario
       // Nos aseguramos de capturar solamente la informacion que se espera del formulario
-      $user = User::create(
-        $request->only('email')
-        + [
-            'password'=>bcrypt($request->input('password'))
-        ]
-      );
 
-      $user->rols()->attach($request->input('rols'));
+      $history = new History();
+      $history->personal_history = $request->input('personal_history');
+      $history->family_background = $request->input('family_background');
+      $history->current_illness = $request->input('current_illness');
+      $history->person_id = $request->input('id_person');
+      $history->save(); // Insertar
 
-      $user->persons()->create([
-        'name' => $request['name'],
-        'lastname' => $request['lastname'],
-        'phone' => $request['phone'],
-        'address' => $request['address'],
-        'city' => $request['city'],
-        'age' => $request['age'],
-        'etnia' => $request['etnia'],
-        'sex' => $request['sex'],
-      ]);
+      // $history = History::create([
+      //   $request->only('personal_history'),
+      //   $request->only('family_background'),
+      //   $request->only('current_illness'),
+      // ]);
+      //
+      // $history->persons()->create([
+      //   'name' => $request['name'],
+      //   'lastname' => $request['lastname'],
+      //   'phone' => $request['phone'],
+      //   'address' => $request['address'],
+      //   'city' => $request['city'],
+      //   'age' => $request['age'],
+      //   'etnia' => $request['etnia'],
+      //   'sex' => $request['sex'],
+      // ]);
 
       // Person::create([
       //   'name' => $request['name'],
@@ -124,7 +121,7 @@ class DoctorController extends Controller
       // $user->save(); // Insertar
 
       $notification = "El usuario se ha registrado correctamente.";
-      return redirect('/doctores')->with(compact('notification'));
+      return redirect('/histories')->with(compact('notification'));
     }
 
     /**
@@ -135,10 +132,8 @@ class DoctorController extends Controller
      */
     public function show($id)
     {
-        $doctor = User::findOrfail($id);
-        $rols = $doctor->rols;                //  Me devuelve el rol que cumple cada usuario(medico o administrador)
-        $persons = $doctor->persons;
-        return view('doctores.show', compact('doctor', 'rols', 'persons'));
+      $history = History::findOrfail($id);
+      return view('clinic_history.show', compact('history'));
     }
 
     /**
@@ -149,9 +144,7 @@ class DoctorController extends Controller
      */
     public function edit($id)
     {
-        $doctor = User::findOrfail($id);
-        $rols = Rol::all();
-        return view('doctores.edit', compact('doctor', 'rols'));
+        //
     }
 
     /**
@@ -161,7 +154,7 @@ class DoctorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Doctor $doctor)
+    public function update(Request $request, $id)
     {
         //
     }

@@ -32,5 +32,15 @@ Route::delete('/rols/{rol}', 'RolController@destroy');   // Eliminar un Rol
 // Doctores
 Route::resource('doctores', 'DoctorController');
 
+// Historia Clinica
+Route::get('/histories', 'HistoryController@index');
+Route::get('/histories/{history}/create', 'HistoryController@create');   // Formulario de Registro de HC
+Route::get('/histories/{history}/edit', 'HistoryController@edit');   // Formulario de Edicion de HC
+Route::post('/histories', 'HistoryController@store');    // Envio del Formulario de HC
+Route::put('/histories/{history}', 'HistoryController@update');   // Editar un HC
+Route::get('/histories/{history}', 'HistoryController@show');   // Mostrar un HC
+Route::delete('/histories/{history}', 'HistoryController@destroy');   // Eliminar un Rol
+// Route::resource('clinic_history', 'HistoryController');
+
 // Pacientes
 Route::resource('patients', 'PatientController');
