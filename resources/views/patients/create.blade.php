@@ -1,5 +1,10 @@
 @extends('layouts.panel')
 
+@section('styles')
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+@endsection
+
 @section('content')
 
     <div class="card shadow">
@@ -28,72 +33,74 @@
           <form action="{{url('patients')}}" method="post">
             @csrf
             <div class="form-group">
-              <label for="name">Nombre</label>
+              <h6 class="heading-small text-muted mb-4">Datos Personales</h6>
+              <label for="name">Nombres</label>
               <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
             </div>
             <div class="form-group">
-              <label for="description">Email</label>
-              <input type="text" name="description" class="form-control" value="{{ old('description') }}" required>
+              <label for="name">Apellidos</label>
+              <input type="text" name="lastname" class="form-control" value="{{ old('lastname') }}" required>
+            </div>
+
+            <hr class="my-4" />
+            <h6 class="heading-small text-muted mb-4">Datos de Usuario</h6>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
             </div>
             <div class="form-group">
-              <label for="description">Contraseña</label>
-              <input type="text" name="description" class="form-control" value="{{ old('description') }}" required>
+              <label for="password">Contraseña</label>
+              <input type="text" name="password" class="form-control" value="{{ Str::random(15) }}" required>
+            </div>
+
+            <hr class="my-4" />
+            <h6 class="heading-small text-muted mb-4">Datos Adicionales</h6>
+            <div class="form-group">
+              <label for="name">Telefono</label>
+              <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" required>
             </div>
             <div class="form-group">
-              <label for="description">Confirmar Contraseña</label>
-              <input type="text" name="description" class="form-control" value="{{ old('description') }}" required>
+              <label for="name">Direccion</label>
+              <input type="text" name="address" class="form-control" value="{{ old('address') }}" required>
             </div>
+            <div class="form-group">
+              <label for="name">Ciudad</label>
+              <input type="text" name="city" class="form-control" value="{{ old('city') }}" required>
+            </div>
+            <div class="form-group">
+              <label for="name">Edad</label>
+              <input type="text" name="age" class="form-control" value="{{ old('age') }}" required>
+            </div>
+            <div class="form-group">
+              <label for="name">Etnia</label>
+              <select class="form-control selectpicker" name="etnia" id="etnia" data-style="btn-secondary">
+                  <option value="Mestizo">Mestizo</option>
+                  <option value="Afroamericano">Afroamericano</option>
+                  <option value="Indigena">Indigena</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="name">Sexo</label>
+              <select class="form-control selectpicker" name="sex" id="sex" data-style="btn-secondary">
+                  <option value="Masculino">Masculino</option>
+                  <option value="Femenino">Femenino</option>
+              </select>
+            </div>
+            <!-- <div class="form-group">
+              <label for="datebirth">Fecha de Nacimento</label>
+              <input type="date" name="datebirth" class="form-control" value="{{ old('datebirth') }}" required>
+            </div> -->
+
             <button type="submit" class="btn btn-primary">
               Guardar
             </button>
           </form>
-
-<!-- A partir de aqui no me guarda con ese form el usuario dentro una sesion -->
-
-          <!-- <form role="form" method="POST" action="{{ route('register') }}">
-            @csrf
-
-            <div class="form-group">
-              <div class="input-group input-group-alternative mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                </div>
-                <input class="form-control" placeholder="Nombre" type="text" name="name"
-                value="{{ old('name') }}" required autocomplete="name" autofocus>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="input-group input-group-alternative mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                </div>
-                <input class="form-control" placeholder="Email" type="email" name="email"
-                value="{{ old('email') }}" required autocomplete="email">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="input-group input-group-alternative">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                </div>
-                <input class="form-control" placeholder="Contraseña" type="password" name="password"
-                required autocomplete="new-password">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="input-group input-group-alternative">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                </div>
-                <input class="form-control" placeholder="Confirmar contraseña" type="password" name="password_confirmation"
-                required autocomplete="new-password">
-              </div>
-            </div>
-            <div class="text-center">
-              <button type="submit" class="btn btn-primary mt-4">Confirmar registro</button>
-            </div>
-          </form> -->
       </div>
       </div>
 
+@endsection
+
+@section('scripts')
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 @endsection

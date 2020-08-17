@@ -120,7 +120,7 @@
                     {{ $history->person->lastname }}
                   </td>
                   <td>
-                    <a href="#" class="btn btn-sm btn-primary">Editar HC</a>
+                    <!-- <a href="#" class="btn btn-sm btn-primary">Editar HC</a> -->
                     <a href="{{ url('/histories/'.$history->id) }}" class="btn btn-sm btn-warning">Ver HC</a>
                   </td>
                 </tr>

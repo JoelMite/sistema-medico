@@ -27,8 +27,8 @@ class CreateMedicalConsultationsTable extends Migration
             $table->string('abdominal_perimeter'); //
             $table->string('capillary_glucose'); //
             $table->string('temperature'); //
-            $table->unsignedBigInteger('person_id');
-            $table->foreign('person_id')->references('id')->on('persons');
+            $table->unsignedBigInteger('history_id'); // Ojo con esto.. No sigue la convencion de laravel
+            $table->foreign('history_id')->references('id')->on('history_clinics');
             $table->timestamps();
         });
     }

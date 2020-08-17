@@ -15,4 +15,8 @@ class History extends Model
   public function person(){
     return $this->belongsTo(Person::class);
   }
+
+  public function medical_consultations(){
+    return $this->hasMany(MedicalConsultation::class);
+  }
 }

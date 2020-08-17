@@ -103,32 +103,31 @@
         <table class="table align-items-center table-flush">
           <thead class="thead-light">
             <tr>
-              <!-- <th scope="col">Nombre</th> -->
               <th scope="col">Email</th>
               <th scope="col">Opciones</th>
             </tr>
           </thead>
           <tbody>
             @foreach ($doctores as $doctor)
-            <tr>
-              <!-- <th scope="row">
-                {{ $doctor->name }}
-              </th> -->
-              <td>
-                {{ $doctor->email }}
-              </td>
-              <td>
-                <!-- <a href="#" class="btn btn-sm btn-primary">Activar</a> -->
-                <!-- <a href="{{ url('/doctores/'.$doctor->id.'/edit') }}" class="btn btn-sm btn-primary">Activar</a> -->
-                <!-- <a href="#" class="btn btn-sm btn-danger">Banear</a> -->
-                <a href="#" class="btn btn-sm btn-primary">Editar</a>
-                <a href="{{ url('/doctores/'.$doctor->id) }}" class="btn btn-sm btn-warning">Ver</a>
-
-              </td>
-            </tr>
+                @foreach ($doctor->rols as $rol)
+                  @if($rol->name == 'Medico')
+                  <tr>
+                    <td>
+                      {{ $doctor->email }}
+                    </td>
+                    <td>
+                      <a href="#" class="btn btn-sm btn-primary">Editar</a>
+                      <a href="{{ url('/doctores/'.$doctor->id) }}" class="btn btn-sm btn-warning">Ver</a>
+                    </td>
+                  </tr>
+                  @endif
+                @endforeach
             @endforeach
           </tbody>
         </table>
+      </div>
+      <div class="card-body">
+        {{ $doctores->links() }}
       </div>
     </div>
   <!-- </div> -->

@@ -16,7 +16,7 @@ class DoctorController extends Controller
 
 //  Metodo GET Mostrar todos los Usuarios
     public function index(){
-        $doctores = User::all();
+        $doctores = User::with('rols')->paginate(5);
         return view('doctores.index', compact('doctores'));
     }
 

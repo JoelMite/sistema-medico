@@ -1,6 +1,7 @@
 <!-- Navigation -->
 <h6 class="navbar-heading text-muted">Gestionar Datos</h6>
 <ul class="navbar-nav">
+  @if(auth()->user()->rols()->first()->name == 'Administrador')
   <li class="nav-item">
     <a class="nav-link" href="/home">
       <i class="ni ni-tv-2 text-red"></i> Dashboard
@@ -16,6 +17,7 @@
       <i class="ni ni-single-02 text-orange"></i> Usuarios
     </a>
   </li>
+  @elseif(auth()->user()->rols()->first()->name == 'Medico')
   <li class="nav-item">
     <a class="nav-link" href="/histories">
       <i class="ni ni-collection text-default"></i> Historia Clinica
@@ -36,6 +38,7 @@
       <i class="ni ni-satisfied text-yellow"></i> Pacientes
     </a>
   </li>
+  @endif
   <!-- <li class="nav-item">
     <a class="nav-link" href="./examples/tables.html">
       <i class="ni ni-bullet-list-67 text-red"></i> Tables

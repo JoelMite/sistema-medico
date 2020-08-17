@@ -13,8 +13,9 @@ class PatientController extends Controller
 
 //  Metodo GET Mostrar todos los Usuarios
   public function index(){
-      $patients = User::all();
+      $patients =  User::with('rols')->paginate(5);
       return view('patients.index', compact('patients'));
+      //return redirect(dd($patients));
   }
 
   /**
@@ -35,31 +36,64 @@ class PatientController extends Controller
    * @return \Illuminate\Http\Response
    */
 
-//  Metodo Validacion
-   private function validation(Request $request){
-     //  Validar a los datos del formulario rol a nivel de servidor
-     $rules = [
-       'name' => 'required',
-       'description' => 'required'
-     ];
-     $messages = [
-       'name.required' => 'Es necesario ingresar un nombre.',
-       'description.required' => 'Es necesario ingresar una descripcion.'
-     ];
-     $this->validate($request, $rules, $messages);
-   }
+   //  Metodo Validacion
+       private function validation(Request $request){
+         //  Validar a los datos del formulario doctor a nivel de servidor
+         $rules = [
+           'name' => 'required',
+           'lastname' => 'required',
+           'email' => 'required|email',
+           'password' => 'required',
+           'phone' => 'required',
+           'address' => 'required',
+           'city' => 'required',
+           'age' => 'required',
+           'etnia' => 'required',
+           'sex' => 'required'
+
+         ];
+         $messages = [
+           'name.required' => 'Es necesario ingresar los nombres.',
+           'lastname.required' => 'Es necesario ingresar los apellidos.',
+           'email.required' => 'Es necesario ingresar un correo.',
+           'password.required' => 'Es necesario ingresar una contraseña.',
+           'phone.required' => 'Es necesario ingresar un telefono.',
+           'address.required' => 'Es necesario ingresar una direccion.',
+           'city.required' => 'Es necesario ingresar una ciudad.',
+           'age.required' => 'Es necesario ingresar un año.',
+           'etnia.required' => 'Es necesario ingresar una etnia.',
+           'sex.required' => 'Es necesario ingresar un sexo.'
+         ];
+         $this->validate($request, $rules, $messages);
+       }
 
   public function store(Request $request){
     $this->validation($request);
 
-    //  Insertar Rol
-    $user = new User();
-    $user->name = $request->input('name');
-    $user->description = $request->input('description');
-    $user->save(); // Insertar
+    //  Insertar Paciente
+    // Nos aseguramos de capturar solamente la informacion que se espera del formulario
+    $user = User::create(
+      $request->only('email')
+      + [
+          'password'=>bcrypt($request->input('password'))
+      ]
+    );
 
-    $notification = "El rol se ha registrado correctamente.";
-    return redirect('/rols')->with(compact('notification'));
+    $user->rols()->attach(3);
+
+    $user->persons()->create([
+      'name' => $request['name'],
+      'lastname' => $request['lastname'],
+      'phone' => $request['phone'],
+      'address' => $request['address'],
+      'city' => $request['city'],
+      'age' => $request['age'],
+      'etnia' => $request['etnia'],
+      'sex' => $request['sex'],
+    ]);
+
+    $notification = "El paciente se ha registrado correctamente.";
+    return redirect('/patients')->with(compact('notification'));
   }
 
   /**
@@ -70,7 +104,8 @@ class PatientController extends Controller
    */
   public function show($id)
   {
-      //
+      $usuario = auth()->user()->rols()->first()->name;
+      return redirect(dd($usuario));
   }
 
   /**

@@ -52,7 +52,7 @@
               <label for="name">Enfermedad Actual</label>
               <textarea name="current_illness" class="form-control" value="{{ old('current_illness') }}" required></textarea>
             </div>
-<!--
+
             <hr class="my-4" />
             <h6 class="heading-small text-muted mb-4">Consulta Medica</h6>
             <div class="form-group">
@@ -136,7 +136,7 @@
             <div class="form-group">
               <label for="name">Observaciones</label>
               <textarea name="observations_pru" class="form-control" value="{{ old('observations_pru') }}" required></textarea>
-            </div> -->
+            </div> 
 
             <button type="submit" class="btn btn-primary">
               Guardar
