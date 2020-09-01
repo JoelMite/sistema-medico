@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\rol;
+
 class RolController extends Controller
 {
 //  Verificar que ha iniciado sesion
@@ -57,16 +58,16 @@ class RolController extends Controller
     }
 
 //  Metodo PUT Editar Roles
-      public function update(Request $request, Rol $rol){
-        //dd($request->all());
-        $this->validation($request);
+    public function update(Request $request, Rol $rol){
+      //dd($request->all());
+      $this->validation($request);
 
-        //  Editar Rol
-        $rol->name = $request->input('name');
-        $rol->description = $request->input('description');
-        $rol->save(); // Editar
+      //  Editar Rol
+      $rol->name = $request->input('name');
+      $rol->description = $request->input('description');
+      $rol->save(); // Editar
 
-        $notification = "El rol se ha actualizado correctamente.";
-        return redirect('/rols')->with(compact('notification'));
-      }
+      $notification = "El rol se ha actualizado correctamente.";
+      return redirect('/rols')->with(compact('notification'));
+    }
 }

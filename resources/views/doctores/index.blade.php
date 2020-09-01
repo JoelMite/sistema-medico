@@ -116,7 +116,7 @@
                       {{ $doctor->email }}
                     </td>
                     <td>
-                      <a href="#" class="btn btn-sm btn-primary">Editar</a>
+                      <a href="{{ url('/doctores/'.$doctor->id.'/edit') }}" class="btn btn-sm btn-primary">Editar</a>
                       <a href="{{ url('/doctores/'.$doctor->id) }}" class="btn btn-sm btn-warning">Ver</a>
                     </td>
                   </tr>
@@ -126,9 +126,10 @@
           </tbody>
         </table>
       </div>
-      <div class="card-body">
+      {{-- Pagination --}}
+      {{-- <div class="card-body">
         {{ $doctores->links() }}
-      </div>
+      </div> --}}
     </div>
   <!-- </div> -->
   <!-- <div class="col-xl-4">

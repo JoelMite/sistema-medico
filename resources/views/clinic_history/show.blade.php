@@ -59,17 +59,28 @@
 
                     <div class="row">
                       @if($history != null)
+                        <div class="col-lg-12">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-first-name">Enfermedad Actual</label>
+                            <textarea class="form-control form-control-alternative" >{{ $history->current_illness ? $history->current_illness:'No hay datos' }}</textarea>
+                          </div>
+                        </div>
+                      @endif
+                    </div>
+
+                    <div class="row">
+                      @if($history != null)
                       <div class="col-lg-12">
                         <div class="form-group">
-                          <label class="form-control-label" for="input-first-name">Enfermedad Actual</label>
-                          <textarea class="form-control form-control-alternative" >{{ $history->current_illness ? $history->current_illness:'No hay datos' }}</textarea>
+                          <label class="form-control-label" for="input-first-name">Habitos</label>
+                          <textarea class="form-control form-control-alternative" >{{ $history->habits ? $history->habits:'No hay datos'  }}</textarea>
                         </div>
                       </div>
                     @endif
                   </div>
                 </div>
 
-
+{{--
                 <hr class="my-4" />
                 <h6 class="heading-small text-muted mb-4">Consulta Medica</h6>
                 <div class="pl-lg-4">
@@ -254,7 +265,7 @@
                 </div>
                 @endif
                 @endif
-              </div>
+              </div> --}}
               </form>
             </div>
           </div>

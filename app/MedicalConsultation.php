@@ -25,4 +25,8 @@ class MedicalConsultation extends Model
   public function history(){
     return $this->belongsTo(History::class);
   }
+
+  public function person(){
+    return $this->belongsTo(Person::class);
+  }
 }

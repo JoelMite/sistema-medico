@@ -21,26 +21,66 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-// Rol
-Route::get('/rols', 'RolController@index');
-Route::get('/rols/create', 'RolController@create');   // Formulario de Registro de Roles
-Route::get('/rols/{rol}/edit', 'RolController@edit');   // Formulario de Edicion de Roles
-Route::post('/rols', 'RolController@store');    // Envio del Formulario de Roles
-Route::put('/rols/{rol}', 'RolController@update');   // Editar un Rol
-Route::delete('/rols/{rol}', 'RolController@destroy');   // Eliminar un Rol
+// Middleware para solo Administradores
+Route::middleware(['auth', 'administrator'])->group(function () {
+  // Rol
+  Route::get('/rols', 'RolController@index');
+  Route::get('/rols/create', 'RolController@create');   // Formulario de Registro de Roles
+  Route::get('/rols/{rol}/edit', 'RolController@edit');   // Formulario de Edicion de Roles
+  Route::post('/rols', 'RolController@store');    // Envio del Formulario de Roles
+  Route::put('/rols/{rol}', 'RolController@update');   // Editar un Rol
+  Route::delete('/rols/{rol}', 'RolController@destroy');   // Eliminar un Rol
 
-// Doctores
-Route::resource('doctores', 'DoctorController');
+  // Doctores o Usuarios
+  Route::resource('doctores', 'DoctorController');
 
-// Historia Clinica
-Route::get('/histories', 'HistoryController@index');
-Route::get('/histories/{history}/create', 'HistoryController@create');   // Formulario de Registro de HC
-Route::get('/histories/{history}/edit', 'HistoryController@edit');   // Formulario de Edicion de HC
-Route::post('/histories', 'HistoryController@store');    // Envio del Formulario de HC
-Route::put('/histories/{history}', 'HistoryController@update');   // Editar un HC
-Route::get('/histories/{history}', 'HistoryController@show');   // Mostrar un HC
-Route::delete('/histories/{history}', 'HistoryController@destroy');   // Eliminar un Rol
-// Route::resource('clinic_history', 'HistoryController');
+  // Especialidades
+  Route::get('/specialties', 'SpecialtyController@index');
+  Route::get('/specialties/create', 'SpecialtyController@create');   // Formulario de Registro de Roles
+  Route::get('/specialties/{specialty}/edit', 'SpecialtyController@edit');   // Formulario de Edicion de Roles
+  Route::post('/specialties', 'SpecialtyController@store');    // Envio del Formulario de Roles
+  Route::put('/specialties/{specialty}', 'SpecialtyController@update');   // Editar un Rol
+  Route::delete('/specialties/{specialty}', 'SpecialtyController@destroy');   // Eliminar un Rol
+});
 
-// Pacientes
-Route::resource('patients', 'PatientController');
+// Middleware para solo Doctores
+Route::middleware(['auth', 'doctor'])->group(function () {
+  // Historia Clinica
+  Route::get('/histories', 'HistoryController@index');
+  Route::get('/histories/{history}/create', 'HistoryController@create');   // Formulario de Registro de HC
+  Route::get('/histories/{history}/edit', 'HistoryController@edit');   // Formulario de Edicion de HC
+  Route::post('/histories', 'HistoryController@store');    // Envio del Formulario de HC
+  Route::put('/histories/{history}', 'HistoryController@update');   // Editar un HC
+  Route::get('/histories/{history}', 'HistoryController@show');   // Mostrar un HC
+  Route::delete('/histories/{history}', 'HistoryController@destroy');   // Eliminar un Rol
+  // Route::resource('clinic_history', 'HistoryController');
+
+  // Consulta Medica
+  Route::get('/medical_consultations', 'MedicalConsultationController@index');
+  Route::get('/medical_consultations/{history}/create', 'MedicalConsultationController@create');   // Formulario de Registro de HC
+  Route::get('/medical_consultations/{history}/edit', 'MedicalConsultationController@edit');   // Formulario de Edicion de HC
+  Route::post('/medical_consultations', 'MedicalConsultationController@store');    // Envio del Formulario de HC
+  Route::put('/medical_consultations/{history}', 'MedicalConsultationController@update');   // Editar un HC
+  Route::get('/medical_consultations/{history}', 'MedicalConsultationController@show');   // Mostrar un HC
+  Route::delete('/medical_consultations/{history}', 'MedicalConsultationController@destroy');   // Eliminar un Rol
+
+  // Pacientes
+  Route::resource('patients', 'PatientController');
+
+  // Calendario
+  Route::get('/schedule', 'ScheduleController@edit');
+  Route::post('/schedule', 'ScheduleController@store');
+
+});
+
+// Middleware para solo Pacientes
+Route::middleware(['auth', 'patient'])->group(function () {
+  // Citas Medicas
+  Route::get('/appointments/create', 'AppointmentController@create');
+  Route::post('/appointments', 'AppointmentController@store');
+
+  //JSON
+  Route::get('/specialties/{specialty}/doctors', 'Api\SpecialtyController@doctors');
+  Route::get('/schedule/hours', 'Api\ScheduleController@hours');
+
+});

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\rol;
+use App\User;
 
 class RolSeeder extends Seeder
 {
@@ -22,19 +23,32 @@ class RolSeeder extends Seeder
         //     'name' => $rol
         //   ]);
         // }
-        Rol::create([
-          'name' => 'Administrador',
-          'description' => 'Se encargara de gestionar los roles y usuarios',
-        ]);
 
-        Rol::create([
-          'name' => 'Medico',
-          'description' => 'Se encargara de gestionar las historias clinicas, consultas medicas, citas medicas y pacientes',
-        ]);
+        $rols = ['Administrador', 'Medico', 'Paciente'];
+        foreach ($rols as $rol_name) {
+          $rol = Rol::create([
+            'name' => $rol_name,
+            'description' => Str::random(20),
+          ]);
 
-        Rol::create([
-          'name' => 'Paciente',
-          'description' => 'Se encargara de gestionar sus citas medicas',
-        ]);
+        // Rol::create([
+        //   'name' => 'Administrador',
+        //   'description' => 'Se encargara de gestionar los roles y usuarios',
+        // ]);
+        //
+        // Rol::create([
+        //   'name' => 'Medico',
+        //   'description' => 'Se encargara de gestionar las historias clinicas, consultas medicas, citas medicas y pacientes',
+        // ]);
+        //
+        // Rol::create([
+        //   'name' => 'Paciente',
+        //   'description' => 'Se encargara de gestionar sus citas medicas',
+        // ]);
+
+        $rol->users()->save(
+          factory(User::class)->make()
+        );
       }
+    }
 }

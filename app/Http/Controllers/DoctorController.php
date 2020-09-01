@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\user;
 use App\rol;
 use App\person;
+use App\specialty;
+
 class DoctorController extends Controller
 {
 
@@ -16,8 +18,10 @@ class DoctorController extends Controller
 
 //  Metodo GET Mostrar todos los Usuarios
     public function index(){
-        $doctores = User::with('rols')->paginate(5);
+        //$doctores = User::with('rols')->paginate(5);
+        $doctores = User::has('rols')->get();
         return view('doctores.index', compact('doctores'));
+        //return dd($doctores);
     }
 
     /**
@@ -29,7 +33,8 @@ class DoctorController extends Controller
 //  Metodo GET Abrir Formulario para Crear Nuevos Usuarios (Esencialmente Medicos y Administradores)
      public function create(){
        $rols = Rol::all();
-       return view('doctores.create', compact('rols'));
+       $specialties = Specialty::all();
+       return view('doctores.create', compact('rols', 'specialties'));
      }
 
     /**
@@ -83,6 +88,7 @@ class DoctorController extends Controller
       );
 
       $user->rols()->attach($request->input('rols'));
+      $user->specialties()->attach($request->input('specialties'));
 
       $user->persons()->create([
         'name' => $request['name'],
@@ -139,6 +145,7 @@ class DoctorController extends Controller
         $rols = $doctor->rols;                //  Me devuelve el rol que cumple cada usuario(medico o administrador)
         $persons = $doctor->persons;
         return view('doctores.show', compact('doctor', 'rols', 'persons'));
+        //return(dd($persons));
     }
 
     /**
@@ -150,8 +157,14 @@ class DoctorController extends Controller
     public function edit($id)
     {
         $doctor = User::findOrfail($id);
+        $specialties = Specialty::all();
+
+        $specialty_ids = $doctor->specialties()->pluck('specialties.id');   // Me devuelve un array de solo los ids de las especialidades que tienen relacion con usuarios
+
         $rols = Rol::all();
-        return view('doctores.edit', compact('doctor', 'rols'));
+        $persons = $doctor->persons;
+        return view('doctores.edit', compact('doctor', 'specialties', 'rols', 'persons', 'specialty_ids'));
+        //return(dd($persons));
     }
 
     /**
@@ -163,7 +176,7 @@ class DoctorController extends Controller
      */
     public function update(Request $request, Doctor $doctor)
     {
-        //
+
     }
 
     /**

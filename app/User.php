@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'pivot', // Le oculte la tabla pivot para solo traer datos relacionados al usuario
     ];
 
     /**
@@ -42,6 +42,10 @@ class User extends Authenticatable
     }
 
     public function rols(){
-      return $this->belongsToMany(Rol::class)->withTimestamps();;
+      return $this->belongsToMany(Rol::class)->withTimestamps();
+    }
+
+    public function specialties(){
+      return $this->belongsToMany(Specialty::class)->withTimestamps();
     }
 }

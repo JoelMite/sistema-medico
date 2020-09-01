@@ -29,6 +29,8 @@ class CreateMedicalConsultationsTable extends Migration
             $table->string('temperature'); //
             $table->unsignedBigInteger('history_id'); // Ojo con esto.. No sigue la convencion de laravel
             $table->foreign('history_id')->references('id')->on('history_clinics');
+            //$table->unsignedBigInteger('person_id');
+            //$table->foreign('person_id')->references('id')->on('persons');
             $table->timestamps();
         });
     }

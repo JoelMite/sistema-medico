@@ -11,10 +11,10 @@
       <div class="card-header border-0">
         <div class="row align-items-center">
           <div class="col">
-            <h3 class="mb-0">Crear Historia Clinica</h3>
+            <h3 class="mb-0">Crear Consulta Medica</h3>
           </div>
           <div class="col text-right">
-            <a href="{{url('histories')}}" class="btn btn-sm btn-default">
+            <a href="{{url('medical_consultations')}}" class="btn btn-sm btn-default">
               Cancelar y Volver
             </a>
           </div>
@@ -30,34 +30,15 @@
               </ul>
             </div>
           @endif
-          <form action="{{url('histories')}}" method="post">
+          <form action="{{url('medical_consultations')}}" method="post">
             @csrf
-            @if($persons != null)
+            @if($histories != null)
               <div class="form-group" style="display: none;">
                 <label class="form-control-label" for="input-first-name">Identificador</label>
-                <input type="text" name="id_person" class="form-control form-control-alternative" value="{{ $persons->id ? $persons->id:'No hay datos' }}">
+                <input type="text" name="id_history" class="form-control form-control-alternative" value="{{ $histories->id ? $histories->id:'No hay datos' }}">
               </div>
             @endif
 
-            <h6 class="heading-small text-muted mb-4">Historia Clinica</h6>
-            <div class="form-group">
-              <label for="name">Antecedentes Personales</label>
-              <textarea name="personal_history" class="form-control" value="{{ old('personal_history') }}" required></textarea>
-            </div>
-            <div class="form-group">
-              <label for="name">Antecedentes Familiares</label>
-              <textarea name="family_background" class="form-control" value="{{ old('family_background') }}" required></textarea>
-            </div>
-            <div class="form-group">
-              <label for="name">Enfermedad Actual</label>
-              <textarea name="current_illness" class="form-control" value="{{ old('current_illness') }}" required></textarea>
-            </div>
-            <div class="form-group">
-              <label for="name">Habitos</label>
-              <textarea name="habits" class="form-control" value="{{ old('current_illness') }}" required></textarea>
-            </div>
-
-            {{-- <hr class="my-4" />
             <h6 class="heading-small text-muted mb-4">Consulta Medica</h6>
             <div class="form-group">
               <label for="name">Motivo</label>
@@ -73,7 +54,7 @@
             </div>
             <div class="form-group">
               <label for="name">Presion Arterial</label>
-              <textarea name="blood_pressure" class="form-control" value="{{ old('blood_pressure') }}" required></textarea>
+              <input type="text" name="blood_pressure" class="form-control" value="{{ old('blood_pressure') }}" required>
             </div>
             <div class="form-group">
               <label for="name">Frecuencia Cardiaca</label>
@@ -140,7 +121,7 @@
             <div class="form-group">
               <label for="name">Observaciones</label>
               <textarea name="observations_pru" class="form-control" value="{{ old('observations_pru') }}" required></textarea>
-            </div> --}}
+            </div>
 
             <button type="submit" class="btn btn-primary">
               Guardar

@@ -16,6 +16,10 @@ class Person extends Model
       return $this->hasOne(History::class);
     }
 
+    public function medicalconsultation(){
+      return $this->hasMany(MedicalConsultation::class);
+    }
+
     public function user(){
       return $this->belongsTo(User::class);
     }

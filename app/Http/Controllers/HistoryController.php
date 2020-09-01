@@ -25,10 +25,10 @@ class HistoryController extends Controller
     public function index()
     {
       // $doctores = User::all();
-      $persons = Person::all();
       $histories = History::all();
       $nohavePersonHistory = Person::doesntHave('history')->get(); // Este metodo me retorna las personas que no tienen una historia clinica
-      return view('clinic_history.index', compact('persons', 'histories', 'nohavePersonHistory'));
+      return view('clinic_history.index', compact('histories', 'nohavePersonHistory'));
+      //return(dd($histories));
     }
 
     /**
@@ -41,6 +41,7 @@ class HistoryController extends Controller
       $doctor = User::findOrfail($id);
       $persons = $doctor->persons;
       return view('clinic_history.create', compact('persons'));
+      //return $id;
     }
 
     /**
@@ -56,12 +57,14 @@ class HistoryController extends Controller
        $rules = [
          'personal_history' => 'required',
          'family_background' => 'required',
-         'current_illness' => 'required'
+         'current_illness' => 'required',
+         'habits' => 'required'
        ];
        $messages = [
          'personal_history.required' => 'Es necesario ingresar los antecedentes personales.',
          'family_background.required' => 'Es necesario ingresar los antecedentes familiares.',
-         'current_illness.required' => 'Es necesario ingresar la enfermedad actual.'
+         'current_illness.required' => 'Es necesario ingresar la enfermedad actual.',
+         'habits.required' => 'Es necesario ingresar los habitos actuales.'
        ];
        $this->validate($request, $rules, $messages);
      }
@@ -84,43 +87,59 @@ class HistoryController extends Controller
         'personal_history' => $request['personal_history'],
         'family_background' => $request['family_background'],
         'current_illness' => $request['current_illness'],
-        'blood_pressure' => $request['blood_pressure'],
+        'habits' => $request['habits'],
         'person_id' => $request['id_person']
-      ]
-      );
-
-      $history->medical_consultations()->create([
-        'reason' => $request['reason'],
-        'diagnosis' => $request['diagnosis'],
-        'observations' => $request['observations'],
-        'blood_pressure' => $request['blood_pressure'],
-        'heart_rate' => $request['heart_rate'],
-        'breathing_frequency' => $request['breathing_frequency'],
-        'weight' => $request['weight'],
-        'height' => $request['height'],
-        'imc' => $request['imc'],
-        'abdominal_perimeter' => $request['abdominal_perimeter'],
-        'capillary_glucose' => $request['capillary_glucose'],
-        'temperature' => $request['temperature'],
       ]);
 
-      $id_med_cons = MedicalConsultation::latest('id')->first()->id;
 
-      $medical_prescription = MedicalPrescription::create([
-        'description' => $request['description'],
-        'posology' => $request['posology'],
-        'observations_pres' => $request['observations_pres'],
-        'medical_consultation_id' => $id_med_cons,
-      ]);
 
-      $lab_test = LabTest::create([
-        'type_of_exam' => $request['type_of_exam'],
-        'quantity' => $request['quantity'],
-        'assessment' => $request['assessment'],
-        'observations_pru' => $request['observations_pru'],
-        'medical_consultation_id' => $id_med_cons,
 
-      ]);
+
+
+
+
+      // $history->medical_consultations()->create([
+      //   'reason' => $request['reason'],
+      //   'diagnosis' => $request['diagnosis'],
+      //   'observations' => $request['observations'],
+      //   'blood_pressure' => $request['blood_pressure'],
+      //   'heart_rate' => $request['heart_rate'],
+      //   'breathing_frequency' => $request['breathing_frequency'],
+      //   'weight' => $request['weight'],
+      //   'height' => $request['height'],
+      //   'imc' => $request['imc'],
+      //   'abdominal_perimeter' => $request['abdominal_perimeter'],
+      //   'capillary_glucose' => $request['capillary_glucose'],
+      //   'temperature' => $request['temperature'],
+      //   //'person_id' => $request['id_person'],
+      // ]);
+      //
+      // $id_med_cons = MedicalConsultation::latest('id')->first()->id;
+      //
+      // $medical_prescription = MedicalPrescription::create([
+      //   'description' => $request['description'],
+      //   'posology' => $request['posology'],
+      //   'observations_pres' => $request['observations_pres'],
+      //   'medical_consultation_id' => $id_med_cons,
+      // ]);
+      //
+      // $lab_test = LabTest::create([
+      //   'type_of_exam' => $request['type_of_exam'],
+      //   'quantity' => $request['quantity'],
+      //   'assessment' => $request['assessment'],
+      //   'observations_pru' => $request['observations_pru'],
+      //   'medical_consultation_id' => $id_med_cons,
+      //
+      // ]);
+
+
+
+
+
+
+
+
+
 
       //return redirect(dd($id_med_cons));
 
@@ -197,14 +216,15 @@ class HistoryController extends Controller
     public function show($id)
     {
       $history = History::findOrfail($id);  //Esto es un solo registro por lo tanto se lo puede imprimir sin ningun problema en la vista sin utilizar for each
-      $medical_consultations = $history->medical_consultations; //Esto es una coleccion por lo tanto se necesita de un for each en la vista
+      //$medical_consultations = $history->medical_consultations; // ojo Esto es una coleccion por lo tanto se necesita de un for each en la vista
       //$data = DB::table('medical_consultations')->where('history_id',$id)->first()->id;     //Esta consulta es la famosa builder query (ojo)
-      $id_medical_prescriptions = $history->medical_consultations->first()->id; //Me trae solo el id de la relacion de la historia clinica y la consulta medica
-      $medical_prescriptions = MedicalPrescription::findOrfail($id_medical_prescriptions); //Esto es un solo registro por lo tanto se lo puede imprimir sin ningun problema en la vista sin utilizar for each
+      //$id_medical_prescriptions = $history->medical_consultations->first()->id; // ojo Me trae solo el id de la relacion de la historia clinica y la consulta medica
+      //$medical_prescriptions = MedicalPrescription::findOrfail($id_medical_prescriptions); // ojo Esto es un solo registro por lo tanto se lo puede imprimir sin ningun problema en la vista sin utilizar for each
       //$lab_tests = LabTest::findOrfail($id_medical_prescriptions);
-      $lab_tests = DB::table('lab_tests')->where('medical_consultation_id',$id_medical_prescriptions)->first();
-      return view('clinic_history.show', compact('history', 'medical_consultations', 'medical_prescriptions', 'lab_tests'));
+      //$lab_tests = DB::table('lab_tests')->where('medical_consultation_id',$id_medical_prescriptions)->first(); //ojo
+      return view('clinic_history.show', compact('history')); // ojo
       //return redirect(dd($history, $medical_consultations, $id_medical_prescriptions, $medical_prescriptions, $lab_tests )); //Este codigo me ayuda a ver la coleccion que me trae
+      //return(dd($history));
     }
 
     /**
