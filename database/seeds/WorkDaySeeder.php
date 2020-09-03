@@ -23,7 +23,7 @@ class WorkDaySeeder extends Seeder
             'afternoon_start' => ($i ==3 ? '15:00:00' : '13:00:00'),
             'afternoon_end' => ($i ==3 ? '18:00:00' : '13:00:00'),
 
-            'user_id' => 3,
+            'user_id' => 2,
           ]);
         }
     }
