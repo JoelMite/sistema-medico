@@ -66,6 +66,7 @@ class Kernel extends HttpKernel
 
         'administrator' => \App\Http\Middleware\AdminMiddleware::class,    //  Proteger ruta Administrador
         'doctor' => \App\Http\Middleware\DoctorMiddleware::class,    //  Proteger ruta Doctor
-        'patient' => \App\Http\Middleware\PatientMiddleware::class,    //  Proteger ruta Doctor
+        'patient' => \App\Http\Middleware\PatientMiddleware::class,    //  Proteger ruta Paciente
+        'pat_doc' => \App\Http\Middleware\PatientDoctorMiddleware::class,    //  Proteger ruta Paciente_Doctor
     ];
 }

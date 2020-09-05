@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+    return redirect('/login');
 });
 
 Auth::routes();
@@ -73,11 +74,22 @@ Route::middleware(['auth', 'doctor'])->group(function () {
 
 });
 
-// Middleware para solo Pacientes
-Route::middleware(['auth', 'patient'])->group(function () {
+// Middleware para solo Pacientes Y Doctores
+Route::middleware(['auth', 'pat_doc'])->group(function () {
+
   // Citas Medicas
   Route::get('/appointments/create', 'AppointmentController@create');
   Route::post('/appointments', 'AppointmentController@store');
+  Route::get('/appointments', 'AppointmentController@index');
+  Route::get('/appointments/{appointment}', 'AppointmentController@show');
+  Route::get('/appointments/{appointment}/cancel', 'AppointmentController@showCancelForm'); // Al  ser este una actualizacion (update) podemos utilizar put p patch
+  Route::post('/appointments/{appointment}/cancel', 'AppointmentController@postCancel');
+  Route::post('/appointments/{appointment}/confirm', 'AppointmentController@postConfirm');
+
+});
+
+// Middleware para solo Pacientes
+Route::middleware(['auth', 'patient'])->group(function () {
 
   //JSON
   Route::get('/specialties/{specialty}/doctors', 'Api\SpecialtyController@doctors');

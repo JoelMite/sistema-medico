@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\specialty;
 use App\appointment;
+use App\cancelledappointment;
 use Carbon\Carbon;
 use App\Interfaces\ScheduleServiceInterface;
 use Validator;
@@ -19,7 +20,32 @@ class AppointmentController extends Controller
 
   public function index()
   {
-      //
+    $role = auth()->user()->rols()->first()->name;
+
+    if ($role == 'Medico') {
+      $pendingAppointments = Appointment::where('status', 'Reservada')
+      ->where('doctor_id', auth()->id())
+      ->paginate(10);
+      $confirmedAppointments = Appointment::where('status', 'Confirmada')
+      ->where('doctor_id', auth()->id())
+      ->paginate(10);
+      $oldAppointments = Appointment::whereIn('status', ['Atendida', 'Cancelada'])
+      ->where('doctor_id', auth()->id())
+      ->paginate(10);
+
+    }elseif($role == 'Paciente'){
+      $pendingAppointments = Appointment::where('status', 'Reservada')
+      ->where('patient_id', auth()->id())
+      ->paginate(10);
+      $confirmedAppointments = Appointment::where('status', 'Confirmada')
+      ->where('patient_id', auth()->id())
+      ->paginate(10);
+      $oldAppointments = Appointment::whereIn('status', ['Atendida', 'Cancelada'])
+      ->where('patient_id', auth()->id())
+      ->paginate(10);
+
+    }
+    return view('appointments.index', compact('pendingAppointments', 'confirmedAppointments', 'oldAppointments', 'role'));
   }
 
   public function create(ScheduleServiceInterface $scheduleService)
@@ -105,23 +131,44 @@ class AppointmentController extends Controller
     //return redirect('/appointments');
   }
 
-  public function show($id)
+  public function showCancelForm(Appointment $appointment)
   {
-      //
+    if ($appointment->status == 'Confirmada'){
+      $role = auth()->user()->rols()->first()->name;
+      return view('appointments.cancel', compact('appointment', 'role'));
+    }
+    return redirect('/appointments');
   }
 
-  public function edit()
+  public function postCancel(Appointment $appointment, Request $request)
   {
+    if ($request->has('justification')){
+      $cancellation = new CancelledAppointment();
+      $cancellation->justification = $request->input('justification');
+      $cancellation->cancelled_by_id = auth()->id();
 
+      $appointment->cancellation()->save($cancellation);
+    }
+
+    $appointment->status = 'Cancelada';
+    $appointment->save(); // update
+
+    $notification = "La cita se ha cancelado correctamente.";
+    return redirect('/appointments')->with(compact('notification'));
   }
 
-  public function update(Request $request, $id)
+  public function show(Appointment $appointment)
   {
-      //
+    $role = auth()->user()->rols()->first()->name;
+    return view('appointments.show', compact('appointment', 'role'));
   }
 
-  public function destroy($id)
+  public function postConfirm(Appointment $appointment)
   {
-      //
+    $appointment->status = 'Confirmada';
+    $appointment->save(); // update
+
+    $notification = "La cita se ha cancelado correctamente.";
+    return redirect('/appointments')->with(compact('notification'));
   }
 }

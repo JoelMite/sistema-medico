@@ -43,14 +43,14 @@
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="#">
-      <i class="ni ni-ruler-pencil text-purple"></i> Cita Medica
+    <a class="nav-link" href="/appointments">
+      <i class="ni ni-ruler-pencil text-purple"></i> Mis citas
     </a>
   </li>
 
   <li class="nav-item">
     <a class="nav-link" href="/patients">
-      <i class="ni ni-satisfied text-yellow"></i> Pacientes
+      <i class="ni ni-satisfied text-yellow"></i> Mis Pacientes
     </a>
   </li>
 @elseif(auth()->user()->rols()->first()->name == 'Paciente')
@@ -62,7 +62,7 @@
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="/appointments">
       <i class="ni ni-satisfied text-yellow"></i> Mis Citas
     </a>
   </li>
