@@ -37,7 +37,6 @@ class MedicalConsultationController extends Controller
           'reason' => 'required',
           'diagnosis' => 'required',
           'observations' => 'required',
-          'blood_pressure' => 'required|max:3|integer',
           'heart_rate' => 'required'
         ];
         $messages = [
@@ -90,7 +89,7 @@ class MedicalConsultationController extends Controller
       ]);
 
       $notification = "El usuario se ha registrado correctamente.";
-      return redirect('/medicalconsultation')->with(compact('notification'));
+      return redirect('/medical_consultations')->with(compact('notification'));
 
     }
 

@@ -103,24 +103,43 @@
         <table class="table align-items-center table-flush">
           <thead class="thead-light">
             <tr>
-              <th scope="col">Email</th>
+              <th scope="col">Nombres</th>
+              <th scope="col">Apellidos</th>
+              <th scope="col">Telefono</th>
+              <th scope="col">Domicilio</th>
+              <th scope="col">Ciudad</th>
               <th scope="col">Opciones</th>
             </tr>
           </thead>
           <tbody>
             @foreach ($patients as $patient)
                 @foreach ($patient->rols as $rol)
-                  @if($rol->name == 'Paciente')
+                  {{-- @if($rol->name == 'Paciente') --}}
                   <tr>
-                    <td>
+                    {{-- <td>
                       {{ $patient->email }}
+                    </td> --}}
+                    <td>
+                      {{ $patient->persons['name'] }}
+                    </td>
+                    <td>
+                      {{ $patient->persons['lastname'] }}
+                    </td>
+                    <td>
+                      {{ $patient->persons['phone'] }}
+                    </td>
+                    <td>
+                      {{ $patient->persons['address'] }}
+                    </td>
+                    <td>
+                      {{ $patient->persons['city'] }}
                     </td>
                     <td>
                       <a href="{{ url('/patients/'.$patient->id.'/edit') }}" class="btn btn-sm btn-primary">Editar</a>
                       <a href="{{ url('/patients/'.$patient->id) }}" class="btn btn-sm btn-warning">Ver</a>
                     </td>
                   </tr>
-                  @endif
+                  {{-- @endif --}}
                 @endforeach
             @endforeach
           </tbody>

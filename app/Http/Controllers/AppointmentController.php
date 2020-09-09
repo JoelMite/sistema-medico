@@ -161,6 +161,7 @@ class AppointmentController extends Controller
   {
     $role = auth()->user()->rols()->first()->name;
     return view('appointments.show', compact('appointment', 'role'));
+    //return dd($appointment);
   }
 
   public function postConfirm(Appointment $appointment)

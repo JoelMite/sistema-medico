@@ -19,9 +19,13 @@ class DoctorController extends Controller
 //  Metodo GET Mostrar todos los Usuarios
     public function index(){
         //$doctores = User::with('rols')->paginate(5);
-        $doctores = User::has('rols')->get();
+
+        //$doctores = User::has('rols')->get();  //  Practicamente me devuelve todos los usuarios asociados a un rol
+        $doctores = User::whereHas('rols', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
+        $query->whereIn('name', ['Medico','Administrador'])->where('creator_id','=',auth()->id());
+        })->get();
         return view('doctores.index', compact('doctores'));
-        //return dd($doctores);
+        //return dd($doc);
     }
 
     /**
@@ -83,7 +87,8 @@ class DoctorController extends Controller
       $user = User::create(
         $request->only('email')
         + [
-            'password'=>bcrypt($request->input('password'))
+            'password'=>bcrypt($request->input('password')),
+            'creator_id'=>auth()->id()
         ]
       );
 

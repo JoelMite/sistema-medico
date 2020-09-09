@@ -103,25 +103,48 @@
         <table class="table align-items-center table-flush">
           <thead class="thead-light">
             <tr>
-              <th scope="col">Email</th>
+              {{-- <th scope="col">Email</th> --}}
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellidos</th>
+              <th scope="col">Telefono</th>
+              <th scope="col">Rol</th>
+              <th scope="col">Especialidad</th>
               <th scope="col">Opciones</th>
             </tr>
           </thead>
           <tbody>
             @foreach ($doctores as $doctor)
-                @foreach ($doctor->rols as $rol)
-                  @if($rol->name == 'Medico')
+
+                  {{-- @if($rol->name == 'Medico') --}}
                   <tr>
-                    <td>
+                    {{-- <td>
                       {{ $doctor->email }}
+                    </td> --}}
+                    <td>
+                      {{ $doctor->persons['name'] }}
+                    </td>
+                    <td>
+                      {{ $doctor->persons['lastname'] }}
+                    </td>
+                    <td>
+                      {{ $doctor->persons['phone'] }}
+                    </td>
+                    <td>
+                      @foreach ($doctor->rols as $rol)
+                        {{ $rol->name }}
+                      @endforeach
+                    </td>
+                    <td>
+                      @foreach ($doctor->specialties as $specialty)
+                        <span class="badge badge-pill badge-info badge-lg">{{ $specialty->name }}</span>
+                      @endforeach
                     </td>
                     <td>
                       <a href="{{ url('/doctores/'.$doctor->id.'/edit') }}" class="btn btn-sm btn-primary">Editar</a>
                       <a href="{{ url('/doctores/'.$doctor->id) }}" class="btn btn-sm btn-warning">Ver</a>
                     </td>
                   </tr>
-                  @endif
-                @endforeach
+                  {{-- @endif --}}
             @endforeach
           </tbody>
         </table>

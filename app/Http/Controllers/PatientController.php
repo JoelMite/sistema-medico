@@ -13,7 +13,10 @@ class PatientController extends Controller
 
 //  Metodo GET Mostrar todos los Usuarios
   public function index(){
-      $patients =  User::with('rols')->paginate(5);
+      //$patients =  User::with('rols')->paginate(5);
+      $patients = User::whereHas('rols', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
+      $query->where('name', 'Paciente')->where('creator_id','=',auth()->id());
+      })->paginate(5);
       return view('patients.index', compact('patients'));
       //return redirect(dd($patients));
   }
@@ -75,7 +78,8 @@ class PatientController extends Controller
     $user = User::create(
       $request->only('email')
       + [
-          'password'=>bcrypt($request->input('password'))
+          'password'=>bcrypt($request->input('password')),
+          'creator_id'=>auth()->id()
       ]
     );
 

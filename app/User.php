@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\UserResetPassword;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password', //Aqui hay un error (name)
+        'email', 'password', 'creator_id', //Aqui hay un error (name)
     ];
 
     /**
@@ -48,4 +49,11 @@ class User extends Authenticatable
     public function specialties(){
       return $this->belongsToMany(Specialty::class)->withTimestamps();
     }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new UserResetPassword($token));
+    }
+
+
 }
