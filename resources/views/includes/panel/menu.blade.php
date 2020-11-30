@@ -29,11 +29,28 @@
     </a>
   </li>
 
-  <li class="nav-item dropdown">
+  {{-- <li class="nav-item dropdown">
       <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="ni ni-single-copy-04 text-green"></i> Consulta Medica
       </a>
       @include('includes.panel.dropdown_menu_medical_consultations')
+  </li> --}}
+
+  <li class="nav-item">
+    <a class="nav-link active" href="#navbar-dashboards" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-dashboards">
+      <i class="ni ni-shop text-primary"></i>
+      <span class="nav-link-text">Consulta Médica</span>
+    </a>
+    <div class="collapse show" id="navbar-dashboards">
+      <ul class="nav nav-sm flex-column">
+        <li class="nav-item">
+          <a href="/medical_consultations" class="nav-link">Crear Consulta Médica</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">Ver Consultas Médicas</a>
+        </li>
+      </ul>
+    </div>
   </li>
 
   <li class="nav-item">
@@ -51,6 +68,12 @@
   <li class="nav-item">
     <a class="nav-link" href="/patients">
       <i class="ni ni-satisfied text-yellow"></i> Mis Pacientes
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="#">
+      <i class="ni ni-circle-08 text-blue"></i> Mi Perfil
     </a>
   </li>
 @elseif(auth()->user()->rols()->first()->name == 'Paciente')

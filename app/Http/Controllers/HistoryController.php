@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\history;
-use App\person;
-use App\user;
-use App\medicalconsultation;
-use App\medicalprescription;
-use App\labtest;
+use App\Models\History;
+use App\Models\Person;
+use App\Models\User;
+use App\Models\MedicalConsultation;
+use App\Models\MedicalPrescription;
+use App\Models\LabTest;
 use DB;
 
 class HistoryController extends Controller
@@ -25,9 +25,12 @@ class HistoryController extends Controller
     public function index()
     {
       // $doctores = User::all();
-      $histories = History::all();
+      //$histories = History::all();
       $nohavePersonHistory = Person::doesntHave('history')->get(); // Este metodo me retorna las personas que no tienen una historia clinica
-      return view('clinic_history.index', compact('histories', 'nohavePersonHistory'));
+      $havePersonHistory = Person::has('history')->get();
+      return view('clinic_history.index', compact('havePersonHistory', 'nohavePersonHistory'));
+
+
       //return(dd($histories));
     }
 

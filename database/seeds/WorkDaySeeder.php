@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\workday;
+use App\Models\WorkDay;
 
 class WorkDaySeeder extends Seeder
 {

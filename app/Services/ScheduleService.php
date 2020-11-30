@@ -1,9 +1,9 @@
 <?php namespace App\Services;
 
 use App\Interfaces\ScheduleServiceInterface;
-use App\WorkDay;
+use App\Models\WorkDay;
 use Carbon\Carbon;
-use App\Appointment;
+use App\Models\Appointment;
 
 class ScheduleService implements ScheduleServiceInterface
 {

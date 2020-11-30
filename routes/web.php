@@ -25,12 +25,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Middleware para solo Administradores
 Route::middleware(['auth', 'administrator'])->group(function () {
   // Rol
-  Route::get('/rols', 'RolController@index');
-  Route::get('/rols/create', 'RolController@create');   // Formulario de Registro de Roles
-  Route::get('/rols/{rol}/edit', 'RolController@edit');   // Formulario de Edicion de Roles
-  Route::post('/rols', 'RolController@store');    // Envio del Formulario de Roles
-  Route::put('/rols/{rol}', 'RolController@update');   // Editar un Rol
-  Route::delete('/rols/{rol}', 'RolController@destroy');   // Eliminar un Rol
+  Route::get('/rols', 'RoleController@index');
+  Route::get('/rols/create', 'RoleController@create');   // Formulario de Registro de Roles
+  Route::get('/rols/{rol}/edit', 'RoleController@edit');   // Formulario de Edicion de Roles
+  Route::post('/rols', 'RoleController@store');    // Envio del Formulario de Roles
+  Route::put('/rols/{rol}', 'RoleController@update');   // Editar un Rol
+  Route::delete('/rols/{rol}', 'RoleController@destroy');   // Eliminar un Rol
 
   // Doctores o Usuarios
   Route::resource('doctores', 'DoctorController');

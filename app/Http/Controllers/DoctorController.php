@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\user;
-use App\rol;
-use App\person;
-use App\specialty;
+use App\Models\User;
+use App\Models\Role;
+use App\Models\Person;
+use App\Models\Specialty;
 
 class DoctorController extends Controller
 {
@@ -36,7 +36,7 @@ class DoctorController extends Controller
 
 //  Metodo GET Abrir Formulario para Crear Nuevos Usuarios (Esencialmente Medicos y Administradores)
      public function create(){
-       $rols = Rol::all();
+       $rols = Role::all();
        $specialties = Specialty::all();
        return view('doctores.create', compact('rols', 'specialties'));
      }
@@ -166,7 +166,7 @@ class DoctorController extends Controller
 
         $specialty_ids = $doctor->specialties()->pluck('specialties.id');   // Me devuelve un array de solo los ids de las especialidades que tienen relacion con usuarios
 
-        $rols = Rol::all();
+        $rols = Role::all();
         $persons = $doctor->persons;
         return view('doctores.edit', compact('doctor', 'specialties', 'rols', 'persons', 'specialty_ids'));
         //return(dd($persons));

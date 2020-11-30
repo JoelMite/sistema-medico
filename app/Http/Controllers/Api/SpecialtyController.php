@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\specialty;
-use App\user;
+use App\Models\Specialty;
+use App\Models\User;
 
 class SpecialtyController extends Controller
 {
@@ -23,10 +23,11 @@ class SpecialtyController extends Controller
         $ens = [];
         foreach ($specialty->users as $user) {
           $en = [];
-           $en ['name']= $user->persons['name'];
-           $en ['lastname']= $user->persons['lastname'];
+           $en ['name']= $user->persons['name'] ?? 'Desconocido';
+           $en ['lastname']= $user->persons['lastname'] ?? 'Desconocido';
            $en ['user_id']= $user->persons['user_id'];
-           $ens []= $en;
+
+          $ens []= $en;
         }
 
 

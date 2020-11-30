@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\medicalconsultation;
-use App\history;
-use App\user;
-use App\person;
+use App\Models\MedicalConsultation;
+use App\Models\History;
+use App\Models\User;
+use App\Models\Person;
 
 class MedicalConsultationController extends Controller
 {

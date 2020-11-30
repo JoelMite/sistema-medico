@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Interfaces\ScheduleServiceInterface;
 
-use App\WorkDay;
+use App\Models\WorkDay;
 use Carbon\Carbon;
 
 class ScheduleController extends Controller

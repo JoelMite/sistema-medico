@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\specialty;
-use App\appointment;
-use App\cancelledappointment;
+use App\Models\Specialty;
+use App\Models\Appointment;
+use App\Models\CancelledAppointment;
 use Carbon\Carbon;
 use App\Interfaces\ScheduleServiceInterface;
 use Validator;

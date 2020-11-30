@@ -111,7 +111,7 @@
           </thead>
           <tbody>
 
-            @foreach ($histories as $history)
+            {{-- @foreach ($histories as $history)
                 <tr>
                   <td>
                     {{ $history->person->name }}
@@ -124,9 +124,27 @@
                     <a href="{{ url('/histories/'.$history->id) }}" class="btn btn-sm btn-warning">Ver HC</a>
                   </td>
                 </tr>
+            @endforeach --}}
+
+          @foreach ($havePersonHistory as $person)
+            @if ($person->user->creator_id == auth()->id())
+                <tr>
+                  <td>
+                    {{ $person->name }}
+                  </td>
+                  <td>
+                    {{ $person->lastname }}
+                  </td>
+                  <td>
+                    <!-- <a href="#" class="btn btn-sm btn-primary">Editar HC</a> -->
+                    <a href="{{ url('/histories/'.$person->history['id']) }}" class="btn btn-sm btn-warning">Ver HC</a>
+                  </td>
+                </tr>
+              @endif
             @endforeach
 
             @foreach ($nohavePersonHistory as $person)
+              @if ($person->user->creator_id == auth()->id())
                   <tr>
                     <td>
                       {{ $person->name }}
@@ -138,6 +156,7 @@
                       <a href="{{ url('histories/'.$person->user->id.'/create') }}" class="btn btn-sm btn-success">Crear HC</a>
                     </td>
                   </tr>
+              @endif
             @endforeach
           </tbody>
         </table>
