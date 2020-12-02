@@ -45,4 +45,10 @@ class SpecialtyController extends Controller
       }
 
     }
+
+    public function index(){
+
+      return Specialty::all(['id', 'name']);
+
+    }
 }

@@ -15,17 +15,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::namespace('Api')->group(function () {
+  // Recursos Publicos -- Rutas Publicas
   Route::post('login', 'AuthController@login');
   Route::post('signup', 'AuthController@signUp');
+  Route::get('specialties', 'SpecialtyController@index');
+  Route::get('specialties/{specialty}/doctors', 'SpecialtyController@doctors');
+  Route::get('schedule/hours', 'ScheduleController@hours');
 
   Route::middleware('auth:api')->group(function () {
-    Route::get('logout', 'AuthController@logout');
+    Route::post('logout', 'AuthController@logout');
     Route::get('user', 'AuthController@user');
 
       });
 
 });
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Esta es la ruta que viene por defecto
+
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });

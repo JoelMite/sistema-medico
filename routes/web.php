@@ -92,7 +92,7 @@ Route::middleware(['auth', 'pat_doc'])->group(function () {
 Route::middleware(['auth', 'patient'])->group(function () {
 
   //JSON
-  Route::get('/specialties/{specialty}/doctors', 'Api\SpecialtyController@doctors');
-  Route::get('/schedule/hours', 'Api\ScheduleController@hours');
+  // Route::get('/specialties/{specialty}/doctors', 'Api\SpecialtyController@doctors');
+  // Route::get('/schedule/hours', 'Api\ScheduleController@hours');
 
 });
