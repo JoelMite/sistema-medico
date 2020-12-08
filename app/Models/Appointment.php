@@ -17,6 +17,14 @@ class Appointment extends Model
     	'type'
     ];
 
+  protected $hidden = [
+    'schedule_time', 'created_at'
+  ];
+
+  protected $appends = [
+    'schedule_time_12', 'created_at_format'
+  ];
+
 // // Definimos un atributo date dentro de un modelo laravel se encarga de hacer casts automaticamente
 //   protected $dates = [
 //     'schedule_time'
@@ -52,5 +60,10 @@ class Appointment extends Model
   public function getScheduleTime12Attribute()
   {
     return (new Carbon($this->schedule_time))->format('g:i A');
+  }
+
+  public function getCreatedAtFormatAttribute()
+  {
+    return (new Carbon($this->created_at))->toDateTimeString(); // 1975-12-25 14:15:16 cambia el formato de la fecha
   }
 }

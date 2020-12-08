@@ -23,6 +23,7 @@ class SpecialtyController extends Controller
         $ens = [];
         foreach ($specialty->users as $user) {
           $en = [];
+           $en ['id']= $user['id'] ?? 'Desconocido';
            $en ['name']= $user->persons['name'] ?? 'Desconocido';
            $en ['lastname']= $user->persons['lastname'] ?? 'Desconocido';
            $en ['user_id']= $user->persons['user_id'];

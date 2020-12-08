@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password', 'creator_id', //Aqui hay un error (name)
+        'email', 'password', //Aqui hay un error (name)
     ];
 
     /**
@@ -27,7 +27,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'pivot', // Le oculte la tabla pivot para solo traer datos relacionados al usuario
+        'password', 'remember_token', 'pivot', 'creator_id', 'email_verified_at', 'created_at', 'updated_at', // Le oculte la tabla pivot para solo traer datos relacionados al usuario
     ];
 
     /**
@@ -49,6 +49,22 @@ class User extends Authenticatable
 
     public function specialties(){
       return $this->belongsToMany(Specialty::class)->withTimestamps();
+    }
+
+    public function asDoctorAppointments(){
+      return $this->hasMany(Appointment::class, 'doctor_id');
+    }
+
+    public function asPatientAppointments(){
+      return $this->hasMany(Appointment::class, 'patient_id');
+    }
+
+    public function attendedAppointments(){
+      return $this->asDoctorAppointments()->where('status', 'Atendida');
+    }
+
+    public function cancelledAppointments(){
+      return $this->asDoctorAppointments()->where('status', 'Cancelada');
     }
 
     public function sendPasswordResetNotification($token)

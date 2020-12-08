@@ -26,6 +26,10 @@ Route::namespace('Api')->group(function () {
     Route::post('logout', 'AuthController@logout');
     Route::get('user', 'AuthController@user');
 
+    // Post Appointment
+    Route::post('/appointments', 'AppointmentController@store');
+    // Appointments
+    Route::get('/appointments', 'AppointmentController@index');
       });
 
 });

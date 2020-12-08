@@ -61,14 +61,14 @@ class AuthController extends Controller
       $tokenResult = $user->createToken('Personal Access Token');
 
       $token = $tokenResult->token;
-      if ($request->remember_me)
-          $token->expires_at = Carbon::now()->addWeeks(1);
+      // if ($request->remember_me)
+      //     $token->expires_at = Carbon::now()->addWeeks(1);
       $token->save();
 
       $access_token = $tokenResult->accessToken;
       $success = true;
-      $rols = $user->rols;                //  Me devuelve el rol que cumple cada usuario(medico o administrador)
-      $persons = $user->persons;
+      //$rols = $user->rols;                //  Me devuelve el rol que cumple cada usuario(medico o administrador)
+      //$persons = $user->persons;
 
       return compact('success', 'user', 'access_token');
 
