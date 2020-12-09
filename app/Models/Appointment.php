@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class Appointment extends Model
 {
@@ -66,4 +67,23 @@ class Appointment extends Model
   {
     return (new Carbon($this->created_at))->toDateTimeString(); // 1975-12-25 14:15:16 cambia el formato de la fecha
   }
+
+  static public function createForPatient(Request $request, $patient_id){
+    $data = $request->only([
+    	'description',
+    	'specialty_id',
+    	'doctor_id',
+    	'schedule_date',
+    	'schedule_time',
+    	'type'
+    ]);
+    $data['patient_id'] = $patient_id;
+
+    $carbonTime = Carbon::createFromFormat('g:i A', $data['schedule_time']); // Este fomato estaba en 12 horas
+    $data['schedule_time'] = $carbonTime->format('H:i:s'); // Y lo pasamos a 24 horas
+    //return dd($data);
+
+    return self::create($data);
+  }
+
 }
