@@ -15,7 +15,7 @@
   <link href="{{ asset('asset/vendor/nucleo/css/nucleo.css') }}" rel="stylesheet">
   <link href="{{ asset('asset/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
   <!-- Argon CSS -->
-  <link href="{{ asset('asset/css/argon.css?v=1.0.0') }}" rel="stylesheet">
+  <link href="{{ asset('asset/css/argon.css?v=1.1.0') }}" rel="stylesheet">
   @yield('styles')
 </head>
 
