@@ -84,16 +84,16 @@ class AppointmentController extends Controller
     // ];
     //
     // $messages = [
-    //   'schedule_time.required' => 'Por favor seleccione una hora valida para su cita'
+    //   'schedule_time.required' => 'Por favor seleccione una hora valida para su cita.'
     // ];
     //
     // $validator = Validator::make($request->all(), $rules, $messages);
-
-    // $validator->after(function($validator) use ($request, $scheduleService){
+    //
+    // $validator->after(function ($validator) use ($request, $scheduleService) {
     //   $date = $request->input('schedule_date');
     //   $doctorId = $request->input('doctor_id');
-    //   $schedule_time = $request->input('$schedule_time');
-    //   if (!$date || !$doctorId ! ||$schedule_time) {
+    //   $schedule_time = $request->input('schedule_time');
+    //   if (!$date || !$doctorId  || !$schedule_time) {
     //     return;
     //   }
     //
@@ -109,8 +109,8 @@ class AppointmentController extends Controller
     //   ->withErrors($validator)
     //   ->withInput();
     // }
-
-    // Guardar una cita
+    //
+    // // Guardar una cita
     // $data = $request->only([
     // 	'description',
     // 	'specialty_id',
@@ -123,7 +123,10 @@ class AppointmentController extends Controller
     //
     // $carbonTime = Carbon::createFromFormat('g:i A', $data['schedule_time']); // Este fomato estaba en 12 horas
     // $data['schedule_time'] = $carbonTime->format('H:i:s'); // Y lo pasamos a 24 horas
-    // //return dd($data);
+    // // //return dd($data);
+    //
+    // Appointment::create($data);
+
     $created = Appointment::createForPatient($request, auth()->id());
 
     if ($created) {
@@ -131,10 +134,13 @@ class AppointmentController extends Controller
     }else{
       $notification = "Ocurrio un problema al registrar la cita médica";
     }
-    
+
     // Notificacion de que se ha creado la cita correctamente
     // $notification = "La cita se ha registrado correctamente.";
-    return back()->with(compact('notification'));
+
+    return redirect('/appointments')->with(compact('notification'));
+
+    // return back()->with(compact('notification'));
     // Return back es lo mismo que el redirect sino que aqui no especificamos la ruta, laravel ya hace eso por nosotros
     //Este es el que estaba antes return redirect('/appointments');
   }

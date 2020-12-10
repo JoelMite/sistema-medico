@@ -124,6 +124,6 @@
 
 @section('scripts')
 <!-- Latest compiled and minified JavaScript -->
-<script src="{{ asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('asset/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ asset('/js/appointments/create.js') }}" ></script>
 @endsection
