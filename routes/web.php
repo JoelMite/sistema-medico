@@ -72,6 +72,9 @@ Route::middleware(['auth', 'doctor'])->group(function () {
   Route::get('/schedule', 'ScheduleController@edit');
   Route::post('/schedule', 'ScheduleController@store');
 
+  // FCM
+  Route::post('/fcm/send', 'FirebaseController@sendAll');
+
 });
 
 // Middleware para solo Pacientes Y Doctores

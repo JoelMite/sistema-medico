@@ -30,6 +30,9 @@ Route::namespace('Api')->group(function () {
     Route::post('/appointments', 'AppointmentController@store');
     // Appointments
     Route::get('/appointments', 'AppointmentController@index');
+
+    // FCM
+    Route::post('/fcm/token', 'FirebaseController@postToken');
       });
 
 });

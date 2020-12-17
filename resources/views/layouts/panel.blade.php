@@ -72,6 +72,12 @@
             </li>
             @elseif(auth()->user()->rols()->first()->name == 'Medico')
             <li class="nav-item">
+              <a class="nav-link" href="/home">
+                <i class="ni ni-tv-2 text-red"></i>
+                <span class="nav-link-text">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="/histories">
                 <i class="ni ni-collection text-default"></i>
                 <span class="nav-link-text">Historia Clinica</span>
