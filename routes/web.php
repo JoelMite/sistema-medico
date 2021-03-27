@@ -18,7 +18,11 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Auth::routes();
+// Auth::routes(['register' => false]);
+//
+Route::get('/login', 'Auth\LoginController@getLogin')->name('login');
+Route::post('/login', 'Auth\LoginController@postLogin')->name('login');
+Route::post('/logout', 'Auth\LoginController@getLogout')->name('logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -33,7 +37,15 @@ Route::middleware(['auth', 'administrator'])->group(function () {
   Route::delete('/rols/{rol}', 'RoleController@destroy');   // Eliminar un Rol
 
   // Doctores o Usuarios
-  Route::resource('doctores', 'DoctorController');
+  Route::get('/doctores', 'DoctorController@index');
+  Route::get('/doctores/create', 'DoctorController@create');
+  Route::post('/doctores', 'DoctorController@store');
+  Route::get('/doctores/{doctor}', 'DoctorController@show');
+  Route::get('/doctores/{doctor}/edit', 'DoctorController@edit');
+  Route::put('/doctores/{doctor}', 'DoctorController@update');
+  Route::delete('/doctores/{doctor}', 'DoctorController@destroy');
+  Route::get('/doctores/{doctor}/state', 'DoctorController@state');
+  // Route::resource('doctores', 'DoctorController');
 
   // Especialidades
   Route::get('/specialties', 'SpecialtyController@index');

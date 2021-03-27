@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password', //Aqui hay un error (name)
+        'email', 'password', 'creator_id', //Aqui hay un error (name)
     ];
 
     /**
@@ -27,7 +27,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'pivot', 'creator_id', 'email_verified_at', 'created_at', 'updated_at', // Le oculte la tabla pivot para solo traer datos relacionados al usuario
+        'password', 'remember_token', 'pivot', 'email_verified_at', 'created_at', 'updated_at', // Le oculte la tabla pivot para solo traer datos relacionados al usuario
     ];
 
     /**
@@ -52,24 +52,35 @@ class User extends Authenticatable
     }
 
     public function asDoctorAppointments(){
-      return $this->hasMany(Appointment::class, 'doctor_id');
+      return $this->hasMany(Appointment::class, 'doctor_id'); // Esto practiamente no funcionaria porque es algo que he omitido
     }
 
     public function asPatientAppointments(){
-      return $this->hasMany(Appointment::class, 'patient_id');
+      return $this->hasMany(Appointment::class, 'patient_id'); // Esto practiamente no funcionaria porque es algo que he omitido
     }
 
     public function attendedAppointments(){
-      return $this->asDoctorAppointments()->where('status', 'Atendida');
+      return $this->asDoctorAppointments()->where('status', 'Atendida'); // Esto practiamente no funcionaria porque es algo que he omitido
     }
 
     public function cancelledAppointments(){
-      return $this->asDoctorAppointments()->where('status', 'Cancelada');
+      return $this->asDoctorAppointments()->where('status', 'Cancelada'); // Esto practiamente no funcionaria porque es algo que he omitido
     }
 
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new UserResetPassword($token));
+    }
+
+    public function sendFCM($message)
+    {
+      return fcm()
+      ->to([$this->device_token])
+      ->notification([
+        'title' => config('app.name'),
+        'body' => $message
+      ])
+      ->send();
     }
 
 

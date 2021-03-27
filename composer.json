@@ -18,7 +18,8 @@
         "laravel/passport": "^9.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
-        "lcobucci/jwt": "3.3.3"
+        "lcobucci/jwt": "3.3.3",
+        "tavo1987/laravel-ec-validator": "^2.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

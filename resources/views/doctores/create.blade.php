@@ -15,7 +15,7 @@
           </div>
           <div class="col text-right">
             <a href="{{url('doctores')}}" class="btn btn-danger">
-              Cancelar
+              Cancelar y Volver
             </a>
           </div>
         </div>
@@ -45,16 +45,22 @@
                   <div class="collapse show" id="contenido-btn-1" aria-labelledby="boton-collapse-1"
                   data-parent="#acordeon-01">
                     <div class="form-row">
-                      <div class="col-md-6 mb-2">
+                      <div class="col-md-4 mb-3">
                         <div class="form-group">
                             <label for="name">Nombres</label>
                             <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
                         </div>
                       </div>
-                      <div class="col-md-6 mb-2">
+                      <div class="col-md-4 mb-3">
                         <div class="form-group">
                             <label for="name">Apellidos</label>
                             <input type="text" name="lastname" class="form-control" value="{{ old('lastname') }}" required>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-3">
+                        <div class="form-group">
+                            <label for="name">DNI</label>
+                            <input type="text" name="dni" class="form-control" value="{{ old('dni') }}" required>
                         </div>
                       </div>
                     </div>
@@ -85,7 +91,7 @@
                         <div class="col-md-4 mb-3">
                           <div class="form-group">
                             <label for="contraseña">Contraseña</label>
-                            <input type="password" name="password" class="form-control" value="{{ old('password') }}" required>
+                            <input type="text" name="password" class="form-control" value="{{ Str::random(15) }}" required>
                           </div>
                         </div>
                         <div class="col-md-4 mb-3">
@@ -111,45 +117,88 @@
                     <!-- Contenedor -->
                       <div class="collapse" id="contenido-btn-3" aria-labelledby="boton-collapse-3"
                       data-parent="#acordeon-01">
-                        <div class="form-group">
-                          <label for="name">Telefono</label>
-                          <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" required>
+                      <div class="form-row">
+                        <div class="col-md-6 mb-2">
+                          <div class="form-group">
+                            <label for="name">Teléfono</label>
+                            <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" required>
+                          </div>
                         </div>
-                        <div class="form-group">
-                          <label for="name">Direccion</label>
-                          <input type="text" name="address" class="form-control" value="{{ old('address') }}" required>
+                        <div class="col-md-6 mb-2">
+                          <div class="form-group">
+                            <label for="name">Dirección</label>
+                            <input type="text" name="address" class="form-control" value="{{ old('address') }}" required>
+                          </div>
                         </div>
-                        <div class="form-group">
-                          <label for="name">Ciudad</label>
-                          <input type="text" name="city" class="form-control" value="{{ old('city') }}" required>
+                        <div class="col-md-6 mb-2">
+                          <div class="form-group">
+                            <label for="name">Ciudad</label>
+                            <input type="text" name="city" class="form-control" value="{{ old('city') }}" required>
+                          </div>
                         </div>
-                        <div class="form-group">
-                          <label for="name">Edad</label>
-                          <input type="text" name="age" class="form-control" value="{{ old('age') }}" required>
+                          {{-- <div class="form-group">
+                            <label for="name">Edad</label>
+                            <input type="text" name="age" class="form-control" value="{{ old('age') }}" required>
+                          </div> --}}
+                          {{-- <div class="form-group">
+                            <label for="name">Etnia</label>
+                            <input type="text" name="etnia" class="form-control" value="{{ old('etnia') }}" required>
+                          </div> --}}
+                        <div class="col-md-6 mb-2">
+                          <div class="form-group">
+                            <label for="name">Etnia</label>
+                            <select class="form-control selectpicker" name="etnia" id="etnia" data-style="btn-secondary" value"{{ old('etnia') }}">
+                                <option value="Mestizo">Mestizo</option>
+                                <option value="Afroamericano">Afroamericano</option>
+                                <option value="Indigena">Indigena</option>
+                            </select>
+                          </div>
                         </div>
-                        <div class="form-group">
-                          <label for="name">Etnia</label>
-                          <input type="text" name="etnia" class="form-control" value="{{ old('etnia') }}" required>
+                       <div class="col-md-4 mb-2">
+                          <div class="form-group">
+                            <label for="name">Fecha de Nacimiento</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                              </div>
+                              <input class="form-control datepicker" placeholder="Seleccionar fecha"
+                              id="date_birth" name = "date_birth" type="text"
+                              value= "{{ old('date_birth') }}"
+                              data-date-format="yyyy-mm-dd">
+                            </div>
+                          </div>
                         </div>
-                        <div class="form-group">
-                          <label for="name">Sexo</label>
-                          <input type="text" name="sex" class="form-control" value="{{ old('sex') }}" required>
+                        <div class="col-md-4 mb-2">
+                          <div class="form-group">
+                            <label for="name">Sexo</label>
+                            <select class="form-control selectpicker" name="sex" id="sex" data-style="btn-secondary" value"{{ old('sex') }}">
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                            </select>
+                          </div>
                         </div>
-                        <!-- <div class="form-group">
-                          <label for="datebirth">Fecha de Nacimento</label>
-                          <input type="date" name="datebirth" class="form-control" value="{{ old('datebirth') }}" required>
-                        </div> -->
-                        <div class="form-group">
-                          <label for="rols">Rol</label>
-                          <select class="form-control selectpicker" name="rols" id="rols" data-style="btn-secondary">
-                            @foreach ($rols as $rol)
-                              <option value="{{ $rol->id }}">{{ $rol->name }}</option>
-                            @endforeach
-                          </select>
+                          {{-- <div class="form-group">
+                            <label for="name">Sexo</label>
+                            <input type="text" name="sex" class="form-control" value="{{ old('sex') }}" required>
+                          </div> --}}
+                          <!-- <div class="form-group">
+                            <label for="datebirth">Fecha de Nacimento</label>
+                            <input type="date" name="datebirth" class="form-control" value="{{ old('datebirth') }}" required>
+                          </div> -->
+                        <div class="col-md-4 mb-2">
+                          <div class="form-group">
+                            <label for="rols">Rol</label>
+                            <select class="form-control selectpicker" name="rols" id="rols" data-style="btn-secondary">
+                              @foreach ($rols as $rol)
+                                <option value="{{ $rol->id }}">{{ $rol->name }}</option>
+                              @endforeach
+                            </select>
+                          </div>
                         </div>
                       </div>
                     </div>
                 </div>
+              </div>
           <div class="form-group">
             <button type="submit" class="btn btn-success">
               Guardar
@@ -209,5 +258,6 @@
 
 @section('scripts')
 <!-- Latest compiled and minified JavaScript -->
+<script src="{{ asset('asset/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 @endsection

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Person;
 use App\Models\Specialty;
+use Carbon\Carbon;
 
 class DoctorController extends Controller
 {
@@ -59,7 +60,9 @@ class DoctorController extends Controller
          'phone' => 'required',
          'address' => 'required',
          'city' => 'required',
-         'age' => 'required',
+         'date_birth' => 'required',
+         'dni' => 'ecuador:ci|required',
+         // 'age' => 'required',
          'etnia' => 'required',
          'sex' => 'required'
 
@@ -72,7 +75,10 @@ class DoctorController extends Controller
          'phone.required' => 'Es necesario ingresar un telefono.',
          'address.required' => 'Es necesario ingresar una direccion.',
          'city.required' => 'Es necesario ingresar una ciudad.',
-         'age.required' => 'Es necesario ingresar un año.',
+         'date_birth' => 'Es necesario ingresar una fecha de nacimiento.',
+         'dni.required' => 'Es necesario ingresar un DNI.',
+         'dni.ecuador' => 'El DNI que ha ingresado es incorrecto.',
+         // 'age.required' => 'Es necesario ingresar un año.',
          'etnia.required' => 'Es necesario ingresar una etnia.',
          'sex.required' => 'Es necesario ingresar un sexo.'
        ];
@@ -95,13 +101,17 @@ class DoctorController extends Controller
       $user->rols()->attach($request->input('rols'));
       $user->specialties()->attach($request->input('specialties'));
 
+      $date_birth = Carbon::parse($request['date_birth'])->age; // Utilizo Carbon para calcular la edad a partir de la fecha de nacimiento
+
       $user->persons()->create([
         'name' => $request['name'],
         'lastname' => $request['lastname'],
         'phone' => $request['phone'],
         'address' => $request['address'],
         'city' => $request['city'],
-        'age' => $request['age'],
+        'date_birth' => $request['date_birth'],
+        'dni' => $request['dni'],
+        'age' => $date_birth,
         'etnia' => $request['etnia'],
         'sex' => $request['sex'],
       ]);
@@ -193,5 +203,23 @@ class DoctorController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function state($id)
+    {
+      //dd($request->all());
+      $doctor = User::findOrfail($id);
+      if($doctor->state == "403"){
+        $doctor->state = "200";
+        $notification = "El usuario a sido activado";
+      }
+      elseif($doctor->state == "200"){
+        $doctor->state = "403";
+        $notification = "El usuario a sido baneado";
+      }
+        if ($doctor->save()){ // Editar
+        return redirect('/doctores')->with(compact('notification'));
+        // return dd($notification);
+      }
     }
 }

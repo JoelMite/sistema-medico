@@ -142,6 +142,20 @@
                     <td>
                       <a href="{{ url('/doctores/'.$doctor->id.'/edit') }}" class="btn btn-sm btn-primary">Editar</a>
                       <a href="{{ url('/doctores/'.$doctor->id) }}" class="btn btn-sm btn-warning">Ver</a>
+                      @if($doctor->state == '403')
+                        <a href="{{ url('/doctores/'.$doctor->id.'/state') }}" class="btn btn-sm btn-success">Activar</a>
+                      @elseif($doctor->state == '200')
+                        <a href="{{ url('/doctores/'.$doctor->id.'/state') }}" class="btn btn-sm btn-danger">Banear</a>
+                      @endif
+                      {{-- <form action="{{ url('/doctores/'.$doctor->state.'/state') }}" method="post">
+                        @csrf
+                        @method('PUT')
+                          @if($doctor->state == '403')
+                            <button class="btn btn-sm btn-success" type="submit">Activar</button>
+                          @elseif($doctor->state == '200')
+                            <button class="btn btn-sm btn-danger" type="submit">Banear</button>
+                          @endif
+                      </form> --}}
                     </td>
                   </tr>
                   {{-- @endif --}}

@@ -177,6 +177,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         //Esta hara que laravel use ese ServiceProvider (ScheduleServiceProvider)
         App\Providers\ScheduleServiceProvider::class,
+        //Esto me permitira validar la cedula
+        Tavo\EcLaravelValidator\EcValidatorServiceProvider::class,
 
 
     ],

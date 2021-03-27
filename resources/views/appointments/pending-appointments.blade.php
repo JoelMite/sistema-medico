@@ -43,6 +43,11 @@
                 {{ $appointment->type }}
               </td>
               <td>
+                <a class="btn btn-sm btn-primary" title="Ver cita"
+                  href="{{ url('/appointments/'.$appointment->id) }}">
+                    Ver
+                </a>
+
                 @if ($role == 'Medico')
                   <form action="{{ url('/appointments/'.$appointment->id.'/confirm') }}" method="POST" class="d-inline-block">
                     @csrf

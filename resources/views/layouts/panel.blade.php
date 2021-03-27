@@ -125,6 +125,12 @@
             </li>
             @elseif(auth()->user()->rols()->first()->name == 'Paciente')
             <li class="nav-item">
+              <a class="nav-link" href="/home">
+                <i class="ni ni-tv-2 text-red"></i>
+                <span class="nav-link-text">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="/appointments/create">
                 <i class="ni ni-ruler-pencil text-purple"></i>
                 <span class="nav-link-text">Reservar Cita</span>
@@ -138,6 +144,7 @@
             </li>
             @endif
             <li class="nav-item">
+              {{-- <a class="nav-link" href="{{ route('logout') }}" > --}}
               <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
               document.getElementById('formLogout').submit();">
                 <i class="ni ni-key-25"></i>
@@ -332,7 +339,7 @@
                 <a href="#!" class="dropdown-item text-center text-primary font-weight-bold py-3">View all</a>
               </div>
             </li>
-            <li class="nav-item dropdown">
+            {{-- <li class="nav-item dropdown">
               <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="ni ni-ungroup"></i>
               </a>
@@ -376,7 +383,7 @@
                   </a>
                 </div>
               </div>
-            </li>
+            </li> --}}
           </ul>
           <ul class="navbar-nav align-items-center ml-auto ml-md-0">
             <li class="nav-item dropdown">
@@ -398,7 +405,7 @@
                   <i class="ni ni-single-02"></i>
                   <span>Mi perfil</span>
                 </a>
-                <a href="#!" class="dropdown-item">
+                {{-- <a href="#!" class="dropdown-item">
                   <i class="ni ni-settings-gear-65"></i>
                   <span>Ajustes</span>
                 </a>
@@ -409,12 +416,22 @@
                 <a href="#!" class="dropdown-item">
                   <i class="ni ni-support-16"></i>
                   <span>Soporte</span>
-                </a>
+                </a> --}}
                 <div class="dropdown-divider"></div>
-                <a href="#!" class="dropdown-item">
+                {{-- <a class="dropdown-item" href="{{ route('logout') }}" > --}}
+                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                document.getElementById('formLogout').submit();">
+                  <i class="ni ni-key-25"></i>
+                  <span class="nav-link-text">Cerrar sesión</span>
+                </a>
+                <form action="{{ route('logout') }}" method="POST" style="display:none;" id="formLogout">
+                  @csrf
+
+                </form>
+                {{-- <a href="#!" class="dropdown-item">
                   <i class="ni ni-user-run"></i>
                   <span>Cerrar sesión</span>
-                </a>
+                </a> --}}
               </div>
             </li>
           </ul>

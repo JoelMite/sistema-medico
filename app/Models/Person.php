@@ -9,7 +9,7 @@ class Person extends Model
     public $table = "persons";
 
     protected $fillable = [
-      'name', 'lastname', 'phone', 'address', 'city', 'age', 'etnia', 'sex', 'user_id',
+      'name', 'lastname', 'dni', 'phone', 'address', 'city', 'date_birth', 'age', 'etnia', 'sex', 'user_id',
     ];
 
     public function history(){

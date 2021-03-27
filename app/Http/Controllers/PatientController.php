@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Carbon\Carbon;
+
 class PatientController extends Controller
 {
 //  Verificar que ha iniciado sesion
@@ -50,20 +52,24 @@ class PatientController extends Controller
            'phone' => 'required',
            'address' => 'required',
            'city' => 'required',
-           'age' => 'required',
+           'date_birth' => 'required',
+           'dni' => 'ecuador:ci|required',
+           // 'age' => 'required',
            'etnia' => 'required',
            'sex' => 'required'
 
          ];
          $messages = [
            'name.required' => 'Es necesario ingresar los nombres.',
-           'lastname.required' => 'Es necesario ingresar los apellidos.',
            'email.required' => 'Es necesario ingresar un correo.',
            'password.required' => 'Es necesario ingresar una contraseña.',
            'phone.required' => 'Es necesario ingresar un telefono.',
            'address.required' => 'Es necesario ingresar una direccion.',
            'city.required' => 'Es necesario ingresar una ciudad.',
-           'age.required' => 'Es necesario ingresar un año.',
+           'date_birth.required' => 'Es necesario ingresar un a fecha de nacimiento.',
+           'dni.required' => 'Es necesario ingresar un DNI.',
+           'dni.ecuador' => 'El DNI que ha ingresado es incorrecto.',
+           // 'age.required' => 'Es necesario ingresar un año.',
            'etnia.required' => 'Es necesario ingresar una etnia.',
            'sex.required' => 'Es necesario ingresar un sexo.'
          ];
@@ -85,13 +91,17 @@ class PatientController extends Controller
 
     $user->rols()->attach(3);
 
+    $date_birth = Carbon::parse($request['date_birth'])->age; // Utilizo Carbon para calcular la edad a partir de la fecha de nacimiento
+
     $user->persons()->create([
       'name' => $request['name'],
       'lastname' => $request['lastname'],
       'phone' => $request['phone'],
       'address' => $request['address'],
       'city' => $request['city'],
-      'age' => $request['age'],
+      'date_birth' => $request['date_birth'],
+      'dni' => $request['dni'],
+      'age' => $date_birth,
       'etnia' => $request['etnia'],
       'sex' => $request['sex'],
     ]);

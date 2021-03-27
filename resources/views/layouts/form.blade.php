@@ -50,7 +50,7 @@
           <!-- Navbar items -->
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="{{route('login') }}">
+              <a class="nav-link nav-link-icon" href="{{ route('login') }}">
                 <i class="ni ni-key-25"></i>
                 <span class="nav-link-inner--text">Ingresar</span>
               </a>
