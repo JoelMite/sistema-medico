@@ -64,10 +64,14 @@ class LoginController extends Controller
       $validator = Validator::make($request->all(), $rules, $messages);
 
       if ($validator->fails()) { // Verificamos que si el validator falla returne con los errores del validator y los datos de los input se mantengan y se han enviados al helper old
-        return back()->withErrors($validator)->withInput();;
+        return back()->withErrors($validator)->withInput();
       }else{
         if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')], true)) { // El true me indica que va a tener la sesion guardada durante un año
-          return redirect('/');
+          if (Auth::user()->state == "403") {
+            return redirect('/logout');
+          }else{
+            return redirect('/');
+          }
         }else{
           $message = "El correo electrónico o la contraseña estan incorrectos.";
           return back()->with(compact('message'));
@@ -77,7 +81,12 @@ class LoginController extends Controller
     }
     public function getLogout()
     {
+      $state = Auth::user()->state;
       Auth::logout();
+      if ($state == "403") {
+        $message = "Su usuario ha sido suspendido. Contáctese con el administrador.";
+        return redirect('/login')->with(compact('message'));
+      }
       return redirect('/');
     }
 }

@@ -94,7 +94,7 @@
                     <a href="/medical_consultations" class="nav-link">Crear Consulta Médica</a>
                   </li>
                   <li class="nav-item">
-                    <a href="#" class="nav-link">Ver Consultas Médicas</a>
+                    <a href="/medical_consultations_show" class="nav-link">Ver Consultas Médicas</a>
                   </li>
                 </ul>
               </div>
@@ -144,16 +144,16 @@
             </li>
             @endif
             <li class="nav-item">
-              {{-- <a class="nav-link" href="{{ route('logout') }}" > --}}
-              <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
-              document.getElementById('formLogout').submit();">
+              <a class="nav-link" href="{{ route('logout') }}" >
+              {{-- <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+              document.getElementById('formLogout').submit();"> --}}
                 <i class="ni ni-key-25"></i>
                 <span class="nav-link-text">Cerrar sesión</span>
               </a>
-              <form action="{{ route('logout') }}" method="POST" style="display:none;" id="formLogout">
+              {{-- <form action="{{ route('logout') }}" method="POST" style="display:none;" id="formLogout">
                 @csrf
 
-              </form>
+              </form> --}}
             </li>
           </ul>
           <!-- Divider -->
@@ -389,12 +389,12 @@
             <li class="nav-item dropdown">
               <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
-                  <span class="avatar avatar-sm rounded-circle">
+                  {{-- <span class="avatar avatar-sm rounded-circle">
                     <img alt="Image placeholder" src="{{ asset('asset/img/theme/team-4.jpg') }}">
-                  </span>
-                  <div class="media-body ml-2 d-none d-lg-block">
+                  </span> --}}
+                  {{-- <div class="media-body ml-2 d-none d-lg-block"> --}}
                     <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->persons['name'] }}</span>
-                  </div>
+                  {{-- </div> --}}
                 </div>
               </a>
               <div class="dropdown-menu dropdown-menu-right">
@@ -418,16 +418,16 @@
                   <span>Soporte</span>
                 </a> --}}
                 <div class="dropdown-divider"></div>
-                {{-- <a class="dropdown-item" href="{{ route('logout') }}" > --}}
-                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                document.getElementById('formLogout').submit();">
+                <a class="dropdown-item" href="{{ route('logout') }}" >
+                {{-- <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                document.getElementById('formLogout').submit();"> --}}
                   <i class="ni ni-key-25"></i>
                   <span class="nav-link-text">Cerrar sesión</span>
                 </a>
-                <form action="{{ route('logout') }}" method="POST" style="display:none;" id="formLogout">
+                {{-- <form action="{{ route('logout') }}" method="POST" style="display:none;" id="formLogout">
                   @csrf
 
-                </form>
+                </form> --}}
                 {{-- <a href="#!" class="dropdown-item">
                   <i class="ni ni-user-run"></i>
                   <span>Cerrar sesión</span>
@@ -444,7 +444,7 @@
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
-            <div class="col-lg-6 col-7">
+            {{-- <div class="col-lg-6 col-7">
               <h6 class="h2 text-white d-inline-block mb-0">Default</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
@@ -453,11 +453,11 @@
                   <li class="breadcrumb-item active" aria-current="page">Default</li>
                 </ol>
               </nav>
-            </div>
-            <div class="col-lg-6 col-5 text-right">
+            </div> --}}
+            {{-- <div class="col-lg-6 col-5 text-right">
               <a href="#" class="btn btn-sm btn-neutral">New</a>
               <a href="#" class="btn btn-sm btn-neutral">Filters</a>
-            </div>
+            </div> --}}
           </div>
           <!-- Card stats -->
           {{-- <div class="row">

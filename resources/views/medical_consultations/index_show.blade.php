@@ -28,13 +28,12 @@
               <!-- <th scope="col">Nombre</th> -->
               <th scope="col">Nombres</th>
               <th scope="col">Apellidos</th>
-              <th scope="col">Teléfono</th>
-              <th scope="col">Dirección</th>
+              <th scope="col">Fecha</th>
               <th scope="col">Opciones</th>
             </tr>
           </thead>
           <tbody>
-            @foreach ($havePersonHistory as $person)
+            @foreach ($variable as $person)
                   <tr>
                     <td>
                       {{ $person->name }}
@@ -43,13 +42,11 @@
                       {{ $person->lastname }}
                     </td>
                     <td>
-                      {{ $person->phone }}
+                      {{ $person->created_at ?? "No hay datos"}}
                     </td>
                     <td>
-                      {{ $person->address }}
-                    </td>
-                    <td>
-                      <a href="{{ url('medical_consultations/'.$person->id.'/create') }}" class="btn btn-sm btn-success">Crear Consulta Médica</a>
+                      <a href="#" class="btn btn-sm btn-success">Ver Consulta Médica</a>
+                      <a href="#" class="btn btn-sm btn-warning">Exportar PDF</a>
                     </td>
                   </tr>
             @endforeach

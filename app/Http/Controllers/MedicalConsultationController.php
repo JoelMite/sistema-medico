@@ -7,6 +7,7 @@ use App\Models\MedicalConsultation;
 use App\Models\History;
 use App\Models\User;
 use App\Models\Person;
+//use DB;
 
 class MedicalConsultationController extends Controller
 {
@@ -22,12 +23,38 @@ class MedicalConsultationController extends Controller
       return view('medical_consultations.index', compact('havePersonHistory'));
     }
 
+    public function index_show()
+    {
+      $histories = History::all();
+      //$havePersonHistory = Person::whereHas('history')->with('medical_consultations')->get(); // Este metodo me retorna las personas que no tienen una historia clinica
+      // $variable = DB::table('persons')
+      // ->join('history_clinics', 'history_clinics.person_id', '=', 'persons.id')
+      // ->join('')
+      // $variable = Person::has('history', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
+      // $query->has('medical_consultations');
+      // })->get();
+      // $variable = Person
+      // ::join("history_clinics", "history_clinics.person_id", "=", "persons.id")
+      // ->join("medical_consultations", "medical_consultations.id", "=", "history_clinics.id")
+      // ->select("persons.id as id", "persons.name as name", "persons.lastname as lastname", "medical_consultations.created_at as created_at")
+      // ->get();
+      $variable = MedicalConsultation
+      ::join("history_clinics", "history_clinics.id", "=", "medical_consultations.history_id")
+      ->join("persons", "persons.id", "=", "history_clinics.person_id")
+      ->select("persons.id as id", "persons.name as name", "persons.lastname as lastname", "medical_consultations.created_at as created_at")
+      ->get();
+      return view('medical_consultations.index_show', compact('variable'));
+      //$medical_consultation = $havePersonHistory->medical_consultations->first();
+      // return dd($variable);
+    }
+
     public function create($id)
     {
       $persons = Person::findOrfail($id);
       $histories = $persons->history;
 
       return view('medical_consultations.create', compact('histories'));
+      // return dd($persons->history->medical_consultations);
     }
 
 //  Metodo Validacion
@@ -88,7 +115,7 @@ class MedicalConsultationController extends Controller
 
       ]);
 
-      $notification = "El usuario se ha registrado correctamente.";
+      $notification = "La consulta médica se ha registrado correctamente en la base de datos.";
       return redirect('/medical_consultations')->with(compact('notification'));
 
     }

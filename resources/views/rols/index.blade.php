@@ -89,11 +89,18 @@
         </div>
       </div>
 
-
           @if(session('notification'))
           <div class="card-body">
             <div class="alert alert-success" role="alert">
               {{ session('notification') }}
+            </div>
+          </div>
+          @endif
+
+          @if(session('warning'))
+          <div class="card-body">
+            <div class="alert alert-warning" role="alert">
+              {{ session('warning') }}
             </div>
           </div>
           @endif

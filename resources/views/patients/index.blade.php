@@ -89,7 +89,6 @@
         </div>
       </div>
 
-
       @if(session('notification'))
       <div class="card-body">
         <div class="alert alert-success" role="alert">
@@ -98,6 +97,13 @@
       </div>
       @endif
 
+      @if(session('warning'))
+      <div class="card-body">
+        <div class="alert alert-warning" role="alert">
+          {{ session('warning') }}
+        </div>
+      </div>
+      @endif
 
       <div class="table-responsive">
         <table class="table align-items-center table-flush">
@@ -113,7 +119,7 @@
           </thead>
           <tbody>
             @foreach ($patients as $patient)
-                @foreach ($patient->rols as $rol)
+                {{-- @foreach ($patient->rols as $rol) --}}
                   {{-- @if($rol->name == 'Paciente') --}}
                   <tr>
                     {{-- <td>
@@ -140,7 +146,7 @@
                     </td>
                   </tr>
                   {{-- @endif --}}
-                @endforeach
+                {{-- @endforeach --}}
             @endforeach
           </tbody>
         </table>

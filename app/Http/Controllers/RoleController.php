@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Role;
+use Carbon\Carbon;
 
 class RoleController extends Controller
 {
@@ -25,7 +26,15 @@ class RoleController extends Controller
 
 //  Metodo GET Abrir Editar Formulario de un Rol
     public function edit(Role $rol){
-      return view('rols.edit', compact('rol'));
+      $time_now = Carbon::now(); // Tiempo Actual
+      $time_update = Carbon::parse($rol->created_at)->floatDiffInDays($time_now->toDateTimeString());
+      if ($time_update <= 0.25) { // Tiempo para actualizar maximo 6 horas
+        return view('rols.edit', compact('rol'));
+      }else{
+        $warning = "El rol no se puede actualizar porque ha caducado el limite de tiempo.";
+        return redirect('/rols')->with(compact('warning'));
+        // return dd($rol);
+      }
     }
 
 //  Metodo Validacion

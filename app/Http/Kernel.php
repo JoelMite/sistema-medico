@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'doctor' => \App\Http\Middleware\DoctorMiddleware::class,    //  Proteger ruta Doctor
         'patient' => \App\Http\Middleware\PatientMiddleware::class,    //  Proteger ruta Paciente
         'pat_doc' => \App\Http\Middleware\PatientDoctorMiddleware::class,    //  Proteger ruta Paciente_Doctor
+        'state' => \App\Http\Middleware\UserStateMiddleware::class,    //  Protege las rutas en caso de que la sesion de un usuario baneado siga activa
     ];
 }

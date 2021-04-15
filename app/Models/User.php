@@ -56,7 +56,7 @@ class User extends Authenticatable
     }
 
     public function asPatientAppointments(){
-      return $this->hasMany(Appointment::class, 'patient_id'); // Esto practiamente no funcionaria porque es algo que he omitido
+      return $this->hasMany(Appointment::class, 'patient_id'); 
     }
 
     public function attendedAppointments(){

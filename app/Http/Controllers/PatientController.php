@@ -116,10 +116,11 @@ class PatientController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function show($id)
+  public function show(User $id)
   {
       $usuario = auth()->user()->rols()->first()->name;
       return redirect(dd($usuario));
+      //return dd($id);
   }
 
   /**
@@ -130,7 +131,17 @@ class PatientController extends Controller
    */
   public function edit($id)
   {
-      return view('patients.edit');
+      $patient = User::findOrfail($id);
+      $time_now = Carbon::now(); // Tiempo Actual
+      $time_update = Carbon::parse($patient->persons['created_at'])->floatDiffInDays($time_now->toDateTimeString());
+      $persons = $patient->persons;
+      if ($time_update <= 0.25) { // Tiempo para actualizar maximo 6 horas
+        // return view('patients.edit', compact('persons'));
+        return dd($persons);
+      }else{
+        $warning = "▪ Los datos del paciente no se pueden actualizar porque se ha caducado el limite de tiempo.";
+        return redirect('/patients')->with(compact('warning'));
+      }
   }
 
   /**

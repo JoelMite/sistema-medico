@@ -208,7 +208,7 @@
 
 <!-- A partir de aqui no me guarda con ese form el usuario dentro una sesion -->
 
-          <!-- <form role="form" method="POST" action="{{ route('register') }}">
+          {{-- <form role="form" method="POST" action="{{ route('register') }}">
             @csrf
 
             <div class="form-group">
@@ -250,7 +250,7 @@
             <div class="text-center">
               <button type="submit" class="btn btn-primary mt-4">Confirmar registro</button>
             </div>
-          </form> -->
+          </form>  --}}
       </div>
       </div>
 

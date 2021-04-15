@@ -11,7 +11,7 @@ class MedicalConsultation extends Model
   protected $fillable = [
     'reason', 'diagnosis', 'observations', 'blood_pressure', 'heart_rate',
     'breathing_frequency', 'weight', 'height', 'imc', 'abdominal_perimeter',
-    'capillary_glucose', 'temperature', 'history_id',
+    'capillary_glucose', 'temperature', 'history_id', 'created_at',
   ];
 
   public function medical_prescriptions(){

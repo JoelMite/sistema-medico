@@ -8,7 +8,7 @@
 @section('content')
 
 
-  <!-- Main content -->
+  {{-- <!-- Main content -->
   <div class="main-content">
 
     <!-- Top navbar -->
@@ -17,7 +17,7 @@
         <!-- Brand -->
         <!-- <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="../index.html">User profile</a> -->
       </div>
-    </nav>
+    </nav> --}}
     <!-- Page content -->
     <div class="container-fluid mt--7">
       <div class="row">
@@ -40,7 +40,7 @@
                       <div class="col-lg-12">
                         <div class="form-group">
                           <label class="form-control-label" for="input-first-name">Antecedentes Personales</label>
-                          <textarea class="form-control form-control-alternative" >{{ $history->personal_history ? $history->personal_history:'No hay datos' }}</textarea>
+                          <textarea class="form-control form-control-alternative" disabled>{{ $history->personal_history ? $history->personal_history:'No hay datos' }}</textarea>
                         </div>
                       </div>
                     @endif
@@ -51,7 +51,7 @@
                         <div class="col-lg-12">
                           <div class="form-group">
                             <label class="form-control-label" for="input-first-name">Antecedentes Familiares</label>
-                            <textarea class="form-control form-control-alternative" >{{ $history->family_background ? $history->family_background:'No hay datos' }}</textarea>
+                            <textarea class="form-control form-control-alternative" disabled>{{ $history->family_background ? $history->family_background:'No hay datos' }}</textarea>
                           </div>
                         </div>
                       @endif
@@ -62,7 +62,7 @@
                         <div class="col-lg-12">
                           <div class="form-group">
                             <label class="form-control-label" for="input-first-name">Enfermedad Actual</label>
-                            <textarea class="form-control form-control-alternative" >{{ $history->current_illness ? $history->current_illness:'No hay datos' }}</textarea>
+                            <textarea class="form-control form-control-alternative" disabled>{{ $history->current_illness ? $history->current_illness:'No hay datos' }}</textarea>
                           </div>
                         </div>
                       @endif
@@ -73,7 +73,7 @@
                       <div class="col-lg-12">
                         <div class="form-group">
                           <label class="form-control-label" for="input-first-name">Habitos</label>
-                          <textarea class="form-control form-control-alternative" >{{ $history->habits ? $history->habits:'No hay datos'  }}</textarea>
+                          <textarea class="form-control form-control-alternative" disabled>{{ $history->habits ? $history->habits:'No hay datos'  }}</textarea>
                         </div>
                       </div>
                     @endif
@@ -272,7 +272,6 @@
         </div>
       </div>
     </div>
-  </div>
 
 @endsection
 
