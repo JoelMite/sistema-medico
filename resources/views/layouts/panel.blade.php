@@ -106,7 +106,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/appointments">
+              <a class="nav-link" href="/appointmentmedicals">
                 <i class="ni ni-ruler-pencil text-purple"></i>
                 <span class="nav-link-text">Mis citas</span>
               </a>
@@ -131,13 +131,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/appointments/create">
+              <a class="nav-link" href="/appointmentmedicals/create">
                 <i class="ni ni-ruler-pencil text-purple"></i>
                 <span class="nav-link-text">Reservar Cita</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/appointments">
+              <a class="nav-link" href="/appointmentmedicals">
                 <i class="ni ni-satisfied text-yellow"></i>
                 <span class="nav-link-text">Mis Citas</span>
               </a>
@@ -393,7 +393,7 @@
                     <img alt="Image placeholder" src="{{ asset('asset/img/theme/team-4.jpg') }}">
                   </span> --}}
                   {{-- <div class="media-body ml-2 d-none d-lg-block"> --}}
-                    <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->persons['name'] }}</span>
+                    <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->person['name'] }}</span>
                   {{-- </div> --}}
                 </div>
               </a>

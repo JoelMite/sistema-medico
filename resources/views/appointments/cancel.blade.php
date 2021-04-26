@@ -19,17 +19,17 @@
 
         @if ($role == 'Paciente')
           <p>Estas a punto de cancelar tu cita reservada con el
-            medico {{ $appointment->doctor->persons->name }}
+            medico {{ $appointment->doctor->person->name }}
             (especialidad {{$appointment->specialty->name}})
             para el dia {{ $appointment->schedule_date }}:</p>
         @elseif ($role == 'Medico')
           <p>Estas a punto de cancelar tu cita con el
-            paciente {{ $appointment->patient->persons->name }}
+            paciente {{ $appointment->patient->person->name }}
             (especialidad {{$appointment->specialty->name}})
             para el dia {{ $appointment->schedule_date }}
             (hora {{ $appointment->schedule_time_12 }}):</p>
         @endif
-        <form action="{{ url('/appointments/'.$appointment->id.'/cancel') }}" method="POST">
+        <form action="{{ url('/appointmentmedicals/'.$appointment->id.'/cancel') }}" method="POST">
           @csrf
 
           <div class="form-group">
@@ -38,7 +38,7 @@
           </div>
 
           <button type="submit" class="btn btn-danger">Cancelar cita</button>
-          <a href="{{ url('/appointments') }}" class="btn btn-primary">
+          <a href="{{ url('/appointmentmedicals') }}" class="btn btn-primary">
           Volver al listado de citas sin cancelar</a>
         </form>
       </div>

@@ -12,15 +12,15 @@ class Person extends Model
       'name', 'lastname', 'dni', 'phone', 'address', 'city', 'date_birth', 'age', 'etnia', 'sex', 'user_id',
     ];
 
-    public function history(){
-      return $this->hasOne(History::class);
+    public function history_clinic(){
+      return $this->hasOne(HistoryClinic::class);
     }
 
     // public function medicalconsultation(){ // Esta de aqui ni sirve
     //   return $this->hasMany(MedicalConsultation::class);
     // }
 
-    public function users(){
+    public function user(){
       return $this->belongsTo(User::class);
     }
 }

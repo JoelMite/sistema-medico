@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
           'password' => bcrypt('12345678'),
           'remember_token' => Str::random(10),
         ]);
-        $user->persons()->save(
+        $user->person()->save(
           factory(Person::class)->make()
         );
       }

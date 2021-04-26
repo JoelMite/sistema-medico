@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Appointment;
+use App\Models\AppointmentMedical;
 use Auth;
 
 use App\Http\Requests\StoreAppointment;
@@ -36,7 +36,7 @@ class AppointmentController extends Controller
       //       "status"
       //   ]);
 
-        $appointments = $user->asPatientAppointments()->with(['specialty', 'doctor.persons'])->get();
+        $appointments = $user->asPatientAppointments()->with(['specialty', 'doctor.person'])->get();
 
         return $appointments;
     }
@@ -44,7 +44,7 @@ class AppointmentController extends Controller
     public function store(StoreAppointment $request){
       $patientId = Auth::guard('api')->id();
       // return compact('patientId');
-      $appointment = Appointment::createForPatient($request, $patientId);
+      $appointment = AppointmentMedical::createForPatient($request, $patientId);
 
         if ($appointment) {
           $success = true;

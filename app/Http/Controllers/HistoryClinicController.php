@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\History;
+use App\Models\HistoryClinic;
 use App\Models\Person;
 use App\Models\User;
 use App\Models\MedicalConsultation;
@@ -11,7 +11,7 @@ use App\Models\MedicalPrescription;
 use App\Models\LabTest;
 use DB;
 
-class HistoryController extends Controller
+class HistoryClinicController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,12 +26,16 @@ class HistoryController extends Controller
     {
       // $doctores = User::all();
       //$histories = History::all();
-      $nohavePersonHistory = Person::doesntHave('history')->get(); // Este metodo me retorna las personas que no tienen una historia clinica
-      $havePersonHistory = Person::has('history')->get();
+      $nohavePersonHistory = Person::doesntHave('history_clinic')->get(); // Este metodo me retorna las personas que no tienen una historia clinica
+      $havePersonHistory = Person::has('history_clinic')->get();
       return view('clinic_history.index', compact('havePersonHistory', 'nohavePersonHistory'));
 
-
-      //return(dd($histories));
+      // $variable = HistoryClinic::whereHas('person', function($query){
+      //   $query->where('person_id', '=', auth()->user()->person['id']);
+      // })->pluck('history_clinics.id');
+      //
+      //
+      // return  dd($variable);
     }
 
     /**
@@ -42,7 +46,7 @@ class HistoryController extends Controller
     public function create($id)
     {
       $doctor = User::findOrfail($id);
-      $persons = $doctor->persons;
+      $persons = $doctor->person;
       return view('clinic_history.create', compact('persons'));
       //return $id;
     }
@@ -85,7 +89,7 @@ class HistoryController extends Controller
       // $history->person_id = $request->input('id_person');
       // $history->save(); // Insertar
 
-      $history = History::create([
+      $history = HistoryClinic::create([
 
         'personal_history' => $request['personal_history'],
         'family_background' => $request['family_background'],
@@ -218,7 +222,7 @@ class HistoryController extends Controller
      */
     public function show($id)
     {
-      $history = History::findOrfail($id);  //Esto es un solo registro por lo tanto se lo puede imprimir sin ningun problema en la vista sin utilizar for each
+      $history = HistoryClinic::findOrfail($id);  //Esto es un solo registro por lo tanto se lo puede imprimir sin ningun problema en la vista sin utilizar for each
       //$medical_consultations = $history->medical_consultations; // ojo Esto es una coleccion por lo tanto se necesita de un for each en la vista
       //$data = DB::table('medical_consultations')->where('history_id',$id)->first()->id;     //Esta consulta es la famosa builder query (ojo)
       //$id_medical_prescriptions = $history->medical_consultations->first()->id; // ojo Me trae solo el id de la relacion de la historia clinica y la consulta medica

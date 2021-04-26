@@ -22,11 +22,11 @@ class MedicalConsultation extends Model
     return $this->hasMany(LabTest::class);
   }
 
-  public function history(){
-    return $this->belongsTo(History::class);
+  public function history_clinic(){
+    return $this->belongsTo(HistoryClinic::class, 'history_id');
   }
 
   public function person(){
-    return $this->belongsTo(Person::class);
+    return $this->belongsTo(Person::class); // Practicamente esto no funcionaria
   }
 }

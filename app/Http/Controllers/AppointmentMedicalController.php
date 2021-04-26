@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Specialty;
-use App\Models\Appointment;
-use App\Models\CancelledAppointment;
+use App\Models\AppointmentMedical;
+// use App\Models\CancelledAppointment;
 use Carbon\Carbon;
 use App\Interfaces\ScheduleServiceInterface;
 use App\Http\Requests\StoreAppointment;
 use Validator;
 
-class AppointmentController extends Controller
+class AppointmentMedicalController extends Controller
 {
 
   public function __construct(){
@@ -24,24 +24,24 @@ class AppointmentController extends Controller
     $role = auth()->user()->rols()->first()->name;
 
     if ($role == 'Medico') {
-      $pendingAppointments = Appointment::where('status', 'Reservada')
+      $pendingAppointments = AppointmentMedical::where('status', 'Reservada')
       ->where('doctor_id', auth()->id())
       ->paginate(10);
-      $confirmedAppointments = Appointment::where('status', 'Confirmada')
+      $confirmedAppointments = AppointmentMedical::where('status', 'Confirmada')
       ->where('doctor_id', auth()->id())
       ->paginate(10);
-      $oldAppointments = Appointment::whereIn('status', ['Atendida', 'Cancelada'])
+      $oldAppointments = AppointmentMedical::whereIn('status', ['Atendida', 'Cancelada'])
       ->where('doctor_id', auth()->id())
       ->paginate(10);
 
     }elseif($role == 'Paciente'){
-      $pendingAppointments = Appointment::where('status', 'Reservada')
+      $pendingAppointments = AppointmentMedical::where('status', 'Reservada')
       ->where('patient_id', auth()->id())
       ->paginate(10);
-      $confirmedAppointments = Appointment::where('status', 'Confirmada')
+      $confirmedAppointments = AppointmentMedical::where('status', 'Confirmada')
       ->where('patient_id', auth()->id())
       ->paginate(10);
-      $oldAppointments = Appointment::whereIn('status', ['Atendida', 'Cancelada'])
+      $oldAppointments = AppointmentMedical::whereIn('status', ['Atendida', 'Cancelada'])
       ->where('patient_id', auth()->id())
       ->paginate(10);
 
@@ -127,7 +127,7 @@ class AppointmentController extends Controller
     //
     // Appointment::create($data);
 
-    $created = Appointment::createForPatient($request, auth()->id());
+    $created = AppointmentMedical::createForPatient($request, auth()->user()->id);
 
     if ($created) {
       $notification = "La cita se ha registrado correctamente.";
@@ -138,30 +138,35 @@ class AppointmentController extends Controller
     // Notificacion de que se ha creado la cita correctamente
     // $notification = "La cita se ha registrado correctamente.";
 
-    return redirect('/appointments')->with(compact('notification'));
+    return redirect('/appointmentmedicals')->with(compact('notification'));
 
     // return back()->with(compact('notification'));
     // Return back es lo mismo que el redirect sino que aqui no especificamos la ruta, laravel ya hace eso por nosotros
     //Este es el que estaba antes return redirect('/appointments');
   }
 
-  public function showCancelForm(Appointment $appointment)
+  public function showCancelForm(AppointmentMedical $appointment)
   {
     if ($appointment->status == 'Confirmada'){
       $role = auth()->user()->rols()->first()->name;
       return view('appointments.cancel', compact('appointment', 'role'));
     }
-    return redirect('/appointments');
+    return redirect('/appointmentmedicals');
   }
 
-  public function postCancel(Appointment $appointment, Request $request)
+  public function postCancel(AppointmentMedical $appointment, Request $request)
   {
-    if ($request->has('justification')){
-      $cancellation = new CancelledAppointment();
-      $cancellation->justification = $request->input('justification');
-      $cancellation->cancelled_by_id = auth()->id();
+    // if ($request->has('justification')){
+    //   $cancellation = new CancelledAppointment();
+    //   $cancellation->justification = $request->input('justification');
+    //   $cancellation->cancelled_by_id = auth()->id();
+    //
+    //   $appointment->cancellation()->save($cancellation);
+    // }
 
-      $appointment->cancellation()->save($cancellation);
+    if ($request->has('justification')){
+      $appointment->cancellation_justification = $request->input('justification');
+      $appointment->cancelled_by_id = auth()->id();
     }
 
     $appointment->status = 'Cancelada';
@@ -171,17 +176,17 @@ class AppointmentController extends Controller
       $appointment->patient->sendFCM('Su cita ha sido cancelada.');
 
     $notification = "La cita se ha cancelado correctamente.";
-    return redirect('/appointments')->with(compact('notification'));
+    return redirect('/appointmentmedicals')->with(compact('notification'));
   }
 
-  public function show(Appointment $appointment)
+  public function show(AppointmentMedical $appointment)
   {
     $role = auth()->user()->rols()->first()->name;
     return view('appointments.show', compact('appointment', 'role'));
     //return dd($appointment);
   }
 
-  public function postConfirm(Appointment $appointment)
+  public function postConfirm(AppointmentMedical $appointment)
   {
     $appointment->status = 'Confirmada';
     $saved = $appointment->save(); // update
@@ -190,6 +195,6 @@ class AppointmentController extends Controller
       $appointment->patient->sendFCM('Su cita ha sido confirmada.');
 
     $notification = "La cita se ha confirmado correctamente.";
-    return redirect('/appointments')->with(compact('notification'));
+    return redirect('/appointmentmedicals')->with(compact('notification'));
   }
 }

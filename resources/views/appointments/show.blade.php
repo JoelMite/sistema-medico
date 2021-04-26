@@ -20,11 +20,11 @@
           </li>
           @if ($role == 'Paciente')
             <li>
-              <strong>Médico:</strong> {{ $appointment->doctor->persons->name }}
+              <strong>Médico:</strong> {{ $appointment->doctor->person->name }}
             </li>
           @elseif ($role == 'Medico')
             <li>
-              <strong>Paciente:</strong> {{ $appointment->patient->persons->name }}
+              <strong>Paciente:</strong> {{ $appointment->patient->person->name }}
             </li>
           @endif
           <li>
@@ -44,7 +44,7 @@
           </li>
         </ul>
 
-        @if ($appointment->status == 'Cancelada')
+        {{-- @if ($appointment->status == 'Cancelada')
           <div class="alert alert-warning">
             <p>Acerca de la cancelación</p>
               <ul>
@@ -56,7 +56,29 @@
                     <strong>Fecha de la cancelación:</strong> {{ $appointment->cancellation->created_at }}
                   </li>
                   <li>
-                    <strong>Quién canceló la cita?:</strong> {{ $appointment->cancellation->cancelled_by->persons->name }}
+                    <strong>Quién canceló la cita?:</strong> {{ $appointment->cancellation->cancelled_by->persons->name }} --}}
+                    {{-- No se que hice pero esta de revisar porque si funciona XD Y ESTA INTERESANTE ESTA RELACION PARA PODER EXTRAER DATOS ASI MISMO A FUTURO --}}
+                  {{-- </li>
+                @else
+                  <li>Esta cita fue cancelada antes de su confirmación.</li>
+                @endif
+              </ul>
+          </div>
+        @endif --}}
+
+        @if ($appointment->status == 'Cancelada')
+          <div class="alert alert-warning">
+            <p>Acerca de la cancelación</p>
+              <ul>
+                @if ($appointment)
+                  <li>
+                    <strong>Motivo de la cancelación:</strong> {{ $appointment->cancellation_justification }}
+                  </li>
+                  {{-- <li>
+                    <strong>Fecha de la cancelación:</strong> {{ $appointment->cancellation->created_at }}
+                  </li> --}}
+                  <li>
+                    <strong>Quién canceló la cita?:</strong> {{ $appointment->cancelletion_by->person->name }}
                     {{-- No se que hice pero esta de revisar porque si funciona XD Y ESTA INTERESANTE ESTA RELACION PARA PODER EXTRAER DATOS ASI MISMO A FUTURO --}}
                   </li>
                 @else
@@ -66,7 +88,7 @@
           </div>
         @endif
 
-        <a href="{{ url('/appointments') }}" class="btn btn-default">Volver</a>
+        <a href="{{ url('/appointmentmedicals') }}" class="btn btn-default">Volver</a>
 
       </div>
     </div>

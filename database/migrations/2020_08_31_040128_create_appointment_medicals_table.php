@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAppointmentsTable extends Migration
+class CreateAppointmentMedicalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,30 @@ class CreateAppointmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('appointments', function (Blueprint $table) {
+        Schema::create('appointment_medicals', function (Blueprint $table) {
           $table->id();
           $table->string('description');
 
           $table->unsignedBigInteger('specialty_id');
-          $table->foreign('specialty_id')->references('id')->on('specialties');
 
           $table->unsignedBigInteger('doctor_id');
-          $table->foreign('doctor_id')->references('id')->on('users');
 
           $table->unsignedBigInteger('patient_id');
-          $table->foreign('patient_id')->references('id')->on('users');
+
+          $table->unsignedBigInteger('history_clinic_id');
+          $table->foreign('history_clinic_id')->references('id')->on('history_clinics');
+
+          $table->string('cancellation_justification')->nullable();
+
+          $table->unsignedBigInteger('cancelled_by_id')->nullable(); // Columna Renombrada
 
           $table->date('schedule_date');
           $table->time('schedule_time');
 
           $table->string('type');
+
+          $table->string('status')->default('Reservada'); //Esta estaba como un añadido
+
           $table->timestamps();
         });
     }
@@ -41,6 +48,6 @@ class CreateAppointmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('appointments');
+        Schema::dropIfExists('appointment_medicals');
     }
 }

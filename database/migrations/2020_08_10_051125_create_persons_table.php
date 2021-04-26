@@ -17,9 +17,11 @@ class CreatePersonsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('lastname');
+            $table->integer('dni')->nullable(); // Esta estaba como un añadido
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
+            $table->date('date_birth')->nullable(); // Esta estaba como un añadido
             $table->string('age')->nullable();
             $table->string('etnia')->nullable();
             $table->string('sex')->nullable();

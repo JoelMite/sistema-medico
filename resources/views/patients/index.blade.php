@@ -126,19 +126,19 @@
                       {{ $patient->email }}
                     </td> --}}
                     <td>
-                      {{ $patient->persons['name'] }}
+                      {{ $patient->person['name'] }}
                     </td>
                     <td>
-                      {{ $patient->persons['lastname'] }}
+                      {{ $patient->person['lastname'] }}
                     </td>
                     <td>
-                      {{ $patient->persons['phone'] }}
+                      {{ $patient->person['phone'] }}
                     </td>
                     <td>
-                      {{ $patient->persons['address'] }}
+                      {{ $patient->person['address'] }}
                     </td>
                     <td>
-                      {{ $patient->persons['city'] }}
+                      {{ $patient->person['city'] }}
                     </td>
                     <td>
                       <a href="{{ url('/patients/'.$patient->id.'/edit') }}" class="btn btn-sm btn-primary">Editar</a>

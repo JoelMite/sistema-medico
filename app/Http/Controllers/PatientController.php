@@ -93,7 +93,7 @@ class PatientController extends Controller
 
     $date_birth = Carbon::parse($request['date_birth'])->age; // Utilizo Carbon para calcular la edad a partir de la fecha de nacimiento
 
-    $user->persons()->create([
+    $user->person()->create([
       'name' => $request['name'],
       'lastname' => $request['lastname'],
       'phone' => $request['phone'],
@@ -133,11 +133,11 @@ class PatientController extends Controller
   {
       $patient = User::findOrfail($id);
       $time_now = Carbon::now(); // Tiempo Actual
-      $time_update = Carbon::parse($patient->persons['created_at'])->floatDiffInDays($time_now->toDateTimeString());
-      $persons = $patient->persons;
+      $time_update = Carbon::parse($patient->person['created_at'])->floatDiffInDays($time_now->toDateTimeString());
+      $persons = $patient->person;
       if ($time_update <= 0.25) { // Tiempo para actualizar maximo 6 horas
         // return view('patients.edit', compact('persons'));
-        return dd($persons);
+        return dd($person);
       }else{
         $warning = "▪ Los datos del paciente no se pueden actualizar porque se ha caducado el limite de tiempo.";
         return redirect('/patients')->with(compact('warning'));

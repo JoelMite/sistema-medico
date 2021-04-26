@@ -26,11 +26,11 @@
               </td>
                 @if ($role == 'Paciente')
                   <td>
-                    {{ $appointment->doctor->persons->name }}
+                    {{ $appointment->doctor->person->name }}
                   </td>
                 @elseif ($role == 'Medico')
                   <td>
-                    {{ $appointment->patient->persons->name }}
+                    {{ $appointment->patient->person->name }}
                   </td>
                 @endif
               <td>
@@ -44,7 +44,7 @@
               </td>
               <td>
                   <a class="btn btn-sm btn-danger" title="Cancelar cita"
-                  href="{{ url('/appointments/'.$appointment->id.'/cancel') }}">Cancelar</a>
+                  href="{{ url('/appointmentmedicals/'.$appointment->id.'/cancel') }}">Cancelar</a>
               </td>
             </tr>
       @endforeach

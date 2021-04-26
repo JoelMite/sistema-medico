@@ -3,14 +3,14 @@
 use App\Interfaces\ScheduleServiceInterface;
 use App\Models\WorkDay;
 use Carbon\Carbon;
-use App\Models\Appointment;
+use App\Models\AppointmentMedical;
 
 class ScheduleService implements ScheduleServiceInterface
 {
 
   public function isAvailableInterval($date, $doctorId, Carbon $start)
   {
-    $exists = Appointment::where('doctor_id', $doctorId)
+    $exists = AppointmentMedical::where('doctor_id', $doctorId)
       ->where('schedule_date', $date)
       ->where('schedule_time', $start->format('H:i:s'))
       ->exists();
@@ -39,7 +39,7 @@ class ScheduleService implements ScheduleServiceInterface
               $morningStart, $morningEnd,
               $date, $doctorId
             );
-  
+
             $afternoonIntervals = $this->getIntervals(
               $afternoonStart, $afternoonEnd,
               $date, $doctorId

@@ -26,11 +26,11 @@
               </td>
               @if ($role == 'Paciente')
                 <td>
-                  {{ $appointment->doctor->persons->name }}
+                  {{ $appointment->doctor->person->name }}
                 </td>
               @elseif ($role == 'Medico')
                 <td>
-                  {{ $appointment->patient->persons->name }}
+                  {{ $appointment->patient->person->name }}
                 </td>
               @endif
               <td>
@@ -44,12 +44,12 @@
               </td>
               <td>
                 <a class="btn btn-sm btn-primary" title="Ver cita"
-                  href="{{ url('/appointments/'.$appointment->id) }}">
+                  href="{{ url('/appointmentmedicals/'.$appointment->id) }}">
                     Ver
                 </a>
 
                 @if ($role == 'Medico')
-                  <form action="{{ url('/appointments/'.$appointment->id.'/confirm') }}" method="POST" class="d-inline-block">
+                  <form action="{{ url('/appointmentmedicals/'.$appointment->id.'/confirm') }}" method="POST" class="d-inline-block">
                     @csrf
                     <button class="btn btn-sm btn-success" type="submit" data-toggle="tooltip" title="Confirmar cita">
                       <i class="ni ni-check-bold"></i>
@@ -57,7 +57,7 @@
                   </form>
                 @endif
 
-                <form action="{{ url('/appointments/'.$appointment->id.'/cancel') }}" method="POST" class="d-inline-block">
+                <form action="{{ url('/appointmentmedicals/'.$appointment->id.'/cancel') }}" method="POST" class="d-inline-block">
                   @csrf
                   <button class="btn btn-sm btn-danger" type="submit" data-toggle="tooltip" title="Cancelar cita">
                     <i class="ni ni-fat-delete"></i>

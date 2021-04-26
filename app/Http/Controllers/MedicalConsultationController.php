@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\MedicalConsultation;
-use App\Models\History;
+use App\Models\HistoryClinic;
 use App\Models\User;
 use App\Models\Person;
 //use DB;
@@ -18,14 +18,14 @@ class MedicalConsultationController extends Controller
 
     public function index()
     {
-      $histories = History::all();
-      $havePersonHistory = Person::has('history')->get(); // Este metodo me retorna las personas que no tienen una historia clinica
+      $histories = HistoryClinic::all();
+      $havePersonHistory = Person::has('history_clinic')->get(); // Este metodo me retorna las personas que no tienen una historia clinica
       return view('medical_consultations.index', compact('havePersonHistory'));
     }
 
     public function index_show()
     {
-      $histories = History::all();
+      $histories = HistoryClinic::all();
       //$havePersonHistory = Person::whereHas('history')->with('medical_consultations')->get(); // Este metodo me retorna las personas que no tienen una historia clinica
       // $variable = DB::table('persons')
       // ->join('history_clinics', 'history_clinics.person_id', '=', 'persons.id')
@@ -41,7 +41,7 @@ class MedicalConsultationController extends Controller
       $variable = MedicalConsultation
       ::join("history_clinics", "history_clinics.id", "=", "medical_consultations.history_id")
       ->join("persons", "persons.id", "=", "history_clinics.person_id")
-      ->select("persons.id as id", "persons.name as name", "persons.lastname as lastname", "medical_consultations.created_at as created_at")
+      ->select("persons.id as id", "persons.name as name", "persons.lastname as lastname", "medical_consultations.created_at as created_at", "medical_consultations.id as medical_consultations_id")
       ->get();
       return view('medical_consultations.index_show', compact('variable'));
       //$medical_consultation = $havePersonHistory->medical_consultations->first();
@@ -51,7 +51,7 @@ class MedicalConsultationController extends Controller
     public function create($id)
     {
       $persons = Person::findOrfail($id);
-      $histories = $persons->history;
+      $histories = $persons->history_clinic;
 
       return view('medical_consultations.create', compact('histories'));
       // return dd($persons->history->medical_consultations);

@@ -45,8 +45,7 @@
                       {{ $person->created_at ?? "No hay datos"}}
                     </td>
                     <td>
-                      <a href="#" class="btn btn-sm btn-success">Ver Consulta Médica</a>
-                      <a href="#" class="btn btn-sm btn-warning">Exportar PDF</a>
+                      <a href="{{ url('medical_consultations_pdf/'.$person->medical_consultations_id) }}" class="btn btn-sm btn-warning">Ver Consulta Médica PDF</a>
                     </td>
                   </tr>
             @endforeach

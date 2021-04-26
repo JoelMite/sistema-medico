@@ -59,13 +59,13 @@ Route::middleware(['auth', 'administrator', 'state'])->group(function () {
 // Middleware para solo Doctores
 Route::middleware(['auth', 'doctor', 'state'])->group(function () {
   // Historia Clinica
-  Route::get('/histories', 'HistoryController@index');
-  Route::get('/histories/{history}/create', 'HistoryController@create');   // Formulario de Registro de HC
-  Route::get('/histories/{history}/edit', 'HistoryController@edit');   // Formulario de Edicion de HC
-  Route::post('/histories', 'HistoryController@store');    // Envio del Formulario de HC
-  Route::put('/histories/{history}', 'HistoryController@update');   // Editar un HC
-  Route::get('/histories/{history}', 'HistoryController@show');   // Mostrar un HC
-  Route::delete('/histories/{history}', 'HistoryController@destroy');   // Eliminar un Rol
+  Route::get('/histories', 'HistoryClinicController@index');
+  Route::get('/histories/{history}/create', 'HistoryClinicController@create');   // Formulario de Registro de HC
+  Route::get('/histories/{history}/edit', 'HistoryClinicController@edit');   // Formulario de Edicion de HC
+  Route::post('/histories', 'HistoryClinicController@store');    // Envio del Formulario de HC
+  Route::put('/histories/{history}', 'HistoryClinicController@update');   // Editar un HC
+  Route::get('/histories/{history}', 'HistoryClinicController@show');   // Mostrar un HC
+  Route::delete('/histories/{history}', 'HistoryClinicController@destroy');   // Eliminar un Rol
   // Route::resource('clinic_history', 'HistoryController');
 
   // Consulta Medica
@@ -77,6 +77,9 @@ Route::middleware(['auth', 'doctor', 'state'])->group(function () {
   Route::put('/medical_consultations/{history}', 'MedicalConsultationController@update');   // Editar un HC
   Route::get('/medical_consultations/{history}', 'MedicalConsultationController@show');   // Mostrar un HC
   Route::delete('/medical_consultations/{history}', 'MedicalConsultationController@destroy');   // Eliminar un Rol
+
+  // PDF Consultas Medicas
+  Route::get('/medical_consultations_pdf/{medical_consultations}', 'PdfController@show');
 
   // Pacientes
   // Route::resource('patients', 'PatientController');
@@ -101,13 +104,13 @@ Route::middleware(['auth', 'doctor', 'state'])->group(function () {
 Route::middleware(['auth', 'pat_doc', 'state'])->group(function () {
 
   // Citas Medicas
-  Route::get('/appointments/create', 'AppointmentController@create');
-  Route::post('/appointments', 'AppointmentController@store');
-  Route::get('/appointments', 'AppointmentController@index');
-  Route::get('/appointments/{appointment}', 'AppointmentController@show');
-  Route::get('/appointments/{appointment}/cancel', 'AppointmentController@showCancelForm'); // Al  ser este una actualizacion (update) podemos utilizar put p patch
-  Route::post('/appointments/{appointment}/cancel', 'AppointmentController@postCancel');
-  Route::post('/appointments/{appointment}/confirm', 'AppointmentController@postConfirm');
+  Route::get('/appointmentmedicals/create', 'AppointmentMedicalController@create');
+  Route::post('/appointmentmedicals', 'AppointmentMedicalController@store');
+  Route::get('/appointmentmedicals', 'AppointmentMedicalController@index');
+  Route::get('/appointmentmedicals/{appointment}', 'AppointmentMedicalController@show');
+  Route::get('/appointmentmedicals/{appointment}/cancel', 'AppointmentMedicalController@showCancelForm'); // Al  ser este una actualizacion (update) podemos utilizar put p patch
+  Route::post('/appointmentmedicals/{appointment}/cancel', 'AppointmentMedicalController@postCancel');
+  Route::post('/appointmentmedicals/{appointment}/confirm', 'AppointmentMedicalController@postConfirm');
 
 });
 

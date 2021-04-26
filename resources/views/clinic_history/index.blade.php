@@ -137,7 +137,7 @@
                   </td>
                   <td>
                     <!-- <a href="#" class="btn btn-sm btn-primary">Editar HC</a> -->
-                    <a href="{{ url('/histories/'.$person->history['id']) }}" class="btn btn-sm btn-warning">Ver HC</a>
+                    <a href="{{ url('/histories/'.$person->history_clinic['id']) }}" class="btn btn-sm btn-warning">Ver HC</a>
                   </td>
                 </tr>
               @endif

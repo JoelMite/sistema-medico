@@ -24,9 +24,9 @@ class SpecialtyController extends Controller
         foreach ($specialty->users as $user) {
           $en = [];
            $en ['id']= $user['id'] ?? 'Desconocido';
-           $en ['name']= $user->persons['name'] ?? 'Desconocido';
-           $en ['lastname']= $user->persons['lastname'] ?? 'Desconocido';
-           $en ['user_id']= $user->persons['user_id'];
+           $en ['name']= $user->person['name'] ?? 'Desconocido';
+           $en ['lastname']= $user->person['lastname'] ?? 'Desconocido';
+           $en ['user_id']= $user->person['user_id'];
 
           $ens []= $en;
         }
@@ -36,7 +36,7 @@ class SpecialtyController extends Controller
 
         //$especialidad = $specialty->users()->get();
         $doctor = User::findOrfail($user_id_pluck);
-        $persons = $doctor->persons()->get(['name', 'lastname', 'user_id']);
+        $persons = $doctor->person()->get(['name', 'lastname', 'user_id']);
 
         //return dd(($a));
         //return $persons ;

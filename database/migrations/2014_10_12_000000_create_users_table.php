@@ -21,6 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->unsignedBigInteger('creator_id')->nullable();
 
+            $table->integer('state')->nullable(); // Esta estaba como un añadido
+            $table->string('device_token')->nullable(); // Esta estaba como añadido
+
             //$table->string('dni')->nullable();
 
             //$table->string('address')->nullable();

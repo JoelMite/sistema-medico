@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class History extends Model
+class HistoryClinic extends Model
 {
   public $table = "history_clinics";
   //
@@ -20,5 +20,9 @@ class History extends Model
 
   public function medical_consultations(){
     return $this->hasMany(MedicalConsultation::class);
+  }
+
+  public function appointment_medicals(){
+    return $this->hasMany(AppointmentMedical::class);
   }
 }

@@ -39,7 +39,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function persons(){
+    public function person(){
       return $this->hasOne(Person::class);
     }
 
@@ -52,11 +52,11 @@ class User extends Authenticatable
     }
 
     public function asDoctorAppointments(){
-      return $this->hasMany(Appointment::class, 'doctor_id'); // Esto practiamente no funcionaria porque es algo que he omitido
+      return $this->hasMany(AppointmentMedical::class, 'doctor_id'); // Esto practiamente no funcionaria porque es algo que he omitido
     }
 
     public function asPatientAppointments(){
-      return $this->hasMany(Appointment::class, 'patient_id'); 
+      return $this->hasMany(AppointmentMedical::class, 'patient_id');
     }
 
     public function attendedAppointments(){
