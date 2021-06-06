@@ -15,24 +15,24 @@
   <link href="{{ asset('vendor/nucleo/css/nucleo.css') }}" rel="stylesheet">
   <link href="{{ asset('vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
   <!-- Argon CSS -->
-  <link href="{{ asset('css/argon.css?v=1.1.0') }}" rel="stylesheet">
+  <link href="{{ asset('css/argon.css') }}" rel="stylesheet">
+  {{-- <link href=" {{ asset('css/plantilla.css') }} " rel="stylesheet"> --}}
 </head>
 
 <body class="bg-default">
-  <div class="main-content">
     <!-- Navbar -->
-    <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
-      <div class="container px-4">
+    <nav id="navbar-main" class="navbar navbar-horizontal navbar-transparent navbar-main navbar-expand-lg navbar-light">
+      <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-          <!-- <img src="{{ asset('img/brand/white.png') }}" /> -->
+           {{-- <img src="{{ asset('img/brand/white.png') }}" /> --}}
           {{ config('app.name') }}
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbar-collapse-main">
+        <div class="navbar-collapse navbar-custom-collapse collapse" id="navbar-collapse">
           <!-- Collapse header -->
-          <div class="navbar-collapse-header d-md-none">
+          <div class="navbar-collapse-header">
             <div class="row">
               <div class="col-6 collapse-brand">
                 <a href="../index.html">
@@ -40,7 +40,7 @@
                 </a>
               </div>
               <div class="col-6 collapse-close">
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                   <span></span>
                   <span></span>
                 </button>
@@ -50,7 +50,7 @@
           <!-- Navbar items -->
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="{{ route('login') }}">
+              <a class="nav-link nav-link-icon" href="{{ route('loginUser') }}">
                 <i class="ni ni-key-25"></i>
                 <span class="nav-link-inner--text">Ingresar</span>
               </a>
@@ -60,11 +60,12 @@
       </div>
     </nav>
     <!-- Header -->
-    <div class="header bg-gradient-primary py-6 py-lg-7">
+    <div class="main-content">
+    <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
       <div class="container">
         <div class="header-body text-center mb-7">
           <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-6">
+            <div class="col-xl-5 col-lg-6 col-md-8 px-5">
               <h1 class="text-white">
                 @yield('title')
               </h1>
@@ -82,15 +83,16 @@
       </div>
     </div>
     <!-- Page content -->
+
     @yield('content')
   </div>
   <!-- Footer -->
-  <footer class="py-5">
+  <footer class="py-5" id="footer-main">
     <div class="container">
       <div class="row align-items-center justify-content-xl-between">
         <div class="col-xl-6">
           <div class="copyright text-center text-xl-left text-muted">
-            &copy; 2020 <a href="/" class="font-weight-bold ml-1" target="_blank">{{ config('app.name') }}</a>
+            &copy; 2019 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
           </div>
         </div>
         <div class="col-xl-6">
@@ -99,7 +101,13 @@
               <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
             </li>
             <li class="nav-item">
-              <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">Acerca de</a>
+              <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com/license" class="nav-link" target="_blank">License</a>
             </li>
           </ul>
         </div>
@@ -109,8 +117,14 @@
   <!-- Argon Scripts -->
   <!-- Core -->
   <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+  <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('vendor/js-cookie/js.cookie.js') }}"></script>
+  <script src="{{ asset('vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
+  <script src="{{ asset('vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"></script>
   <!-- Argon JS -->
-  <script src="{{ asset('js/argon.js?v=1.1.0') }}"></script>
+  <script src="{{ asset('js/argon.js') }}" ></script>
+  {{-- <script src=" {{ asset('js/app.js') }} "></script> --}}
+  {{-- <script src=" {{ asset('js/plantilla.js') }} "></script> --}}
 </body>
 
 </html>

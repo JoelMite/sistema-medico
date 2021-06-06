@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Person;
 use App\Models\Specialty;
 use Carbon\Carbon;
+
 
 class DoctorController extends Controller
 {
@@ -19,13 +21,15 @@ class DoctorController extends Controller
 
 //  Metodo GET Mostrar todos los Usuarios
     public function index(){
+
+        Gate::authorize('haveaccess','doctor.index');
         //$doctores = User::with('rols')->paginate(5);
 
         //$doctores = User::has('rols')->get();  //  Practicamente me devuelve todos los usuarios asociados a un rol
-        $doctores = User::whereHas('rols', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
-        $query->whereIn('name', ['Medico','Administrador'])->where('creator_id','=',auth()->id());
+        $doctores = User::whereHas('roles', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
+        $query->where('creator_id','=',auth()->id());
         })->get();
-        return view('doctores.index', compact('doctores'));
+        return view('doctors.index', compact('doctores'));
         //return dd($doc);
     }
 
@@ -37,9 +41,12 @@ class DoctorController extends Controller
 
 //  Metodo GET Abrir Formulario para Crear Nuevos Usuarios (Esencialmente Medicos y Administradores)
      public function create(){
-       $rols = Role::all();
+
+       Gate::authorize('haveaccess','doctor.create');
+
+       $roles = Role::all();
        $specialties = Specialty::all();
-       return view('doctores.create', compact('rols', 'specialties'));
+       return view('doctors.create', compact('roles', 'specialties'));
      }
 
     /**
@@ -55,32 +62,43 @@ class DoctorController extends Controller
        $rules = [
          'name' => 'required',
          'lastname' => 'required',
+         // 'dni' => 'bail|required|unique:persons,dni|ecuador:ci|digits:10',
+         'dni' => 'bail|required|ecuador:ci|digits:10',
+         // 'email' => 'required|unique:users,email|email',
          'email' => 'required|email',
-         'password' => 'required',
-         'phone' => 'required',
+         'password' => 'required|min:6',
+         'specialties' => 'required|array',
+         'phone' => 'required|max:15',
          'address' => 'required',
          'city' => 'required',
-         'date_birth' => 'required',
-         'dni' => 'ecuador:ci|required',
-         // 'age' => 'required',
          'etnia' => 'required',
-         'sex' => 'required'
+         'date_birth' => 'required|date',
+         'sex' => 'required',
+         'roles' => 'required|array'
 
        ];
        $messages = [
          'name.required' => 'Es necesario ingresar los nombres.',
          'lastname.required' => 'Es necesario ingresar los apellidos.',
+         'dni.required' => 'Es necesario ingresar un DNI.',
+         // 'dni.unique' => 'Este DNI ya se encuentra registrado.',
+         'dni.ecuador' => 'El DNI que ha ingresado es invalido.',
+         'dni.digits' => 'El DNI que tiene que tener exactamente 10 dígitos.',
          'email.required' => 'Es necesario ingresar un correo.',
+         // 'email.unique' => 'Este email ya se encuentra registrado.',
+         'email.email' => 'Es necesario ingresar un correo válido.',
          'password.required' => 'Es necesario ingresar una contraseña.',
+         'password.min' => 'La contraseña debe tener al menos 6 caracteres.',
+         'specialties.required' => 'Es necesario ingresar por lo menos una especialidad.',
          'phone.required' => 'Es necesario ingresar un telefono.',
+         'phone.max' => 'El número telefónico no puede exceder los 15 dígitos.',
          'address.required' => 'Es necesario ingresar una direccion.',
          'city.required' => 'Es necesario ingresar una ciudad.',
-         'date_birth' => 'Es necesario ingresar una fecha de nacimiento.',
-         'dni.required' => 'Es necesario ingresar un DNI.',
-         'dni.ecuador' => 'El DNI que ha ingresado es incorrecto.',
-         // 'age.required' => 'Es necesario ingresar un año.',
          'etnia.required' => 'Es necesario ingresar una etnia.',
-         'sex.required' => 'Es necesario ingresar un sexo.'
+         'date_birth.required' => 'Es necesario ingresar una fecha de nacimiento.',
+         'date_birth.date' => 'Es necesario ingresar una fecha de nacimiento válida.',
+         'sex.required' => 'Es necesario ingresar un sexo.',
+         'roles.required' => 'Es necesario ingresar por lo menos un rol.'
        ];
        $this->validate($request, $rules, $messages);
      }
@@ -94,25 +112,26 @@ class DoctorController extends Controller
         $request->only('email')
         + [
             'password'=>bcrypt($request->input('password')),
-            'creator_id'=>auth()->id()
+            'creator_id'=>auth()->id(),
+            'state'=>'200'
         ]
       );
 
-      $user->rols()->attach($request->input('rols'));
       $user->specialties()->attach($request->input('specialties'));
+      $user->roles()->attach($request->input('roles'));
 
       $date_birth = Carbon::parse($request['date_birth'])->age; // Utilizo Carbon para calcular la edad a partir de la fecha de nacimiento
 
-      $user->persons()->create([
+      $user->person()->create([
         'name' => $request['name'],
         'lastname' => $request['lastname'],
+        'dni' => $request['dni'],
         'phone' => $request['phone'],
         'address' => $request['address'],
         'city' => $request['city'],
-        'date_birth' => $request['date_birth'],
-        'dni' => $request['dni'],
-        'age' => $date_birth,
         'etnia' => $request['etnia'],
+        'date_birth' => $request['date_birth'],
+        'age' => $date_birth,
         'sex' => $request['sex'],
       ]);
 
@@ -145,7 +164,7 @@ class DoctorController extends Controller
       // $user->save(); // Insertar
 
       $notification = "El usuario se ha registrado correctamente.";
-      return redirect('/doctores')->with(compact('notification'));
+      return redirect('/doctors')->with(compact('notification'));
     }
 
     /**
@@ -156,10 +175,13 @@ class DoctorController extends Controller
      */
     public function show($id)
     {
+
+        Gate::authorize('haveaccess','doctor.show');
+
         $doctor = User::findOrfail($id);
-        $rols = $doctor->rols;                //  Me devuelve el rol que cumple cada usuario(medico o administrador)
-        $persons = $doctor->persons;
-        return view('doctores.show', compact('doctor', 'rols', 'persons'));
+        $roles = $doctor->roles;                //  Me devuelve el rol que cumple cada usuario(medico o administrador)
+        $persons = $doctor->person;
+        return view('doctors.show', compact('doctor', 'roles', 'persons'));
         //return(dd($persons));
     }
 
@@ -171,14 +193,20 @@ class DoctorController extends Controller
      */
     public function edit($id)
     {
+
+        Gate::authorize('haveaccess','doctor.edit');
+
         $doctor = User::findOrfail($id);
         $specialties = Specialty::all();
 
         $specialty_ids = $doctor->specialties()->pluck('specialties.id');   // Me devuelve un array de solo los ids de las especialidades que tienen relacion con usuarios
+        $role_ids = $doctor->roles()->pluck('roles.id');
 
-        $rols = Role::all();
-        $persons = $doctor->persons;
-        return view('doctores.edit', compact('doctor', 'specialties', 'rols', 'persons', 'specialty_ids'));
+        // return $role_ids;
+
+        $roles = Role::all();
+        $persons = $doctor->person;
+        return view('doctors.edit', compact('doctor', 'specialties', 'roles', 'persons', 'specialty_ids', 'role_ids'));
         //return(dd($persons));
     }
 
@@ -189,9 +217,33 @@ class DoctorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Doctor $doctor)
+    public function update(Request $request, User $doctor)
     {
+      $this->validation($request);
 
+      $date_birth = Carbon::parse($request['date_birth'])->age;
+
+      $doctor->email = $request->input('email');
+      $doctor->password = $request->input('password');
+      $doctor->save(); // Editar
+
+      $person = $doctor->person;
+
+      $person->name = $request->name;
+      $person->lastname = $request->lastname;
+      $person->dni = $request->dni;
+      $person->phone = $request->phone;
+      $person->address = $request->address;
+      $person->city = $request->city;
+      $person->etnia = $request->etnia;
+      $person->date_birth = $request->date_birth;
+      $person->age = $date_birth;
+      $person->sex = $request->sex;
+
+      $person->save();
+
+      $notification = "El rol se ha actualizado correctamente.";
+      return redirect('/doctors')->with(compact('notification'));
     }
 
     /**
@@ -207,6 +259,9 @@ class DoctorController extends Controller
 
     public function state($id)
     {
+
+      Gate::authorize('haveaccess','user.state');
+
       //dd($request->all());
       $doctor = User::findOrfail($id);
       if($doctor->state == "403"){
@@ -218,8 +273,35 @@ class DoctorController extends Controller
         $notification = "El usuario a sido baneado";
       }
         if ($doctor->save()){ // Editar
-        return redirect('/doctores')->with(compact('notification'));
+        return redirect('/doctors')->with(compact('notification'));
         // return dd($notification);
       }
+    }
+
+    public function count_users(){
+
+      $user = User::whereHas('roles', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
+      $query->where('name', 'Medico')->where('creator_id','=',auth()->id());
+      })->count();
+      return response()->json($user);
+
+    }
+
+    public function activeUsers(){
+
+      $user = User::whereHas('roles', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
+      $query->where('name', 'Medico')->where('creator_id','=',auth()->id())->where('state', '200');
+      })->count();
+      return response()->json($user);
+
+    }
+
+    public function bannedUsers(){
+
+      $user = User::whereHas('roles', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
+      $query->where('name', 'Medico')->where('creator_id','=',auth()->id())->where('state', '403');
+      })->count();
+      return response()->json($user);
+
     }
 }

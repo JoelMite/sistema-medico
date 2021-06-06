@@ -13,6 +13,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+      // Users
       $users = ['joelmite19@gmail.com', 'juangarcia19@gmail.com', 'manolopalacios19@gmail.com'];
       foreach ($users as $user_email) {
         $user = User::create([
@@ -21,10 +22,25 @@ class UserSeeder extends Seeder
           'password' => bcrypt('12345678'),
           'remember_token' => Str::random(10),
         ]);
+
+        // Users - Persons
         $user->person()->save(
           factory(Person::class)->make()
         );
+
+        // Users - Roles
+        $user->roles()->sync([$user->id]);
+        if ($user->id == 1) {
+          $user->roles()->attach([2]);
+        }
+
+        // Users - Specialties
+        if ($user->id != 3) {
+          $user->specialties()->sync([1]);
+        }
+
       }
+
       // User::create([
       //   //'name' => 'Joel',
       //   'email' => 'joelmite19@gmail.com',

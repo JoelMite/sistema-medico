@@ -25,12 +25,20 @@ class RoleSeeder extends Seeder
         //   ]);
         // }
 
-        $rols = ['Administrador', 'Medico', 'Paciente'];
-        foreach ($rols as $rol_name) {
-          $rol = Role::create([
+        $roles = ['Administrador', 'Medico', 'Paciente'];
+        foreach ($roles as $rol_name) {
+          $role = Role::create([
             'name' => $rol_name,
             'description' => Str::random(20),
           ]);
+
+        if ($role->id == 1) {
+          $role->permissions()->sync([16,17,18,19,24,25,26,27,28,29,30,31,32,33,34,36]);
+        }elseif ($role->id == 2) {
+          $role->permissions()->sync([1,2,3,4,5,6,7,8,9,10,11,13,14,15,20,21,22,23,24,37]);
+        }else {
+          $role->permissions()->sync([12,13,14,24,35]);
+        }
 
         // Rol::create([
         //   'name' => 'Administrador',
@@ -47,9 +55,9 @@ class RoleSeeder extends Seeder
         //   'description' => 'Se encargara de gestionar sus citas medicas',
         // ]);
 
-        $rol->users()->save(
-          factory(User::class)->make()
-        );
+        // $rol->users()->save(
+        //   factory(User::class)->make()
+        // );
       }
     }
 }

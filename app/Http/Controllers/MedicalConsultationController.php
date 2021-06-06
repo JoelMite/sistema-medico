@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use App\Models\MedicalConsultation;
 use App\Models\HistoryClinic;
@@ -18,6 +19,9 @@ class MedicalConsultationController extends Controller
 
     public function index()
     {
+
+      Gate::authorize('haveaccess','medicalconsultation.index');
+
       $histories = HistoryClinic::all();
       $havePersonHistory = Person::has('history_clinic')->get(); // Este metodo me retorna las personas que no tienen una historia clinica
       return view('medical_consultations.index', compact('havePersonHistory'));
@@ -25,6 +29,9 @@ class MedicalConsultationController extends Controller
 
     public function index_show()
     {
+
+      Gate::authorize('haveaccess','medicalconsultation.indexShow');
+
       $histories = HistoryClinic::all();
       //$havePersonHistory = Person::whereHas('history')->with('medical_consultations')->get(); // Este metodo me retorna las personas que no tienen una historia clinica
       // $variable = DB::table('persons')
@@ -50,6 +57,9 @@ class MedicalConsultationController extends Controller
 
     public function create($id)
     {
+
+      Gate::authorize('haveaccess','medicalconsultation.create');
+
       $persons = Person::findOrfail($id);
       $histories = $persons->history_clinic;
 
@@ -81,6 +91,8 @@ class MedicalConsultationController extends Controller
     {
       $this->validation($request);
 
+      //return dd($request);
+
       $medical_consultations = MedicalConsultation::create([
         'reason' => $request['reason'],
         'diagnosis' => $request['diagnosis'],
@@ -99,34 +111,55 @@ class MedicalConsultationController extends Controller
 
       //$id_med_cons = MedicalConsultation::latest('id')->first()->id;
 
-      $medical_consultations->medical_prescriptions()->create([
-        'description' => $request['description'],
-        'posology' => $request['posology'],
-        'observations_pres' => $request['observations_pres'],
-        //'medical_consultation_id' => $id_med_cons,
-      ]);
+      // Esta tenia antes
 
-      $medical_consultations->lab_tests()->create([
-        'type_of_exam' => $request['type_of_exam'],
-        'quantity' => $request['quantity'],
-        'assessment' => $request['assessment'],
-        'observations_pru' => $request['observations_pru'],
-        //'medical_consultation_id' => $id_med_cons,
+      // $medical_consultations->medical_prescriptions()->create([
+      //   'description' => $request['description'],
+      //   'posology' => $request['posology'],
+      //   'observations_pres' => $request['observations_pres'],
+      //   //'medical_consultation_id' => $id_med_cons,
+      // ]);
 
-      ]);
+      foreach ($request->description as $key => $value) {
+        $medical_consultations->medical_prescriptions()->create([
+          'description' => $value,
+          'posology' => $request->posology[$key],
+          'observations_pres' => $request->observations_pres[$key],
+          //'medical_consultation_id' => $id_med_cons,
+
+        ]);
+      }
+
+      // $medical_consultations->lab_tests()->create([
+      //   'type_of_exam' => $request['type_of_exam'],
+      //   'quantity' => $request['quantity'],
+      //   'assessment' => $request['assessment'],
+      //   'observations_pru' => $request['observations_pru'],
+      //   //'medical_consultation_id' => $id_med_cons,
+      //
+      // ]);
+
+      foreach ($request->type_of_exam as $key => $value) {
+        $medical_consultations->lab_tests()->create([
+          'type_of_exam' => $value,
+          'quantity' => $request->quantity[$key],
+          'assessment' => $request->assessment[$key],
+          'observations_pru' => $request->observations_pru[$key],
+          //'medical_consultation_id' => $id_med_cons,
+
+        ]);
+      }
 
       $notification = "La consulta médica se ha registrado correctamente en la base de datos.";
       return redirect('/medical_consultations')->with(compact('notification'));
 
     }
 
-    public function show($id)
-    {
-        //
-    }
-
     public function edit($id)
     {
+
+      Gate::authorize('haveaccess','medicalconsultation.edit');
+
         //
     }
 
@@ -135,8 +168,4 @@ class MedicalConsultationController extends Controller
         //
     }
 
-    public function destroy($id)
-    {
-        //
-    }
 }

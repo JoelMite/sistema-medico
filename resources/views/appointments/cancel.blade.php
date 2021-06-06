@@ -29,7 +29,7 @@
             para el dia {{ $appointment->schedule_date }}
             (hora {{ $appointment->schedule_time_12 }}):</p>
         @endif
-        <form action="{{ url('/appointmentmedicals/'.$appointment->id.'/cancel') }}" method="POST">
+        <form action="{{ url('/appointment_medicals/'.$appointment->id.'/cancel') }}" method="POST">
           @csrf
 
           <div class="form-group">
@@ -38,7 +38,7 @@
           </div>
 
           <button type="submit" class="btn btn-danger">Cancelar cita</button>
-          <a href="{{ url('/appointmentmedicals') }}" class="btn btn-primary">
+          <a href="{{ url('/appointment_medicals') }}" class="btn btn-primary">
           Volver al listado de citas sin cancelar</a>
         </form>
       </div>

@@ -46,6 +46,7 @@
                     </td>
                     <td>
                       <a href="{{ url('medical_consultations_pdf/'.$person->medical_consultations_id) }}" class="btn btn-sm btn-warning">Ver Consulta Médica PDF</a>
+                      <a href="{{ url('medical_consultations_export_pdf/'.$person->medical_consultations_id) }}" class="btn btn-sm btn-success">Exportar Consulta Médica PDF</a>
                     </td>
                   </tr>
             @endforeach

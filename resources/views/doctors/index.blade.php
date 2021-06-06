@@ -79,61 +79,94 @@
       <div class="card-header border-0">
         <div class="row align-items-center">
           <div class="col">
-            <h3 class="mb-0">Roles</h3>
+            <h3 class="mb-0">Usuarios</h3>
           </div>
           <div class="col text-right">
-            <a href="{{url('rols/create')}}" class="btn btn-sm btn-success">
-              Nuevo rol
+            <a href="{{url('doctors/create')}}" class="btn btn-success">
+              Nuevo Usuario
             </a>
           </div>
         </div>
       </div>
 
-          @if(session('notification'))
-          <div class="card-body">
-            <div class="alert alert-success" role="alert">
-              {{ session('notification') }}
-            </div>
-          </div>
-          @endif
-
-          @if(session('warning'))
-          <div class="card-body">
-            <div class="alert alert-warning" role="alert">
-              {{ session('warning') }}
-            </div>
-          </div>
-          @endif
+      @if(session('notification'))
+      <div class="card-body">
+        <div class="alert alert-success" role="alert">
+          {{ session('notification') }}
+        </div>
+      </div>
+      @endif
 
 
       <div class="table-responsive">
-        <!-- Rols table -->
+        <!-- doctores table -->
         <table class="table align-items-center table-flush">
           <thead class="thead-light">
             <tr>
+              {{-- <th scope="col">Email</th> --}}
               <th scope="col">Nombre</th>
-              <th scope="col">Descripcion</th>
+              <th scope="col">Apellidos</th>
+              <th scope="col">Telefono</th>
+              <th scope="col">Rol</th>
+              <th scope="col">Especialidad</th>
               <th scope="col">Opciones</th>
             </tr>
           </thead>
           <tbody>
-            @foreach ($rols as $rol)
-            <tr>
-              <th scope="row">
-                {{ $rol->name }}
-              </th>
-              <td>
-                {{ $rol->description }}
-              </td>
-              <td>
-                <a href="{{ url('/rols/'.$rol->id.'/edit') }}" class="btn btn-sm btn-primary">Editar</a>
-                <a href="" class="btn btn-sm btn-danger">Eliminar</a>
-              </td>
-            </tr>
+            @foreach ($doctores as $doctor)
+
+                  {{-- @if($rol->name == 'Medico') --}}
+                  <tr>
+                    {{-- <td>
+                      {{ $doctor->email }}
+                    </td> --}}
+                    <td>
+                      {{ $doctor->person['name'] }}
+                    </td>
+                    <td>
+                      {{ $doctor->person['lastname'] }}
+                    </td>
+                    <td>
+                      {{ $doctor->person['phone'] }}
+                    </td>
+                    <td>
+                      @foreach ($doctor->roles as $role)
+                        {{ $role->name }}
+                      @endforeach
+                    </td>
+                    <td>
+                      @foreach ($doctor->specialties as $specialty)
+                        <span class="badge badge-pill badge-info badge-lg">{{ $specialty->name }}</span>
+                      @endforeach
+                    </td>
+                    <td>
+                      <a href="{{ url('/doctors/'.$doctor->id.'/edit') }}" class="btn btn-sm btn-primary">Editar</a>
+                      <a href="{{ url('/doctors/'.$doctor->id) }}" class="btn btn-sm btn-warning">Ver</a>
+                      @if($doctor->state == '403')
+                        <a href="{{ url('/doctors/'.$doctor->id.'/state') }}" class="btn btn-sm btn-success">Activar</a>
+                      @elseif($doctor->state == '200')
+                        <a href="{{ url('/doctors/'.$doctor->id.'/state') }}" class="btn btn-sm btn-danger">Banear</a>
+                      @endif
+                      {{-- <form action="{{ url('/doctores/'.$doctor->state.'/state') }}" method="post">
+                        @csrf
+                        @method('PUT')
+                          @if($doctor->state == '403')
+                            <button class="btn btn-sm btn-success" type="submit">Activar</button>
+                          @elseif($doctor->state == '200')
+                            <button class="btn btn-sm btn-danger" type="submit">Banear</button>
+                          @endif
+                      </form> --}}
+                    </td>
+                  </tr>
+                  {{-- @endif --}}
             @endforeach
           </tbody>
         </table>
       </div>
+      {{-- Pagination --}}
+      {{-- <div class="card-body">
+        {{ $doctores->links() }}
+      </div> --}}
     </div>
   <!-- </div> -->
   <!-- <div class="col-xl-4">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use App\Models\Specialty;
 
@@ -14,17 +15,25 @@ class SpecialtyController extends Controller
   //  Metodo GET Mostrar todos las Especialidades
       public function index(){
 
+        Gate::authorize('haveaccess','specialty.index');
+
         $specialties = Specialty::all();
         return view('specialties.index', compact('specialties'));
       }
 
   //  Metodo GET Abrir Formulario para Crear Nuevas Especialidades
       public function create(){
+
+        Gate::authorize('haveaccess','specialty.create');
+
         return view('specialties.create');
       }
 
   //  Metodo GET Abrir Editar Formulario de una Especialidad
       public function edit(Specialty $specialty){
+
+        Gate::authorize('haveaccess','specialty.edit');
+
         return view('specialties.edit', compact('specialty'));
       }
 
@@ -70,4 +79,35 @@ class SpecialtyController extends Controller
         $notification = "La especialidad se ha actualizado correctamente.";
         return redirect('/specialties')->with(compact('notification'));
       }
+
+
+      public function getDoctors(Request $request){
+        if ($request->ajax()) {
+          $specialty = Specialty::findOrfail($request->specialty_id);
+          $user_id_pluck = $specialty->users()->pluck('users.id')->first();
+          if (empty($user_id_pluck)) {
+            return [];
+          }else{
+
+            //Podria ser Esto ////:) Ahi fue Joel Que bien.
+            $ens = [];
+            foreach ($specialty->users as $user) {
+              $en = [];
+               $en ['id']= $user['id'] ?? 'Desconocido';
+               $en ['name']= $user->person['name'] ?? 'Desconocido';
+               $en ['lastname']= $user->person['lastname'] ?? 'Desconocido';
+               $en ['user_id']= $user->person['user_id'];
+
+              $ens []= $en;
+            }
+
+            return response()->json($ens);
+        }
+      }
+    }
+
+    public function getSpecialties(){
+      $specialties = Specialty::all();
+      return response()->json($specialties);
+    }
 }

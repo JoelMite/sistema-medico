@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use App\Models\HistoryClinic;
 use App\Models\Person;
@@ -24,6 +25,9 @@ class HistoryClinicController extends Controller
 
     public function index()
     {
+
+      Gate::authorize('haveaccess','historyclinic.index');
+
       // $doctores = User::all();
       //$histories = History::all();
       $nohavePersonHistory = Person::doesntHave('history_clinic')->get(); // Este metodo me retorna las personas que no tienen una historia clinica
@@ -45,6 +49,9 @@ class HistoryClinicController extends Controller
      */
     public function create($id)
     {
+
+      Gate::authorize('haveaccess','historyclinic.create');
+
       $doctor = User::findOrfail($id);
       $persons = $doctor->person;
       return view('clinic_history.create', compact('persons'));
@@ -220,9 +227,12 @@ class HistoryClinicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(HistoryClinic $history) // Aqui utilizo model binding(En base al modelo obtengo el resultado de acuerdo a la variable que se encuentra en la ruta Route::get('/histories/{history}', 'HistoryClinicController@show');)
     {
-      $history = HistoryClinic::findOrfail($id);  //Esto es un solo registro por lo tanto se lo puede imprimir sin ningun problema en la vista sin utilizar for each
+
+      Gate::authorize('haveaccess','historyclinic.show');
+
+      //$history = HistoryClinic::findOrfail($id);  //Esto es un solo registro por lo tanto se lo puede imprimir sin ningun problema en la vista sin utilizar for each
       //$medical_consultations = $history->medical_consultations; // ojo Esto es una coleccion por lo tanto se necesita de un for each en la vista
       //$data = DB::table('medical_consultations')->where('history_id',$id)->first()->id;     //Esta consulta es la famosa builder query (ojo)
       //$id_medical_prescriptions = $history->medical_consultations->first()->id; // ojo Me trae solo el id de la relacion de la historia clinica y la consulta medica
@@ -242,6 +252,9 @@ class HistoryClinicController extends Controller
      */
     public function edit($id)
     {
+
+      Gate::authorize('haveaccess','historyclinic.edit');
+
         //
     }
 

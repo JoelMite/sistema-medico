@@ -88,7 +88,7 @@
           </div>
         @endif
 
-        <a href="{{ url('/appointmentmedicals') }}" class="btn btn-default">Volver</a>
+        <a href="{{ url('/appointment_medicals') }}" class="btn btn-default">Volver</a>
 
       </div>
     </div>

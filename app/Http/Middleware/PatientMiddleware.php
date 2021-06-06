@@ -15,7 +15,7 @@ class PatientMiddleware
      */
     public function handle($request, Closure $next)
     {
-      if (auth()->user()->rols()->first()->name == 'Paciente') {
+      if (auth()->user()->roles()->first()->name == 'Paciente') {
         return $next($request);
       }
 

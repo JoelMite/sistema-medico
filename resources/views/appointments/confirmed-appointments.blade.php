@@ -4,11 +4,15 @@
       <tr>
         <th scope="col">Descripción</th>
         <th scope="col">Especialidad</th>
-        @if ($role == 'Paciente')
+        {{-- @if ($role == 'Paciente') --}}
+        @can('haveaccess','appointmentmedicalPatient.index')
           <th scope="col">Médico</th>
-        @elseif ($role == 'Medico')
+        @endcan
+        @can('haveaccess','appointmentmedicalDoctor.index')
+        {{-- @elseif ($role == 'Medico') --}}
         <th scope="col">Paciente</th>
-        @endif
+        @endcan
+        {{-- @endif --}}
         <th scope="col">Fecha</th>
         <th scope="col">Hora</th>
         <th scope="col">Tipo</th>
@@ -24,15 +28,19 @@
               <td>
                 {{ $appointment->specialty->name }}
               </td>
-                @if ($role == 'Paciente')
+              @can('haveaccess','appointmentmedicalPatient.index')
+                {{-- @if ($role == 'Paciente') --}}
                   <td>
                     {{ $appointment->doctor->person->name }}
                   </td>
-                @elseif ($role == 'Medico')
+              @endcan
+              @can('haveaccess','appointmentmedicalDoctor.index')
+                {{-- @elseif ($role == 'Medico') --}}
                   <td>
                     {{ $appointment->patient->person->name }}
                   </td>
-                @endif
+              @endcan
+                {{-- @endif --}}
               <td>
                 {{ $appointment->schedule_date }}
               </td>
@@ -44,7 +52,7 @@
               </td>
               <td>
                   <a class="btn btn-sm btn-danger" title="Cancelar cita"
-                  href="{{ url('/appointmentmedicals/'.$appointment->id.'/cancel') }}">Cancelar</a>
+                  href="{{ url('/appointment_medicals/'.$appointment->id.'/cancel') }}">Cancelar</a>
               </td>
             </tr>
       @endforeach

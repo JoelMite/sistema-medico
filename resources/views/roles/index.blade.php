@@ -1,6 +1,13 @@
 @extends('layouts.panel')
 
+@section('styles')
+<!-- Latest compiled and minified CSS -->
+{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/css/bootstrap-notify.css"> --}}
+@endsection
+
 @section('content')
+
+{{-- <div class='notifications top-right'></div> --}}
     <!-- <div class="row justify-content-center">
     </div> -->
 <!--<div class="row">
@@ -79,71 +86,72 @@
       <div class="card-header border-0">
         <div class="row align-items-center">
           <div class="col">
-            <h3 class="mb-0">Crear Rol</h3>
+            <h3 class="mb-0">Roles</h3>
           </div>
           <div class="col text-right">
-            <a href="{{url('rols')}}" class="btn btn-sm btn-default">
-              Cancelar y Volver
+            <a href="{{url('roles/create')}}" class="btn btn-success">
+              Nuevo rol
             </a>
           </div>
         </div>
-        </div>
-        <div class="card-body">
-          @if ($errors->any())
-            <div class="alert alert-danger" role="alert">
-              <ul>
-                @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-                @endforeach
-              </ul>
-            </div>
-          @endif
-          <form action="{{url('rols')}}" method="post">
-            @csrf
-            <div class="form-group">
-              <label for="name">Nombre del rol</label>
-              <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
-            </div>
-            <div class="form-group">
-              <label for="description">Descripcion</label>
-              <input type="text" name="description" class="form-control" value="{{ old('description') }}" required>
-            </div>
-            <button type="submit" class="btn btn-primary">
-              Guardar
-            </button>
-          </form>
-      </div>
       </div>
 
+          {{-- @if(session('notification'))
+          <div class="card-body">
+            <div class="alert alert-success" role="alert">
+              {{ session('notification') }}
+            </div>
+          </div>
+          @endif --}}
+
+          {{-- @if(session('warning'))
+          <div class="card-body">
+            <div class='notifications top-right'></div>
+            <div class="alert alert-warning" role="alert">
+              {{ session('warning') }}
+            </div>
+          </div>
+          @endif --}}
 
 
-      <!-- <div class="table-responsive"> -->
-        <!-- Rols table -->
-        <!-- <table class="table align-items-center table-flush">
+      <div class="table-responsive">
+        <!-- Roles table -->
+        <table class="table align-items-center table-flush">
           <thead class="thead-light">
             <tr>
               <th scope="col">Nombre</th>
               <th scope="col">Descripcion</th>
-              <th scope="col">Opciones</th>
+              <th scope="col">Permisos</th>
             </tr>
           </thead>
           <tbody>
+            @foreach ($roles as $role)
             <tr>
               <th scope="row">
-                /argon/
+                {{ $role->name }}
               </th>
               <td>
-                4,569
+                {{ $role->description }}
               </td>
-              <td>
-                <a href="" class="btn btn-sm btn-primary">Editar</a>
-                <a href="" class="btn btn-sm btn-danger">Eliminar</a>
+              <td class="text-right">
+                  <div class="dropdown">
+                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                      <a class="dropdown-item" href="{{ url('/roles/'.$role->id.'/edit') }}">Editar Rol</a>
+                      <a class="dropdown-item" href="#">Ver Rol</a>
+                    </div>
+                  </div>
+                {{-- <a href="{{ url('/roles/'.$role->id.'/edit') }}" class="btn btn-sm btn-primary">Editar</a> --}}
+                {{-- <a href="" class="btn btn-sm btn-danger">Eliminar</a> --}}
               </td>
             </tr>
+            @endforeach
           </tbody>
         </table>
       </div>
-    </div> -->
+    </div>
   <!-- </div> -->
   <!-- <div class="col-xl-4">
     <div class="card shadow">
@@ -264,5 +272,38 @@
     </div>
   </div>
 </div> -->
+@endsection
 
+@section('scripts')
+  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script> --}}
+
+  @if(session('warning'))
+    <script>
+    $.notify({
+    	title: '<strong>Error!</strong><br>',
+    	message: '{{ session('warning') }}'
+    },{
+    	type: 'danger',
+      animate: {
+    		enter: 'animated bounceInDown',
+    		exit: 'animated bounceOutUp'
+  	  }
+    });
+    </script>
+  @endif
+
+  @if(session('notification'))
+      <script>
+      $.notify({
+      	title: '<strong>Exito!</strong><br>',
+      	message: '{{ session('notification') }}'
+      },{
+      	type: 'success',
+        animate: {
+      		enter: 'animated bounceInDown',
+      		exit: 'animated bounceOutUp'
+    	  }
+      });
+      </script>
+  @endif
 @endsection

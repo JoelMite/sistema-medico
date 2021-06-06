@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
-
 use App\Models\Specialty;
 use App\Models\AppointmentMedical;
 // use App\Models\CancelledAppointment;
@@ -19,11 +19,11 @@ class AppointmentMedicalController extends Controller
    $this->middleware('auth');
   }
 
-  public function index()
+  public function indexDoctor()
   {
-    $role = auth()->user()->rols()->first()->name;
 
-    if ($role == 'Medico') {
+    Gate::authorize('haveaccess','appointmentmedicalDoctor.index');
+
       $pendingAppointments = AppointmentMedical::where('status', 'Reservada')
       ->where('doctor_id', auth()->id())
       ->paginate(10);
@@ -34,23 +34,34 @@ class AppointmentMedicalController extends Controller
       ->where('doctor_id', auth()->id())
       ->paginate(10);
 
-    }elseif($role == 'Paciente'){
-      $pendingAppointments = AppointmentMedical::where('status', 'Reservada')
-      ->where('patient_id', auth()->id())
-      ->paginate(10);
-      $confirmedAppointments = AppointmentMedical::where('status', 'Confirmada')
-      ->where('patient_id', auth()->id())
-      ->paginate(10);
-      $oldAppointments = AppointmentMedical::whereIn('status', ['Atendida', 'Cancelada'])
-      ->where('patient_id', auth()->id())
-      ->paginate(10);
-
-    }
+    // return dd($role);
     return view('appointments.index', compact('pendingAppointments', 'confirmedAppointments', 'oldAppointments', 'role'));
+  }
+
+  public function indexPatient()
+  {
+
+    Gate::authorize('haveaccess','appointmentmedicalPatient.index');
+
+    $pendingAppointments = AppointmentMedical::where('status', 'Reservada')
+    ->where('patient_id', auth()->id())
+    ->paginate(10);
+    $confirmedAppointments = AppointmentMedical::where('status', 'Confirmada')
+    ->where('patient_id', auth()->id())
+    ->paginate(10);
+    $oldAppointments = AppointmentMedical::whereIn('status', ['Atendida', 'Cancelada'])
+    ->where('patient_id', auth()->id())
+    ->paginate(10);
+
+    return view('appointments.index', compact('pendingAppointments', 'confirmedAppointments', 'oldAppointments', 'role'));
+
   }
 
   public function create(ScheduleServiceInterface $scheduleService)
   {
+
+    Gate::authorize('haveaccess','appointmentmedical.create');
+
     $specialties = Specialty::all();
     //Esta parte de aqui no funciona porque no tengo los valores que se envian en la variable doctor name y lastname no estan en la tabla users.
     /*$specialtyId = old('specialty_id');
@@ -72,6 +83,33 @@ class AppointmentMedicalController extends Controller
 
     return view('appointments.create', compact('specialties','intervals'));
   }
+
+  // public function test(ScheduleServiceInterface $scheduleService)
+  // {
+  //
+  //   Gate::authorize('haveaccess','appointmentmedical.create');
+  //
+  //   $specialties = Specialty::all();
+  //   //Esta parte de aqui no funciona porque no tengo los valores que se envian en la variable doctor name y lastname no estan en la tabla users.
+  //   /*$specialtyId = old('specialty_id');
+  //   if ($specialtyId) {
+  //     $specialty = Specialty::find($specialtyId);
+  //     $doctors = $specialty->users;
+  //   }else{
+  //     $doctors = collect();
+  //   }*/
+  //
+  //   $date = old('schedule_date');
+  //   $doctorId = old('doctor_id');
+  //   if ($date && $doctorId) {
+  //     $intervals = $scheduleService->getAvailableIntervals($date, $doctorId);;
+  //   }else{
+  //     $intervals = null;
+  //   }
+  //
+  //
+  //   return view('appointments.create', compact('specialties','intervals'));
+  // }
 
   public function store(StoreAppointment $request)
   {
@@ -147,6 +185,9 @@ class AppointmentMedicalController extends Controller
 
   public function showCancelForm(AppointmentMedical $appointment)
   {
+
+    Gate::authorize('haveaccess','appointmentmedical.showCancelForm');
+
     if ($appointment->status == 'Confirmada'){
       $role = auth()->user()->rols()->first()->name;
       return view('appointments.cancel', compact('appointment', 'role'));
@@ -181,6 +222,9 @@ class AppointmentMedicalController extends Controller
 
   public function show(AppointmentMedical $appointment)
   {
+
+    Gate::authorize('haveaccess','appointmentmedical.show');
+
     $role = auth()->user()->rols()->first()->name;
     return view('appointments.show', compact('appointment', 'role'));
     //return dd($appointment);
@@ -188,6 +232,9 @@ class AppointmentMedicalController extends Controller
 
   public function postConfirm(AppointmentMedical $appointment)
   {
+
+    Gate::authorize('haveaccess','appointmentmedical.postConfirm');
+
     $appointment->status = 'Confirmada';
     $saved = $appointment->save(); // update
 
@@ -196,5 +243,29 @@ class AppointmentMedicalController extends Controller
 
     $notification = "La cita se ha confirmado correctamente.";
     return redirect('/appointmentmedicals')->with(compact('notification'));
+  }
+
+  public function pendingAppointments(){
+
+    $pendingAppointments = AppointmentMedical::where('status', 'Reservada')
+    ->where('doctor_id', auth()->id())->count();
+    return response()->json($pendingAppointments);
+
+  }
+
+  public function confirmedAppointments(){
+
+    $confirmedAppointments = AppointmentMedical::where('status', 'Confirmada')
+    ->where('doctor_id', auth()->id())->count();
+    return response()->json($confirmedAppointments);
+
+  }
+
+  public function attendedAppointments(){
+
+    $attendedAppointments = AppointmentMedical::where('status', 'Atendida')
+    ->where('doctor_id', auth()->id())->count();
+    return response()->json($attendedAppointments);
+
   }
 }

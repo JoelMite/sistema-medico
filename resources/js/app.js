@@ -20,7 +20,11 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
+Vue.component('create-appointment-component', require('./components/CreateAppointmentComponent.vue').default);
+Vue.component('create-medical-consultation-component', require('./components/CreateMedicalConsultationComponent.vue').default);
+Vue.component('home-dashboard-doctor-component', require('./components/HomeDashboardDoctorComponent.vue').default);
+Vue.component('home-dashboard-administrator-component', require('./components/HomeDashboardAdministratorComponent.vue').default);
+Vue.component('create-doctor-component', require('./components/CreateDoctorComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -30,3 +34,4 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
 });
+// require('./index');

@@ -17,8 +17,8 @@ class SpecialtySeeder extends Seeder
         'name' => 'Medico Familiar',
         'description' => 'Brinda atención médica continua e integral para el individuo y la familia.',
       ]);
-      $specialty->users()->saveMany(
-        factory(User::class, 3)->make()
-      );
+      // $specialty->users()->saveMany(
+      //   factory(User::class, 3)->make()
+      // );
     }
 }

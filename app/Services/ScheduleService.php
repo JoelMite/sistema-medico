@@ -49,9 +49,14 @@ class ScheduleService implements ScheduleServiceInterface
             $afternoonIntervals = [];
           }
 
-          $data = [];
-          $data['morning'] = $morningIntervals;
-          $data['afternoon'] = $afternoonIntervals;
+          if ($morningIntervals == [] && $afternoonIntervals == []) {
+            $data = [];
+          }else{
+
+            $data = [];
+            $data['morning'] = $morningIntervals;
+            $data['afternoon'] = $afternoonIntervals;
+          }
 
           return $data;
   }

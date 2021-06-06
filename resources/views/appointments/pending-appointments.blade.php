@@ -4,11 +4,15 @@
       <tr>
         <th scope="col">Descripción</th>
         <th scope="col">Especialidad</th>
-        @if ($role == 'Paciente')
+        @can('haveaccess','appointmentmedicalPatient.index')
+        {{-- @if ($role == 'Paciente') --}}
           <th scope="col">Médico</th>
-        @elseif ($role == 'Medico')
+        @endcan
+        @can('haveaccess','appointmentmedicalDoctor.index')
+        {{-- @elseif ($role == 'Medico') --}}
         <th scope="col">Paciente</th>
-        @endif
+        @endcan
+        {{-- @endif --}}
         <th scope="col">Fecha</th>
         <th scope="col">Hora</th>
         <th scope="col">Tipo</th>
@@ -24,15 +28,19 @@
               <td>
                 {{ $appointment->specialty->name }}
               </td>
-              @if ($role == 'Paciente')
+              {{-- @if ($role == 'Paciente') --}}
+              @can('haveaccess','appointmentmedicalPatient.index')
                 <td>
                   {{ $appointment->doctor->person->name }}
                 </td>
-              @elseif ($role == 'Medico')
+              @endcan
+              {{-- @elseif ($role == 'Medico') --}}
+              @can('haveaccess','appointmentmedicalDoctor.index')
                 <td>
                   {{ $appointment->patient->person->name }}
                 </td>
-              @endif
+              @endcan
+              {{-- @endif --}}
               <td>
                 {{ $appointment->schedule_date }}
               </td>
@@ -44,20 +52,21 @@
               </td>
               <td>
                 <a class="btn btn-sm btn-primary" title="Ver cita"
-                  href="{{ url('/appointmentmedicals/'.$appointment->id) }}">
+                  href="{{ url('/appointment_medicals/'.$appointment->id) }}">
                     Ver
                 </a>
-
-                @if ($role == 'Medico')
-                  <form action="{{ url('/appointmentmedicals/'.$appointment->id.'/confirm') }}" method="POST" class="d-inline-block">
+                @can('haveaccess','appointmentmedicalDoctor.index')
+                {{-- @if ($role == 'Medico') --}}
+                  <form action="{{ url('/appointment_medicals/'.$appointment->id.'/confirm') }}" method="POST" class="d-inline-block">
                     @csrf
                     <button class="btn btn-sm btn-success" type="submit" data-toggle="tooltip" title="Confirmar cita">
                       <i class="ni ni-check-bold"></i>
                     </button>
                   </form>
-                @endif
+                @endcan
+                {{-- @endif --}}
 
-                <form action="{{ url('/appointmentmedicals/'.$appointment->id.'/cancel') }}" method="POST" class="d-inline-block">
+                <form action="{{ url('/appointment_medicals/'.$appointment->id.'/cancel') }}" method="POST" class="d-inline-block">
                   @csrf
                   <button class="btn btn-sm btn-danger" type="submit" data-toggle="tooltip" title="Cancelar cita">
                     <i class="ni ni-fat-delete"></i>

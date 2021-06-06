@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
-
 use App\Models\WorkDay;
 use Carbon\Carbon;
+use App\Interfaces\ScheduleServiceInterface;
 
 class ScheduleController extends Controller
 {
@@ -75,6 +76,9 @@ class ScheduleController extends Controller
 
     public function edit()
     {
+
+      Gate::authorize('haveaccess','schedule.edit');
+
       $workDays = WorkDay::where('user_id', auth()->id())->get();
 
       if (count($workDays) > 0){
@@ -106,5 +110,36 @@ class ScheduleController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function hours(Request $request, ScheduleServiceInterface $scheduleService){
+
+      if ($request->ajax()) {
+        //dd($request->all());
+        $rules = [
+            'date' => 'required|date_format:"Y-m-d"',
+            'doctor_id' => 'required|exists:users,id'
+        ];
+
+        $this->validate($request, $rules);
+
+        $date = $request->date;
+        //$day = $dateCarbon->dayOfWeek;
+        //dd($day);
+        $doctorId = $request->doctor_id;
+
+        return response()->json($scheduleService->getAvailableIntervals($date, $doctorId));
+
+          /*$table->unsignedSmallInteger('day');
+          $table->boolean('active');
+
+          $table->time('morning_start');
+          $table->time('morning_end');
+
+          $table->time('afternoon_start');
+          $table->time('afternoon_end');
+
+          $table->unsignedBigInteger('user_id');*/
+        }
     }
 }

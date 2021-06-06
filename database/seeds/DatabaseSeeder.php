@@ -15,10 +15,11 @@ class DatabaseSeeder extends Seeder
         //$this->call(SpecialtySeeder::class);
         //$this->call(RolSeeder::class);
         $this->call([
-          UserSeeder::class,
-          SpecialtySeeder::class,
+          PermissionSeeder::class,
           RoleSeeder::class,
-          WorkDaySeeder::class
+          SpecialtySeeder::class,
+          UserSeeder::class,
+          WorkDaySeeder::class,
         ]);
     }
 }

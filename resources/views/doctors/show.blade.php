@@ -7,17 +7,7 @@
 
 @section('content')
 
-  <!-- Main content -->
-  <div class="main-content">
 
-    <!-- Top navbar -->
-    <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
-      <div class="container-fluid">
-        <!-- Brand -->
-        <!-- <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="../index.html">User profile</a> -->
-
-      </div>
-    </nav>
     <!-- Header -->
     <!-- <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(../assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;"> -->
       <!-- Mask -->
@@ -104,10 +94,10 @@
                 <div class="col-8">
                   <h3 class="mb-0">Datos Personales</h3>
                 </div>
-                <div class="col-4 text-right">
+                {{-- <div class="col-4 text-right">
                   <!-- <a href="#!" class="btn btn-sm btn-primary">Editar</a> -->
                   <a href="#!" class="btn btn-sm btn-success">Activar o Desactivar</a>
-                </div>
+                </div> --}}
               </div>
             </div>
             <div class="card-body">
@@ -116,11 +106,11 @@
                 <div class="pl-lg-4">
                   <div class="row">
 
-                    @foreach ($rols as $rol)
+                    @foreach ($roles as $role)
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-username">Rol</label>
-                        <input type="text" id="input-rols" class="form-control form-control-alternative" value="{{ $rol->name }}">
+                        <input type="text" id="input-roles" class="form-control form-control-alternative" value="{{ $role->name }}">
                       </div>
                     </div>
                     @endforeach
@@ -138,7 +128,7 @@
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-first-name">Nombres</label>
-                        <input type="text" id="input-name" class="form-control form-control-alternative" value="{{ $doctor->persons->name ? $doctor->persons->name:'No hay datos' }}">
+                        <input type="text" id="input-name" class="form-control form-control-alternative" value="{{ $doctor->person->name ? $doctor->person->name:'No hay datos' }}">
                       </div>
                     </div>
                     @endif
@@ -147,7 +137,7 @@
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-last-name">Apellidos</label>
-                        <input type="text" id="input-last-name" class="form-control form-control-alternative" value="{{ $doctor->persons->lastname ? $doctor->persons->lastname:'No hay datos' }}">
+                        <input type="text" id="input-last-name" class="form-control form-control-alternative" value="{{ $doctor->person->lastname ? $doctor->person->lastname:'No hay datos' }}">
                       </div>
                     </div>
                     @endif
@@ -159,7 +149,7 @@
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-last-name">Edad</label>
-                        <input type="text" id="input-age" class="form-control form-control-alternative" value="{{ $doctor->persons->age ? $doctor->persons->age:'No hay datos' }}">
+                        <input type="text" id="input-age" class="form-control form-control-alternative" value="{{ $doctor->person->age ? $doctor->person->age:'No hay datos' }}">
                       </div>
                     </div>
                     @endif
@@ -168,7 +158,7 @@
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-last-name">Sexo</label>
-                        <input type="text" id="input-sex" class="form-control form-control-alternative" value="{{ $doctor->persons->sex ? $doctor->persons->sex:'No hay datos' }}">
+                        <input type="text" id="input-sex" class="form-control form-control-alternative" value="{{ $doctor->person->sex ? $doctor->person->sex:'No hay datos' }}">
                       </div>
                     </div>
                     @endif
@@ -186,7 +176,7 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class="form-control-label" for="input-address">Dirección</label>
-                        <input id="input-address" class="form-control form-control-alternative" value="{{ $doctor->persons->address ? $doctor->persons->address:'No hay datos' }}" type="text">
+                        <input id="input-address" class="form-control form-control-alternative" value="{{ $doctor->person->address ? $doctor->person->address:'No hay datos' }}" type="text">
                       </div>
                     </div>
                     @endif
@@ -198,7 +188,7 @@
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-city">Telefono</label>
-                        <input type="text" id="input-phone" class="form-control form-control-alternative" value="{{ $doctor->persons->phone ? $doctor->persons->phone:'No hay datos' }}">
+                        <input type="text" id="input-phone" class="form-control form-control-alternative" value="{{ $doctor->person->phone ? $doctor->person->phone:'No hay datos' }}">
                       </div>
                     </div>
                     @endif
@@ -207,7 +197,7 @@
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-country">Ciudad</label>
-                        <input type="text" id="input-city" class="form-control form-control-alternative" value="{{ $doctor->persons->city ? $doctor->persons->city:'No hay datos' }}">
+                        <input type="text" id="input-city" class="form-control form-control-alternative" value="{{ $doctor->person->city ? $doctor->person->city:'No hay datos' }}">
                       </div>
                     </div>
                     @endif
@@ -216,7 +206,7 @@
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-country">Etnia</label>
-                        <input type="text" id="input-etnia" class="form-control form-control-alternative" value="{{ $doctor->persons->etnia ? $doctor->persons->etnia:'No hay datos' }}">
+                        <input type="text" id="input-etnia" class="form-control form-control-alternative" value="{{ $doctor->person->etnia ? $doctor->person->etnia:'No hay datos' }}">
                       </div>
                     </div>
                     @endif
@@ -229,7 +219,6 @@
         </div>
       </div>
     </div>
-  </div>
 
 @endsection
 

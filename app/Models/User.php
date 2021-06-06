@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password', 'creator_id', //Aqui hay un error (name)
+        'email', 'password', 'creator_id', 'state'//Aqui hay un error (name)
     ];
 
     /**
@@ -43,7 +43,7 @@ class User extends Authenticatable
       return $this->hasOne(Person::class);
     }
 
-    public function rols(){
+    public function roles(){
       return $this->belongsToMany(Role::class)->withTimestamps();
     }
 
@@ -83,5 +83,18 @@ class User extends Authenticatable
       ->send();
     }
 
+    public function havePermission($permission){
+
+        foreach ($this->roles as $role ) {
+
+            foreach ($role->permissions as $perm) {
+
+                if ($perm->slug == $permission ) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 }

@@ -12,10 +12,12 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
-  <link href="{{ asset('asset/vendor/nucleo/css/nucleo.css') }}" rel="stylesheet">
-  <link href="{{ asset('asset/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+  <link href=" {{ asset('asset/vendor/nucleo/css/nucleo.css') }}" rel="stylesheet">
+  <link href=" {{ asset('asset/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+  <link href=" {{ asset('asset/vendor/animate.css/animate.min.css') }}" rel="stylesheet">
   <!-- Argon CSS -->
-  <link href="{{ asset('asset/css/argon.css?v=1.1.0') }}" rel="stylesheet">
+  <link href=" {{ asset('asset/css/argon.min.css') }}" rel="stylesheet">
+  {{-- <link href=" {{ asset('css/plantilla.css') }} " rel="stylesheet"> --}}
   @yield('styles')
 </head>
 
@@ -26,7 +28,7 @@
       <!-- Brand -->
       <div class="sidenav-header d-flex align-items-center">
         <a class="navbar-brand" href="../../pages/dashboards/dashboard.html">
-          <img src="{{ asset('asset/img/brand/blue.png') }}" class="navbar-brand-img" alt="...">
+          <img src="{{ asset('img/brand/Brand-Medical.png') }}" class="navbar-brand-img" alt="...">
         </a>
         <div class="ml-auto">
           <!-- Sidenav toggler -->
@@ -45,19 +47,25 @@
           <!-- Nav items -->
 
           <ul class="navbar-nav">
-            @if(auth()->user()->rols()->first()->name == 'Administrador')
+            {{-- @if(auth()->user()->rols()->first()->name == 'Administrador') --}}
+            @if(auth()->user()->can('haveaccess', 'administrator.dashboard') ||
+            auth()->user()->can('haveaccess', 'doctor.dashboard') ||
+            auth()->user()->can('haveaccess', 'patient.dashboard'))
             <li class="nav-item">
               <a class="nav-link" href="/home">
                 <i class="ni ni-tv-2 text-red"></i>
                 <span class="nav-link-text">Dashboard</span>
               </a>
             </li>
+            @endif
+            @can('haveaccess','role.index')
             <li class="nav-item">
-              <a class="nav-link" href="/rols">
+              <a class="nav-link" href="/roles">
                 <i class="ni ni-badge text-blue"></i>
                 <span class="nav-link-text">Roles</span>
               </a>
             </li>
+            @endcan
             <li class="nav-item">
               <a class="nav-link" href="/specialties">
                 <i class="ni ni-active-40 text-green"></i>
@@ -65,18 +73,18 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/doctores">
+              <a class="nav-link" href="/doctors">
                 <i class="ni ni-single-02 text-orange"></i>
                 <span class="nav-link-text">Usuarios</span>
               </a>
             </li>
-            @elseif(auth()->user()->rols()->first()->name == 'Medico')
-            <li class="nav-item">
+            {{-- @elseif(auth()->user()->rols()->first()->name == 'Medico') --}}
+            {{-- <li class="nav-item">
               <a class="nav-link" href="/home">
                 <i class="ni ni-tv-2 text-red"></i>
                 <span class="nav-link-text">Dashboard</span>
               </a>
-            </li>
+            </li> --}}
             <li class="nav-item">
               <a class="nav-link" href="/histories">
                 <i class="ni ni-collection text-default"></i>
@@ -106,9 +114,9 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/appointmentmedicals">
-                <i class="ni ni-ruler-pencil text-purple"></i>
-                <span class="nav-link-text">Mis citas</span>
+              <a class="nav-link" href="/appointment_medicals_doctor">
+                <i class="fas fa-book-medical"></i>
+                <span class="nav-link-text">Mis citas (Doctor)</span>
               </a>
             </li>
             <li class="nav-item">
@@ -117,34 +125,40 @@
                 <span class="nav-link-text">Mis Pacientes</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <i class="ni ni-circle-08 text-blue"></i>
-                <span class="nav-link-text">Mi Perfil</span>
-              </a>
-            </li>
-            @elseif(auth()->user()->rols()->first()->name == 'Paciente')
-            <li class="nav-item">
+            {{-- @elseif(auth()->user()->rols()->first()->name == 'Paciente') --}}
+            {{-- <li class="nav-item">
               <a class="nav-link" href="/home">
                 <i class="ni ni-tv-2 text-red"></i>
                 <span class="nav-link-text">Dashboard</span>
               </a>
-            </li>
+            </li> --}}
             <li class="nav-item">
-              <a class="nav-link" href="/appointmentmedicals/create">
+              <a class="nav-link" href="/appointment_medicals/create">
                 <i class="ni ni-ruler-pencil text-purple"></i>
                 <span class="nav-link-text">Reservar Cita</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/appointmentmedicals">
-                <i class="ni ni-satisfied text-yellow"></i>
-                <span class="nav-link-text">Mis Citas</span>
+              <a class="nav-link" href="/appointment_medicals_patient">
+                <i class="fas fa-book-medical"></i>
+                <span class="nav-link-text">Mis Citas (Paciente)</span>
               </a>
             </li>
-            @endif
+            {{-- <li class="nav-item">
+              <a class="nav-link" href="/appointmentmedicals_prueba/prueba">
+                <i class="ni ni-satisfied text-yellow"></i>
+                <span class="nav-link-text">Prueba Citas</span>
+              </a>
+            </li> --}}
+            {{-- @endif --}}
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('logout') }}" >
+              <a class="nav-link" href="/profile">
+                <i class="ni ni-circle-08 text-blue"></i>
+                <span class="nav-link-text">Mi Perfil</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('logoutUser') }}" >
               {{-- <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
               document.getElementById('formLogout').submit();"> --}}
                 <i class="ni ni-key-25"></i>
@@ -192,7 +206,7 @@
     </div>
   </nav>
   <!-- Main content -->
-  <div class="main-content" id="panel">
+  <div class="main-content">
     <!-- Topnav -->
     <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
       <div class="container-fluid">
@@ -243,7 +257,7 @@
                     <div class="row align-items-center">
                       <div class="col-auto">
                         <!-- Avatar -->
-                        <img alt="Image placeholder" src="../../assets/img/theme/team-1.jpg" class="avatar rounded-circle">
+                        {{-- <img alt="Image placeholder" src="../../assets/img/theme/team-1.jpg" class="avatar rounded-circle"> --}}
                       </div>
                       <div class="col ml--2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -262,7 +276,7 @@
                     <div class="row align-items-center">
                       <div class="col-auto">
                         <!-- Avatar -->
-                        <img alt="Image placeholder" src="../../assets/img/theme/team-2.jpg" class="avatar rounded-circle">
+                        {{-- <img alt="Image placeholder" src="../../assets/img/theme/team-2.jpg" class="avatar rounded-circle"> --}}
                       </div>
                       <div class="col ml--2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -281,7 +295,7 @@
                     <div class="row align-items-center">
                       <div class="col-auto">
                         <!-- Avatar -->
-                        <img alt="Image placeholder" src="../../assets/img/theme/team-3.jpg" class="avatar rounded-circle">
+                        {{-- <img alt="Image placeholder" src="../../assets/img/theme/team-3.jpg" class="avatar rounded-circle"> --}}
                       </div>
                       <div class="col ml--2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -300,7 +314,7 @@
                     <div class="row align-items-center">
                       <div class="col-auto">
                         <!-- Avatar -->
-                        <img alt="Image placeholder" src="../../assets/img/theme/team-4.jpg" class="avatar rounded-circle">
+                        {{-- <img alt="Image placeholder" src="../../assets/img/theme/team-4.jpg" class="avatar rounded-circle"> --}}
                       </div>
                       <div class="col ml--2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -319,7 +333,7 @@
                     <div class="row align-items-center">
                       <div class="col-auto">
                         <!-- Avatar -->
-                        <img alt="Image placeholder" src="../../assets/img/theme/team-5.jpg" class="avatar rounded-circle">
+                        {{-- <img alt="Image placeholder" src="../../assets/img/theme/team-5.jpg" class="avatar rounded-circle"> --}}
                       </div>
                       <div class="col ml--2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -393,7 +407,7 @@
                     <img alt="Image placeholder" src="{{ asset('asset/img/theme/team-4.jpg') }}">
                   </span> --}}
                   {{-- <div class="media-body ml-2 d-none d-lg-block"> --}}
-                    <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->person['name'] }}</span>
+                    <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->person()->first()->name }}</span>
                   {{-- </div> --}}
                 </div>
               </a>
@@ -401,7 +415,7 @@
                 <div class="dropdown-header noti-title">
                   <h6 class="text-overflow m-0">Bienvenido!</h6>
                 </div>
-                <a href="#!" class="dropdown-item">
+                <a href="/profile" class="dropdown-item">
                   <i class="ni ni-single-02"></i>
                   <span>Mi perfil</span>
                 </a>
@@ -418,7 +432,7 @@
                   <span>Soporte</span>
                 </a> --}}
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('logout') }}" >
+                <a class="dropdown-item" href="{{ route('logoutUser') }}" >
                 {{-- <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                 document.getElementById('formLogout').submit();"> --}}
                   <i class="ni ni-key-25"></i>
@@ -554,17 +568,19 @@
       </div>
     </div>
     <!-- Page content -->
+
     <div class="container-fluid mt--6">
       @yield('content')
+
       <!-- Footer -->
       <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
             <div class="copyright text-center text-lg-left text-muted">
-              &copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">{{ config('app.name') }}</a>
+              &copy; 2021 <a href="#" class="font-weight-bold ml-1" target="_blank">{{ config('app.name') }}</a>
             </div>
           </div>
-          <div class="col-lg-6">
+          {{-- <div class="col-lg-6">
             <ul class="nav nav-footer justify-content-center justify-content-lg-end">
               <li class="nav-item">
                 <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
@@ -579,24 +595,31 @@
                 <a href="https://www.creative-tim.com/license" class="nav-link" target="_blank">License</a>
               </li>
             </ul>
-          </div>
+          </div> --}}
         </div>
       </footer>
+
     </div>
   </div>
   <!-- Argon Scripts -->
   <!-- Core -->
-  <script src="{{ asset('asset/vendor/jquery/dist/jquery.min.js') }}"></script>
-  <script src="{{ asset('asset/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('asset/vendor/js-cookie/js.cookie.js') }}"></script>
-  <script src="{{ asset('asset/vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
-  <script src="{{ asset('asset/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"></script>
+  <script src=" {{ asset('asset/vendor/jquery/dist/jquery.min.js') }}"></script>
+  <script src=" {{ asset('asset/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+  <script src=" {{ asset('asset/vendor/js-cookie/js.cookie.js') }}"></script>
+  <script src=" {{ asset('asset/vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
+  <script src=" {{ asset('asset/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"></script>
   <!-- Optional JS -->
-  <script src="{{ asset('asset/vendor/chart.js/dist/Chart.min.js') }}"></script>
-  <script src="{{ asset('asset/vendor/chart.js/dist/Chart.extension.js') }}"></script>
+  <script src=" {{ asset('asset/vendor/chart.js/dist/Chart.min.js') }}"></script>
+  <script src=" {{ asset('asset/vendor/chart.js/dist/Chart.extension.js') }}"></script>
+  <script src=" {{ asset('asset/vendor/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
+
   @yield('scripts')
   <!-- Argon JS -->
-  <script src="{{ asset('asset/js/argon.js?v=1.1.0') }}"></script>
+
+  {{-- <script src=" {{ asset('js/app.js') }} "></script> --}}
+  <script src=" {{ asset('asset/js/argon.js') }}"></script>
+  <script src="{{ asset('js/app.js') }}"></script>
+  {{-- <script src=" {{ asset('js/plantilla.js') }} "></script>  --}}
 </body>
 
 </html>

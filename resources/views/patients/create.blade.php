@@ -140,7 +140,7 @@
                           <div class="col-md-6 mb-2">
                             <div class="form-group">
                               <label for="name">Etnia</label>
-                              <select class="form-control selectpicker" name="etnia" id="etnia" data-style="btn-secondary" value"{{ old('etnia') }}">
+                              <select class="form-control selectpicker" name="etnia" id="etnia" data-style="btn-secondary">
                                   <option value="Mestizo">Mestizo</option>
                                   <option value="Afroamericano">Afroamericano</option>
                                   <option value="Indigena">Indigena</option>
@@ -164,7 +164,7 @@
                           <div class="col-md-6 mb-2">
                             <div class="form-group">
                               <label for="name">Sexo</label>
-                              <select class="form-control selectpicker" name="sex" id="sex" data-style="btn-secondary" value"{{ old('sex') }}">
+                              <select class="form-control selectpicker" name="sex" id="sex" data-style="btn-secondary">
                                   <option value="Masculino">Masculino</option>
                                   <option value="Femenino">Femenino</option>
                               </select>

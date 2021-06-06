@@ -52,4 +52,5 @@ class SpecialtyController extends Controller
       return Specialty::all(['id', 'name']);
 
     }
+
 }

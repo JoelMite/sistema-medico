@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
@@ -15,8 +16,11 @@ class PatientController extends Controller
 
 //  Metodo GET Mostrar todos los Usuarios
   public function index(){
+
+      Gate::authorize('haveaccess','patient.index');
+
       //$patients =  User::with('rols')->paginate(5);
-      $patients = User::whereHas('rols', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
+      $patients = User::whereHas('roles', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
       $query->where('name', 'Paciente')->where('creator_id','=',auth()->id());
       })->paginate(5);
       return view('patients.index', compact('patients'));
@@ -31,6 +35,9 @@ class PatientController extends Controller
 
 //  Metodo GET Abrir Formulario para Crear Nuevos Usuarios (Esencialmente Medicos y Administradores)
    public function create(){
+
+     Gate::authorize('haveaccess','patient.create');
+
      return view('patients.create');
    }
 
@@ -85,11 +92,12 @@ class PatientController extends Controller
       $request->only('email')
       + [
           'password'=>bcrypt($request->input('password')),
-          'creator_id'=>auth()->id()
+          'creator_id'=>auth()->id(),
+          'state'=>'200'
       ]
     );
 
-    $user->rols()->attach(3);
+    $user->roles()->attach(3);
 
     $date_birth = Carbon::parse($request['date_birth'])->age; // Utilizo Carbon para calcular la edad a partir de la fecha de nacimiento
 
@@ -118,7 +126,10 @@ class PatientController extends Controller
    */
   public function show(User $id)
   {
-      $usuario = auth()->user()->rols()->first()->name;
+
+    Gate::authorize('haveaccess','patient.show');
+
+      $usuario = auth()->user()->roles()->first()->name;
       return redirect(dd($usuario));
       //return dd($id);
   }
@@ -131,13 +142,16 @@ class PatientController extends Controller
    */
   public function edit($id)
   {
+
+    Gate::authorize('haveaccess','patient.edit');
+
       $patient = User::findOrfail($id);
       $time_now = Carbon::now(); // Tiempo Actual
       $time_update = Carbon::parse($patient->person['created_at'])->floatDiffInDays($time_now->toDateTimeString());
       $persons = $patient->person;
       if ($time_update <= 0.25) { // Tiempo para actualizar maximo 6 horas
-        // return view('patients.edit', compact('persons'));
-        return dd($person);
+        return view('patients.edit', compact('persons'));
+        //return dd($persons);
       }else{
         $warning = "▪ Los datos del paciente no se pueden actualizar porque se ha caducado el limite de tiempo.";
         return redirect('/patients')->with(compact('warning'));
@@ -165,5 +179,12 @@ class PatientController extends Controller
   public function destroy($id)
   {
       //
+  }
+
+  public function count_patients(){
+      $patients = User::whereHas('roles', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
+      $query->where('name', 'Paciente')->where('creator_id','=',auth()->id());
+      })->count();
+      return response()->json($patients);
   }
 }
