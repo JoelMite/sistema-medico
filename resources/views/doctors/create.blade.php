@@ -319,5 +319,13 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="{{ asset('asset/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-<script src="{{ asset('/js/doctor/create.js') }}"></script>
+{{-- <script src="{{ asset('/js/doctor/create.js') }}"></script> --}}
+<script src="{{ asset('/js/validate/validation.js') }}"></script>
+<script>
+
+  $(document).ready(() => {
+      $('#date_birth').datepicker('val');
+  });
+
+</script>
 @endsection

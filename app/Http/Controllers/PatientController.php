@@ -182,6 +182,9 @@ class PatientController extends Controller
   }
 
   public function count_patients(){
+
+    Gate::authorize('haveaccess','doctor.dashboard');
+
       $patients = User::whereHas('roles', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
       $query->where('name', 'Paciente')->where('creator_id','=',auth()->id());
       })->count();

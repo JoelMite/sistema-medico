@@ -247,6 +247,8 @@ class AppointmentMedicalController extends Controller
 
   public function pendingAppointments(){
 
+    Gate::authorize('haveaccess','doctor.dashboard');
+
     $pendingAppointments = AppointmentMedical::where('status', 'Reservada')
     ->where('doctor_id', auth()->id())->count();
     return response()->json($pendingAppointments);
@@ -255,6 +257,8 @@ class AppointmentMedicalController extends Controller
 
   public function confirmedAppointments(){
 
+    Gate::authorize('haveaccess','doctor.dashboard');
+
     $confirmedAppointments = AppointmentMedical::where('status', 'Confirmada')
     ->where('doctor_id', auth()->id())->count();
     return response()->json($confirmedAppointments);
@@ -262,6 +266,8 @@ class AppointmentMedicalController extends Controller
   }
 
   public function attendedAppointments(){
+
+    Gate::authorize('haveaccess','doctor.dashboard');
 
     $attendedAppointments = AppointmentMedical::where('status', 'Atendida')
     ->where('doctor_id', auth()->id())->count();

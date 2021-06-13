@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <!-- <div class="row justify-content-center">
+<!-- <div class="row justify-content-center">
     </div> -->
 <!--<div class="row">
   <div class="col-md-12 mb-4">
@@ -51,15 +51,15 @@
         </div>
       </div>
       <div class="card-body"> -->
-        <!-- Chart -->
-        <!-- <div class="chart"> -->
-          <!-- Chart wrapper -->
-          <!-- <canvas id="chart-sales" class="chart-canvas"></canvas>
+<!-- Chart -->
+<!-- <div class="chart"> -->
+<!-- Chart wrapper -->
+<!-- <canvas id="chart-sales" class="chart-canvas"></canvas>
         </div>
       </div>
     </div>
   </div> -->
-  <!-- <div class="col-xl-4">
+<!-- <div class="col-xl-4">
     <div class="card shadow">
       <div class="card-header bg-transparent">
         <div class="row align-items-center">
@@ -70,8 +70,8 @@
         </div>
       </div>
       <div class="card-body"> -->
-        <!-- Chart -->
-        <!-- <div class="chart">
+<!-- Chart -->
+<!-- <div class="chart">
           <canvas id="chart-orders" class="chart-canvas"></canvas>
         </div>
       </div>
@@ -80,34 +80,34 @@
 </div> -->
 <!-- <div class="row mt-5">
   <div class="col-xl-8 mb-5 mb-xl-0"> -->
-    <div class="card shadow">
-      <div class="card-header border-0">
+<div class="card shadow">
+    <div class="card-header border-0">
         <div class="row align-items-center">
-          <div class="col">
-            <h3 class="mb-0">Editar Rol</h3>
-          </div>
-          <div class="col text-right">
-            <a href="{{url('roles')}}" class="btn btn-sm btn-default">
-              Cancelar y Volver
-            </a>
-          </div>
-        </div>
-        </div>
-        <div class="card-body">
-          @if ($errors->any())
-            <div class="alert alert-danger" role="alert">
-              <ul>
-                @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-                @endforeach
-              </ul>
+            <div class="col">
+                <h3 class="mb-0">Editar Rol</h3>
             </div>
-          @endif
-          <form action="{{ url('roles/'.$role->id) }}" method="post">
+            <div class="col text-right">
+                <a href="{{url('roles')}}" class="btn btn-warning">
+                    Volver
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        @if ($errors->any())
+        <div class="alert alert-danger" role="alert">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+        <form action="{{ url('roles/'.$role->id) }}" method="post">
             @csrf
             @method('PUT')
 
-            <<div class="form-row">
+            <div class="form-row">
                 <div class="col-md-4 mb-3">
                     <div class="form-group">
                         <label class="form-control-label">Nombre del rol</label>
@@ -120,106 +120,104 @@
                     </div>
                 </div>
 
-                  <div class="col-md-8 mb-3">
-                      <div class="form-group">
-                          <label class="form-control-label">Descripción</label>
-                          <div class="input-group">
-                              <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="fas fa-comments"></i></span>
-                              </div>
-                              <input type="text" name="description" class="form-control" value="{{ old('description', $role->description) }}" required>
-                          </div>
-                      </div>
-                  </div>
-
+                <div class="col-md-8 mb-3">
                     <div class="form-group">
-                        <label class="form-control-label">Permisos</label>
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label>Gestionar Pacientes</label>
-                                <select class="form-control selectpicker" multiple data-selected-text-format="count" multiple data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
-                                  title="Seleccione una o varios permisos">
-                                    @foreach ($permissions_patients as $permission_patient)
-                                    <option value="{{ $permission_patient->id }}">{{ $permission_patient->name }}</option>
-                                    @endforeach
-                                </select>
+                        <label class="form-control-label">Descripción</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-comments"></i></span>
                             </div>
-                            <div class="col-md-3 mb-3">
-                                <label>Gestionar Doctores</label>
-                                <select class="form-control selectpicker" multiple data-selected-text-format="count" multiple data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
-                                  title="Seleccione una o varios permisos">
-                                    @foreach ($permissions_doctor as $permission_doctor)
-                                    <option value="{{ $permission_doctor->id }}">{{ $permission_doctor->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label>Gestionar Roles</label>
-                                <select class="form-control selectpicker" multiple data-selected-text-format="count" multiple data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
-                                  title="Seleccione una o varios permisos">
-                                    @foreach ($permissions_role as $permission_role)
-                                    <option value="{{ $permission_role->id }}">{{ $permission_role->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label>Gestionar Especialidades</label>
-                                <select class="form-control selectpicker" multiple data-selected-text-format="count" multiple data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
-                                  title="Seleccione una o varios permisos">
-                                    @foreach ($permissions_specialty as $permission_specialty)
-                                    <option value="{{ $permission_specialty->id }}">{{ $permission_specialty->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label>Gestionar Estado de Cuenta</label>
-                                <select class="form-control selectpicker" multiple data-selected-text-format="count" multiple data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
-                                  title="Seleccione una o varios permisos">
-                                    @foreach ($permissions_user as $permission_user)
-                                    <option value="{{ $permission_user->id }}">{{ $permission_user->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label>Gestionar Historia Clinica</label>
-                                <select class="form-control selectpicker" multiple data-selected-text-format="count" multiple data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
-                                  title="Seleccione una o varios permisos">
-                                    @foreach ($permissions_history_clinic as $permission_history_clinic)
-                                    <option value="{{ $permission_history_clinic->id }}">{{ $permission_history_clinic->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label>Gestionar Consultas y Citas Médicas</label>
-                                <select class="form-control selectpicker" multiple data-selected-text-format="count" multiple data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
-                                  title="Seleccione una o varios permisos">
-                                    @foreach ($permissions_consultation_appointment_medical as $permission_consultation_appointment_medical)
-                                    <option value="{{ $permission_consultation_appointment_medical->id }}">{{ $permission_consultation_appointment_medical->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-2">
-                                <label>Gestionar Dashboard</label>
-                                <select class="form-control selectpicker" multiple data-selected-text-format="count" multiple data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
-                                  title="Seleccione una o varios permisos">
-                                    @foreach ($permissions_dashboard as $permission_dashboard)
-                                    <option value="{{ $permission_dashboard->id }}">{{ $permission_dashboard->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            <input type="text" name="description" class="form-control" value="{{ old('description', $role->description) }}" required>
                         </div>
                     </div>
-                  </div>
-                    <button type="submit" class="btn btn-success">
-                        Guardar
-                    </button>
-        </form>
-      </div>
-      </div>
+                </div>
 
-      <!-- <div class="table-responsive"> -->
-        <!-- Rols table -->
-        <!-- <table class="table align-items-center table-flush">
+                <div class="form-group">
+                    <label class="form-control-label">Permisos</label>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <label>Gestionar Pacientes</label>
+                            <select class="form-control selectpicker" multiple data-selected-text-format="count" data-actions-box="true" name="permissions[]" id="permissions_patient_id" data-style="btn-primary"
+                              title="Seleccione una o varios permisos">
+                                @foreach ($permissions_patient as $permission_patient)
+                                <option value="{{ $permission_patient->id }}">{{ $permission_patient->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label>Gestionar Doctores</label>
+                            <select class="form-control selectpicker" multiple data-selected-text-format="count" data-actions-box="true" name="permissions[]" id="permissions_doctor_id" data-style="btn-primary"
+                              title="Seleccione una o varios permisos">
+                                @foreach ($permissions_doctor as $permission_doctor)
+                                <option value="{{ $permission_doctor->id }}">{{ $permission_doctor->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label>Gestionar Roles</label>
+                            <select class="form-control selectpicker" multiple data-selected-text-format="count" data-actions-box="true" name="permissions[]" id="permissions_role_id" data-style="btn-primary" title="Seleccione una o varios permisos">
+                                @foreach ($permissions_role as $permission_role)
+                                <option value="{{ $permission_role->id }}">{{ $permission_role->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label>Gestionar Especialidades</label>
+                            <select class="form-control selectpicker" multiple data-selected-text-format="count" data-actions-box="true" name="permissions[]" id="permissions_specialty_id" data-style="btn-primary"
+                              title="Seleccione una o varios permisos">
+                                @foreach ($permissions_specialty as $permission_specialty)
+                                <option value="{{ $permission_specialty->id }}">{{ $permission_specialty->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label>Gestionar Estado de Cuenta</label>
+                            <select class="form-control selectpicker" multiple data-selected-text-format="count" data-actions-box="true" name="permissions[]" id="permissions_user_id" data-style="btn-primary" title="Seleccione una o varios permisos">
+                                @foreach ($permissions_user as $permission_user)
+                                <option value="{{ $permission_user->id }}">{{ $permission_user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label>Gestionar Historia Clinica</label>
+                            <select class="form-control selectpicker" multiple data-selected-text-format="count" data-actions-box="true" name="permissions[]" id="permissions_history_clinic_id" data-style="btn-primary"
+                              title="Seleccione una o varios permisos">
+                                @foreach ($permissions_history_clinic as $permission_history_clinic)
+                                <option value="{{ $permission_history_clinic->id }}">{{ $permission_history_clinic->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label>Gestionar Consultas y Citas Médicas</label>
+                            <select class="form-control selectpicker" multiple data-selected-text-format="count" data-actions-box="true" name="permissions[]" id="permissions_consultation_appointment_medical_id" data-style="btn-primary"
+                              title="Seleccione una o varios permisos">
+                                @foreach ($permissions_consultation_appointment_medical as $permission_consultation_appointment_medical)
+                                <option value="{{ $permission_consultation_appointment_medical->id }}">{{ $permission_consultation_appointment_medical->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label>Gestionar Dashboard</label>
+                            <select class="form-control selectpicker" multiple data-selected-text-format="count" data-actions-box="true" name="permissions[]" id="permissions_dashboard_id" data-style="btn-primary"
+                              title="Seleccione una o varios permisos">
+                                @foreach ($permissions_dashboard as $permission_dashboard)
+                                <option value="{{ $permission_dashboard->id }}">{{ $permission_dashboard->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">
+                Guardar
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- <div class="table-responsive"> -->
+<!-- Rols table -->
+<!-- <table class="table align-items-center table-flush">
           <thead class="thead-light">
             <tr>
               <th scope="col">Nombre</th>
@@ -244,8 +242,8 @@
         </table>
       </div>
     </div> -->
-  <!-- </div> -->
-  <!-- <div class="col-xl-4">
+<!-- </div> -->
+<!-- <div class="col-xl-4">
     <div class="card shadow">
       <div class="card-header border-0">
         <div class="row align-items-center">
@@ -258,8 +256,8 @@
         </div>
       </div>
       <div class="table-responsive"> -->
-        <!-- Projects table -->
-        <!-- <table class="table align-items-center table-flush">
+<!-- Projects table -->
+<!-- <table class="table align-items-center table-flush">
           <thead class="thead-light">
             <tr>
               <th scope="col">Referral</th>
@@ -370,4 +368,16 @@
 @section('scripts')
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script>
+    $(document).ready(() => {
+        $('#permissions_patient_id').selectpicker('val',  @json($permissions_patient_id));
+        $('#permissions_doctor_id').selectpicker('val',  @json($permissions_doctor_id));
+        $('#permissions_role_id').selectpicker('val',  @json($permissions_role_id));
+        $('#permissions_specialty_id').selectpicker('val',  @json($permissions_specialty_id));
+        $('#permissions_user_id').selectpicker('val',  @json($permissions_user_id));
+        $('#permissions_history_clinic_id').selectpicker('val',  @json($permissions_history_clinic_id));
+        $('#permissions_consultation_appointment_medical_id').selectpicker('val',  @json($permissions_consultation_appointment_medical_id));
+        $('#permissions_dashboard_id').selectpicker('val',  @json($permissions_dashboard_id));
+    });
+</script>
 @endsection

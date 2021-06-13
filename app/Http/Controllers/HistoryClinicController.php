@@ -216,8 +216,8 @@ class HistoryClinicController extends Controller
       // $user->description = $request->input('description');
       // $user->save(); // Insertar
 
-      $notification = "El usuario se ha registrado correctamente.";
-      return redirect('/histories')->with(compact('notification'));
+      $success = "Se ha registrado correctamente la historia clínica.";
+      return redirect('/histories')->with(compact('success'));
 
     }
 
@@ -250,12 +250,12 @@ class HistoryClinicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(HistoryClinic $history)
     {
 
       Gate::authorize('haveaccess','historyclinic.edit');
 
-        //
+      //return view('specialties.edit', compact('specialty'));
     }
 
     /**
@@ -265,7 +265,7 @@ class HistoryClinicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
     }

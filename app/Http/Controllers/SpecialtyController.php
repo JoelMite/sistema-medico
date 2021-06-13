@@ -62,8 +62,8 @@ class SpecialtyController extends Controller
         $specialty->description = $request->input('description');
         $specialty->save(); // Insertar
 
-        $notification = "La especialidad se ha registrado correctamente.";
-        return redirect('/specialties')->with(compact('notification'));
+        $success = "La especialidad se ha registrado correctamente.";
+        return redirect('/specialties')->with(compact('success'));
       }
 
   //  Metodo PUT Editar Especialidades
@@ -76,8 +76,8 @@ class SpecialtyController extends Controller
         $specialty->description = $request->input('description');
         $specialty->save(); // Editar
 
-        $notification = "La especialidad se ha actualizado correctamente.";
-        return redirect('/specialties')->with(compact('notification'));
+        $success = "La especialidad se ha actualizado correctamente.";
+        return redirect('/specialties')->with(compact('success'));
       }
 
 

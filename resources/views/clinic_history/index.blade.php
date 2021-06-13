@@ -89,18 +89,18 @@
         </div>
       </div>
 
-      @if(session('notification'))
+      {{-- @if(session('notification'))
       <div class="card-body">
         <div class="alert alert-success" role="alert">
           {{ session('notification') }}
         </div>
       </div>
-      @endif
+      @endif --}}
 
 
-      <div class="table-responsive">
+      <div class="table-responsive py-4">
         <!-- doctores table -->
-        <table class="table align-items-center table-flush">
+        <table class="table table-striped table-bordered" id="datatable">
           <thead class="thead-light">
             <tr>
               <!-- <th scope="col">Nombre</th> -->
@@ -137,6 +137,7 @@
                   </td>
                   <td>
                     <!-- <a href="#" class="btn btn-sm btn-primary">Editar HC</a> -->
+                    <a href="{{ url('/histories/'.$person->history_clinic['id'].'/edit') }}" class="btn btn-sm btn-primary">Editar HC</a>
                     <a href="{{ url('/histories/'.$person->history_clinic['id']) }}" class="btn btn-sm btn-warning">Ver HC</a>
                   </td>
                 </tr>
@@ -162,5 +163,26 @@
         </table>
       </div>
     </div>
+
+@endsection
+
+@section('scripts')
+
+<script src="{{ asset('/js/datatable/table.js') }}"></script>
+
+  @if(session('success'))
+      <script>
+      $.notify({
+        title: '<strong>Exito!</strong><br>',
+        message: '{{ session('success') }}'
+      },{
+        type: 'success',
+        animate: {
+          enter: 'animated bounceInDown',
+          exit: 'animated bounceOutUp'
+        }
+      });
+      </script>
+  @endif
 
 @endsection

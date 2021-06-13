@@ -137,7 +137,7 @@
                                 <label>Gestionar Pacientes</label>
                                 <select class="form-control selectpicker" multiple data-selected-text-format="count" multiple data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
                                   title="Seleccione una o varios permisos">
-                                    @foreach ($permissions_patients as $permission_patient)
+                                    @foreach ($permissions_patient as $permission_patient)
                                     <option value="{{ $permission_patient->id }}">{{ $permission_patient->name }}</option>
                                     @endforeach
                                 </select>

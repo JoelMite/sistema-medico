@@ -30,7 +30,7 @@
             </ul>
         </div>
         @endif
-        <form class="needs-validation" action="{{ url('doctors/'.$doctor->id) }}" method="post">
+        <form class="needs-validation" action="{{ url('doctors/'.$doctor->id) }}" method="post" novalidate>
             @csrf
             @method('PUT')
 
@@ -113,7 +113,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-key-25"></i></span>
                                         </div>
-                                        <input type="text" name="password" class="form-control" value="" required>
+                                        <input type="text" name="password" class="form-control" value="">
                                         <div class="invalid-feedback">Este campo es obligatorio.</div>
                                     </div>
                                     <p>- Ingrese una contraseña sólo si desea modificarla.</p>
@@ -272,7 +272,9 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="{{ asset('asset/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-<script src="{{ asset('/js/doctor/create.js') }}"></script>
+{{-- <script src="{{ asset('/js/doctor/create.js') }}"></script> --}}
+<script src="{{ asset('/js/validate/validation.js') }}"></script>
+
 <script>
     $(document).ready(() => {
         $('#specialties').selectpicker('val', @json($specialty_ids));
@@ -281,6 +283,7 @@
         $('#sex').selectpicker('val', @json($persons->sex));
         // $('#roles').selectpicker('val', [3]);
         $('#roles').selectpicker('val', @json($role_ids));
+        $('#date_birth').datepicker('val');
     });
 </script>
 @endsection

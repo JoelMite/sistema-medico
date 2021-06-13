@@ -15,6 +15,10 @@
   <link href=" {{ asset('asset/vendor/nucleo/css/nucleo.css') }}" rel="stylesheet">
   <link href=" {{ asset('asset/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
   <link href=" {{ asset('asset/vendor/animate.css/animate.min.css') }}" rel="stylesheet">
+
+  <link href="{{ asset('asset/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('asset/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('asset/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}" rel="stylesheet">
   <!-- Argon CSS -->
   <link href=" {{ asset('asset/css/argon.min.css') }}" rel="stylesheet">
   {{-- <link href=" {{ asset('css/plantilla.css') }} " rel="stylesheet"> --}}
@@ -212,7 +216,7 @@
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Search form -->
-          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+          {{-- <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
             <div class="form-group mb-0">
               <div class="input-group input-group-alternative input-group-merge">
                 <div class="input-group-prepend">
@@ -224,7 +228,7 @@
             <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-          </form>
+          </form> --}}
           <!-- Navbar links -->
           <ul class="navbar-nav align-items-center ml-md-auto">
             <li class="nav-item d-xl-none">
@@ -569,7 +573,7 @@
     </div>
     <!-- Page content -->
 
-    <div class="container-fluid mt--6">
+    <div id="app" class="container-fluid mt--6">
       @yield('content')
 
       <!-- Footer -->
@@ -612,6 +616,15 @@
   <script src=" {{ asset('asset/vendor/chart.js/dist/Chart.min.js') }}"></script>
   <script src=" {{ asset('asset/vendor/chart.js/dist/Chart.extension.js') }}"></script>
   <script src=" {{ asset('asset/vendor/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
+
+  <script src=" {{ asset('asset/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+  <script src=" {{ asset('asset/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+  <script src=" {{ asset('asset/vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+  <script src=" {{ asset('asset/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script>
+  <script src=" {{ asset('asset/vendor/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+  <script src=" {{ asset('asset/vendor/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
+  <script src=" {{ asset('asset/vendor/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+  <script src=" {{ asset('asset/vendor/datatables.net-select/js/dataTables.select.min.js') }}"></script>
 
   @yield('scripts')
   <!-- Argon JS -->

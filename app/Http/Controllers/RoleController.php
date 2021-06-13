@@ -28,17 +28,18 @@ class RoleController extends Controller
 
       Gate::authorize('haveaccess','role.create');
 
-      $permissions_patients = Permission::where('name', 'LIKE', '%paciente%')->orWhere('name', 'LIKE', '%perfil%')->get(); // 4 resultados
+      $permissions_patient = Permission::where('name', 'LIKE', '%paciente%')->orWhere('name', 'LIKE', '%perfil%')->get(); // 4 resultados
       $permissions_doctor = Permission::where('name', 'LIKE', '%medico%')->where('name', 'NOT LIKE', '%dashboard%')->orWhere('name', 'LIKE', '%perfil%')->orWhere('name', 'LIKE', '%horario%')->get(); // 6 resultados
       $permissions_role = Permission::where('name', 'LIKE', '%rol%')->get(); // 4 resultados
       $permissions_specialty = Permission::where('name', 'LIKE', '%especialidad%')->get(); // 4 resultados
       $permissions_user = Permission::where('name', 'LIKE', '%usuario%')->get(); // 2 resultados
       $permissions_history_clinic = Permission::where('name', 'LIKE', '%clinica%')->get(); // 4 resultados
-      $permissions_consultation_appointment_medical = Permission::where('name', 'LIKE', '%medica%')->get(); // 9 resultados
+      $permissions_consultation_appointment_medical = Permission::where('name', 'LIKE', '%medica%')->where('name', 'NOT LIKE', '%(Paciente)%')
+      ->where('name', 'NOT LIKE', '%Pacientes%')->get(); // 9 resultados
       $permissions_dashboard = Permission::where('name', 'LIKE', '%dashboard%')->get(); // 2 resultados
 
       //return $permissions_doctor;
-      return view('roles.create', compact('permissions_patients', 'permissions_doctor', 'permissions_role', 'permissions_specialty', 'permissions_user', 'permissions_history_clinic', 'permissions_consultation_appointment_medical', 'permissions_dashboard'));
+      return view('roles.create', compact('permissions_patient', 'permissions_doctor', 'permissions_role', 'permissions_specialty', 'permissions_user', 'permissions_history_clinic', 'permissions_consultation_appointment_medical', 'permissions_dashboard'));
     }
 
 //  Metodo GET Abrir Editar Formulario de un Rol
@@ -46,43 +47,57 @@ class RoleController extends Controller
 
       Gate::authorize('haveaccess','role.edit');
 
-      $permissions_patients = $role->permissions()->where(function ($query) {
+      $permissions_patient = Permission::where('name', 'LIKE', '%paciente%')->orWhere('name', 'LIKE', '%perfil%')->get(); // 4 resultados
+      $permissions_doctor = Permission::where('name', 'LIKE', '%medico%')->where('name', 'NOT LIKE', '%dashboard%')->orWhere('name', 'LIKE', '%perfil%')->orWhere('name', 'LIKE', '%horario%')->get(); // 6 resultados
+      $permissions_role = Permission::where('name', 'LIKE', '%rol%')->get(); // 4 resultados
+      $permissions_specialty = Permission::where('name', 'LIKE', '%especialidad%')->get(); // 4 resultados
+      $permissions_user = Permission::where('name', 'LIKE', '%usuario%')->get(); // 2 resultados
+      $permissions_history_clinic = Permission::where('name', 'LIKE', '%clinica%')->get(); // 4 resultados
+      $permissions_consultation_appointment_medical = Permission::where('name', 'LIKE', '%medica%')->where('name', 'NOT LIKE', '%(Paciente)%')
+      ->where('name', 'NOT LIKE', '%Pacientes%')->get(); // 9 resultados
+      $permissions_dashboard = Permission::where('name', 'LIKE', '%dashboard%')->get(); // 2 resultados
+
+      $permissions_patient_id = $role->permissions()->where(function ($query) {
       $query->where('name', 'LIKE', '%paciente%')
       ->orWhere('name', 'LIKE', '%perfil%');
-      })->get();
+      })->pluck('permissions.id');
 
-      $permissions_doctor = $role->permissions()->where(function ($query) {
+      $permissions_doctor_id = $role->permissions()->where(function ($query) {
       $query->where('name', 'LIKE', '%medico%')
       ->where('name', 'NOT LIKE', '%dashboard%')
       ->orWhere('name', 'LIKE', '%perfil%')
       ->orWhere('name', 'LIKE', '%horario%');
-      })->get();
+      })->pluck('permissions.id');
 
-      $permissions_role = $role->permissions()->where(function ($query) {
-      $query->where('name', 'LIKE', '%rol%');})->get();
+      $permissions_role_id = $role->permissions()->where(function ($query) {
+      $query->where('name', 'LIKE', '%rol%');})->pluck('permissions.id');
 
-      $permissions_specialty = $role->permissions()->where(function ($query) {
-      $query->where('name', 'LIKE', '%especialidad%');})->get();
+      $permissions_specialty_id = $role->permissions()->where(function ($query) {
+      $query->where('name', 'LIKE', '%especialidad%');})->pluck('permissions.id');
 
-      $permissions_user = $role->permissions()->where(function ($query) {
-      $query->where('name', 'LIKE', '%usuario%');})->get();
+      $permissions_user_id = $role->permissions()->where(function ($query) {
+      $query->where('name', 'LIKE', '%usuario%');})->pluck('permissions.id');
 
-      $permissions_history_clinic = $role->permissions()->where(function ($query) {
-      $query->where('name', 'LIKE', '%clinica%');})->get();
+      $permissions_history_clinic_id = $role->permissions()->where(function ($query) {
+      $query->where('name', 'LIKE', '%clinica%');})->pluck('permissions.id');
 
-      $permissions_consultation_appointment_medical = $role->permissions()->where(function ($query) {
-      $query->where('name', 'LIKE', '%medica%');})->get();
+      $permissions_consultation_appointment_medical_id = $role->permissions()->where(function ($query) {
+      $query->where('name', 'LIKE', '%medica%')->where('name', 'NOT LIKE', '%(Paciente)%')
+      ->where('name', 'NOT LIKE', '%Pacientes%');})->pluck('permissions.id');
 
-      $permissions_dashboard = $role->permissions()->where(function ($query) {
-      $query->where('name', 'LIKE', '%dashboard%');})->get();
-
+      $permissions_dashboard_id = $role->permissions()->where(function ($query) {
+      $query->where('name', 'LIKE', '%dashboard%');})->pluck('permissions.id');
 
       // $permissions_patients = $role::whereHas('permissions')->get();
 
       $time_now = Carbon::now(); // Tiempo Actual
       $time_update = Carbon::parse($role->created_at)->floatDiffInDays($time_now->toDateTimeString());
       if ($time_update <= 0.25) { // Tiempo para actualizar maximo 6 horas
-        return view('roles.edit', compact('role', 'permissions_patients', 'permissions_doctor', 'permissions_role', 'permissions_specialty', 'permissions_user', 'permissions_history_clinic', 'permissions_consultation_appointment_medical', 'permissions_dashboard'));
+        return view('roles.edit', compact('role', 'permissions_patient', 'permissions_doctor',
+        'permissions_role', 'permissions_specialty', 'permissions_user', 'permissions_history_clinic',
+        'permissions_consultation_appointment_medical', 'permissions_dashboard','permissions_patient_id', 'permissions_doctor_id',
+        'permissions_role_id', 'permissions_specialty_id', 'permissions_user_id', 'permissions_history_clinic_id',
+        'permissions_consultation_appointment_medical_id', 'permissions_dashboard_id'));
       }else{
         $warning = "El rol no se puede actualizar porque ha caducado el limite de tiempo.";
         return redirect('/roles')->with(compact('warning'));
@@ -122,8 +137,8 @@ class RoleController extends Controller
       // Insertar el rol con su permiso
       $role->permissions()->sync($request->input('permissions'));
 
-      $notification = "El rol se ha registrado correctamente.";
-      return redirect('/roles')->with(compact('notification'));
+      $success = "El rol se ha registrado correctamente.";
+      return redirect('/roles')->with(compact('success'));
     }
 
 //  Metodo PUT Editar Roles
@@ -136,7 +151,9 @@ class RoleController extends Controller
       $role->description = $request->input('description');
       $role->save(); // Editar
 
-      $notification = "El rol se ha actualizado correctamente.";
-      return redirect('/roles')->with(compact('notification'));
+      $role->permissions()->sync($request->input('permissions'));
+
+      $success = "El rol se ha actualizado correctamente.";
+      return redirect('/roles')->with(compact('success'));
     }
 }

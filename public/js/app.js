@@ -1978,7 +1978,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2006,8 +2005,11 @@ __webpack_require__.r(__webpack_exports__);
     //     }
     //  })
 
-    axios.get('specialties').then(function (response) {
+    axios.get('get/specialtiesAll').then(function (response) {
       _this.specialties = response.data;
+    });
+    $(document).ready(function () {
+      $('#date').datepicker('val');
     });
   },
   methods: {
@@ -2018,7 +2020,7 @@ __webpack_require__.r(__webpack_exports__);
       document.getElementById("doctor").disabled = true;
 
       if (this.selected_specialty != '') {
-        axios.get('doctors', {
+        axios.get('get/doctors', {
           params: {
             specialty_id: this.selected_specialty
           }
@@ -2038,7 +2040,7 @@ __webpack_require__.r(__webpack_exports__);
       this.morning = [];
 
       if (this.selected_date != '') {
-        axios.get('hours', {
+        axios.get('get/hours', {
           params: {
             date: this.selected_date,
             doctor_id: this.selected_doctor
@@ -20185,7 +20187,9 @@ var render = function() {
             _vm._l(_vm.specialties, function(specialty) {
               return _c("option", { domProps: { value: specialty.id } }, [
                 _vm._v(
-                  "\n            " + _vm._s(specialty.name) + "\n          "
+                  "\r\n                    " +
+                    _vm._s(specialty.name) +
+                    "\r\n                "
                 )
               ])
             })
@@ -20233,7 +20237,11 @@ var render = function() {
             _vm._v(" "),
             _vm._l(_vm.doctors, function(doctor) {
               return _c("option", { domProps: { value: doctor.id } }, [
-                _vm._v("\n            " + _vm._s(doctor.name) + "\n          ")
+                _vm._v(
+                  "\r\n                    " +
+                    _vm._s(doctor.name) +
+                    "\r\n                "
+                )
               ])
             })
           ],
@@ -20257,12 +20265,12 @@ var render = function() {
               expression: "selected_date"
             }
           ],
-          staticClass: "form-control",
+          staticClass: "form-control datepicker",
           attrs: {
             placeholder: "Seleccionar fecha",
             id: "date",
             name: "schedule_date",
-            type: "date"
+            type: "text"
           },
           domProps: { value: _vm.selected_date },
           on: {
@@ -20287,7 +20295,7 @@ var render = function() {
             { staticClass: "alert alert-info", attrs: { role: "alert" } },
             [
               _vm._v(
-                "\n          Seleccione un médico y una fecha para ver sus horarios disponibles.\n      "
+                "\r\n            Seleccione un médico y una fecha para ver sus horarios disponibles.\r\n        "
               )
             ]
           )
@@ -20298,7 +20306,7 @@ var render = function() {
             [
               _c("strong", [_vm._v("Lo sentimos!")]),
               _vm._v(
-                " No se encontraron horas disponibles para el medico en el dia seleccionado.\n      "
+                " No se encontraron horas disponibles para el medico en el dia seleccionado.\r\n        "
               )
             ]
           )
@@ -20350,11 +20358,11 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                " +
+                              "\r\n                            " +
                                 _vm._s(item.start) +
                                 " - " +
                                 _vm._s(item.end) +
-                                "\n              "
+                                "\r\n                        "
                             )
                           ]
                         )
@@ -20411,11 +20419,11 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                " +
+                              "\r\n                            " +
                                 _vm._s(item.start) +
                                 " - " +
                                 _vm._s(item.end) +
-                                "\n              "
+                                "\r\n                        "
                             )
                           ]
                         )
@@ -21337,7 +21345,7 @@ var staticRenderFns = [
           staticClass:
             "icon icon-shape bg-white text-dark rounded-circle shadow"
         },
-        [_c("i", { staticClass: "ni ni-bell-55" })]
+        [_c("i", { staticClass: "fas fa-user-check" })]
       )
     ])
   },
@@ -21352,7 +21360,7 @@ var staticRenderFns = [
           staticClass:
             "icon icon-shape bg-white text-dark rounded-circle shadow"
         },
-        [_c("i", { staticClass: "ni ni-collection" })]
+        [_c("i", { staticClass: "fas fa-user-times" })]
       )
     ])
   }

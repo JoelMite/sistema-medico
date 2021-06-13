@@ -163,8 +163,8 @@ class DoctorController extends Controller
       // $user->description = $request->input('description');
       // $user->save(); // Insertar
 
-      $notification = "El usuario se ha registrado correctamente.";
-      return redirect('/doctors')->with(compact('notification'));
+      $success = "El usuario se ha registrado correctamente.";
+      return redirect('/doctors')->with(compact('success'));
     }
 
     /**
@@ -219,13 +219,64 @@ class DoctorController extends Controller
      */
     public function update(Request $request, User $doctor)
     {
-      $this->validation($request);
+      // $this->validation($request);
+
+      //  Validar a los datos del formulario doctor a nivel de servidor
+      $rules = [
+        'name' => 'required',
+        'lastname' => 'required',
+        // 'dni' => 'bail|required|unique:persons,dni|ecuador:ci|digits:10',
+        'dni' => 'bail|required|ecuador:ci|digits:10',
+        // 'email' => 'required|unique:users,email|email',
+        'email' => 'required|email',
+        'password' => 'nullable|min:6',
+        'specialties' => 'required|array',
+        'phone' => 'required|max:15',
+        'address' => 'required',
+        'city' => 'required',
+        'etnia' => 'required',
+        'date_birth' => 'required|date',
+        'sex' => 'required',
+        'roles' => 'required|array'
+
+      ];
+      $messages = [
+        'name.required' => 'Es necesario ingresar los nombres.',
+        'lastname.required' => 'Es necesario ingresar los apellidos.',
+        'dni.required' => 'Es necesario ingresar un DNI.',
+        // 'dni.unique' => 'Este DNI ya se encuentra registrado.',
+        'dni.ecuador' => 'El DNI que ha ingresado es invalido.',
+        'dni.digits' => 'El DNI que tiene que tener exactamente 10 dígitos.',
+        'email.required' => 'Es necesario ingresar un correo.',
+        // 'email.unique' => 'Este email ya se encuentra registrado.',
+        'email.email' => 'Es necesario ingresar un correo válido.',
+        'password.required' => 'Es necesario ingresar una contraseña.',
+        'password.min' => 'La contraseña debe tener al menos 6 caracteres.',
+        'specialties.required' => 'Es necesario ingresar por lo menos una especialidad.',
+        'phone.required' => 'Es necesario ingresar un telefono.',
+        'phone.max' => 'El número telefónico no puede exceder los 15 dígitos.',
+        'address.required' => 'Es necesario ingresar una direccion.',
+        'city.required' => 'Es necesario ingresar una ciudad.',
+        'etnia.required' => 'Es necesario ingresar una etnia.',
+        'date_birth.required' => 'Es necesario ingresar una fecha de nacimiento.',
+        'date_birth.date' => 'Es necesario ingresar una fecha de nacimiento válida.',
+        'sex.required' => 'Es necesario ingresar un sexo.',
+        'roles.required' => 'Es necesario ingresar por lo menos un rol.'
+      ];
+      $this->validate($request, $rules, $messages);
 
       $date_birth = Carbon::parse($request['date_birth'])->age;
 
       $doctor->email = $request->input('email');
-      $doctor->password = $request->input('password');
+      $password = $request->input('password');
+
+      if ($password)
+      $doctor->password = bcrypt($request->input('password'));
+
       $doctor->save(); // Editar
+
+      $doctor->specialties()->sync($request->input('specialties'));
+      $doctor->roles()->sync($request->input('roles'));
 
       $person = $doctor->person;
 
@@ -242,8 +293,8 @@ class DoctorController extends Controller
 
       $person->save();
 
-      $notification = "El rol se ha actualizado correctamente.";
-      return redirect('/doctors')->with(compact('notification'));
+      $success = "El usuario se ha actualizado correctamente.";
+      return redirect('/doctors')->with(compact('success'));
     }
 
     /**
@@ -266,19 +317,21 @@ class DoctorController extends Controller
       $doctor = User::findOrfail($id);
       if($doctor->state == "403"){
         $doctor->state = "200";
-        $notification = "El usuario a sido activado";
+        $success = "El usuario a sido activado";
       }
       elseif($doctor->state == "200"){
         $doctor->state = "403";
-        $notification = "El usuario a sido baneado";
+        $success = "El usuario a sido baneado";
       }
         if ($doctor->save()){ // Editar
-        return redirect('/doctors')->with(compact('notification'));
+        return redirect('/doctors')->with(compact('success'));
         // return dd($notification);
       }
     }
 
     public function count_users(){
+
+      Gate::authorize('haveaccess','administrator.dashboard');
 
       $user = User::whereHas('roles', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
       $query->where('name', 'Medico')->where('creator_id','=',auth()->id());
@@ -289,6 +342,8 @@ class DoctorController extends Controller
 
     public function activeUsers(){
 
+      Gate::authorize('haveaccess','administrator.dashboard');
+
       $user = User::whereHas('roles', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
       $query->where('name', 'Medico')->where('creator_id','=',auth()->id())->where('state', '200');
       })->count();
@@ -297,6 +352,8 @@ class DoctorController extends Controller
     }
 
     public function bannedUsers(){
+
+      Gate::authorize('haveaccess','administrator.dashboard');
 
       $user = User::whereHas('roles', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
       $query->where('name', 'Medico')->where('creator_id','=',auth()->id())->where('state', '403');

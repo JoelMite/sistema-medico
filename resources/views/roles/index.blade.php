@@ -114,27 +114,33 @@
           @endif --}}
 
 
-      <div class="table-responsive">
-        <!-- Roles table -->
-        <table class="table align-items-center table-flush">
+      <div class="table-responsive py-4">
+        {{-- Roles Tables --}}
+        <table class="table table-striped table-bordered" id="datatable">
           <thead class="thead-light">
             <tr>
               <th scope="col">Nombre</th>
               <th scope="col">Descripcion</th>
-              <th scope="col">Permisos</th>
+              <th scope="col">Opciones</th>
+              {{-- <th scope="col">Permisos</th> --}}
             </tr>
           </thead>
           <tbody>
             @foreach ($roles as $role)
             <tr>
-              <th scope="row">
+              <td>
                 {{ $role->name }}
               </th>
               <td>
                 {{ $role->description }}
               </td>
-              <td class="text-right">
-                  <div class="dropdown">
+              {{-- <td>
+                @foreach ($role->permissions as $permissions)
+                  <span class="badge badge-pill badge-info badge-lg">{{ $permissions->name }}</span>
+                @endforeach
+              </td> --}}
+              <td>
+                  {{-- <div class="dropdown">
                     <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v"></i>
                     </a>
@@ -142,9 +148,9 @@
                       <a class="dropdown-item" href="{{ url('/roles/'.$role->id.'/edit') }}">Editar Rol</a>
                       <a class="dropdown-item" href="#">Ver Rol</a>
                     </div>
-                  </div>
-                {{-- <a href="{{ url('/roles/'.$role->id.'/edit') }}" class="btn btn-sm btn-primary">Editar</a> --}}
-                {{-- <a href="" class="btn btn-sm btn-danger">Eliminar</a> --}}
+                  </div> --}}
+                <a href="{{ url('/roles/'.$role->id.'/edit') }}" class="btn btn-sm btn-primary">Editar</a>
+                <a href="#" class="btn btn-sm btn-warning">Ver</a>
               </td>
             </tr>
             @endforeach
@@ -277,6 +283,8 @@
 @section('scripts')
   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script> --}}
 
+<script src="{{ asset('/js/datatable/table.js') }}"></script>
+
   @if(session('warning'))
     <script>
     $.notify({
@@ -292,17 +300,17 @@
     </script>
   @endif
 
-  @if(session('notification'))
+  @if(session('success'))
       <script>
       $.notify({
       	title: '<strong>Exito!</strong><br>',
-      	message: '{{ session('notification') }}'
+      	message: '{{ session('success') }}'
       },{
       	type: 'success',
         animate: {
-      		enter: 'animated bounceInDown',
-      		exit: 'animated bounceOutUp'
-    	  }
+      		enter: 'animated fadeInRight',
+      		exit: 'animated fadeOutRight'
+      	}
       });
       </script>
   @endif
