@@ -31,7 +31,7 @@
             @csrf
             @method('PUT')
             <div class="form-group">
-                <label class="form-control-label">Nombre de la Especialidad</label>
+                <label class="form-control-label">Nombre de la especialidad</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-address-card"></i></span>

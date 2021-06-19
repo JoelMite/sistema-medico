@@ -79,7 +79,7 @@
       <div class="card-header border-0">
         <div class="row align-items-center">
           <div class="col">
-            <h3 class="mb-0">Historia Clinica</h3>
+            <h3 class="mb-0">Historia Clínica</h3>
           </div>
           <!-- <div class="col text-right">
             <a href="{{url('clinic_history/create')}}" class="btn btn-sm btn-success">
@@ -127,7 +127,7 @@
             @endforeach --}}
 
           @foreach ($havePersonHistory as $person)
-            @if ($person->user->creator_id == auth()->id())
+            {{-- @if ($person->user->creator_id == auth()->id()) --}}
                 <tr>
                   <td>
                     {{ $person->name }}
@@ -137,15 +137,15 @@
                   </td>
                   <td>
                     <!-- <a href="#" class="btn btn-sm btn-primary">Editar HC</a> -->
-                    <a href="{{ url('/histories/'.$person->history_clinic['id'].'/edit') }}" class="btn btn-sm btn-primary">Editar HC</a>
-                    <a href="{{ url('/histories/'.$person->history_clinic['id']) }}" class="btn btn-sm btn-warning">Ver HC</a>
+                    <a href="{{ url('/histories/'.$person->history_clinic->id.'/edit') }}" class="btn btn-sm btn-primary">Editar HC</a>
+                    <a href="{{ url('/histories/'.$person->history_clinic->id) }}" class="btn btn-sm btn-warning">Ver HC</a>
                   </td>
                 </tr>
-              @endif
+              {{-- @endif --}}
             @endforeach
 
             @foreach ($nohavePersonHistory as $person)
-              @if ($person->user->creator_id == auth()->id())
+              {{-- @if ($person->user->creator_id == auth()->id()) --}}
                   <tr>
                     <td>
                       {{ $person->name }}
@@ -154,10 +154,10 @@
                       {{ $person->lastname }}
                     </td>
                     <td>
-                      <a href="{{ url('histories/'.$person->user->id.'/create') }}" class="btn btn-sm btn-success">Crear HC</a>
+                      <a href="{{ url('histories/'.$person->user_id.'/create') }}" class="btn btn-sm btn-success">Crear HC</a>
                     </td>
                   </tr>
-              @endif
+              {{-- @endif --}}
             @endforeach
           </tbody>
         </table>

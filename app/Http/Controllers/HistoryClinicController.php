@@ -11,6 +11,7 @@ use App\Models\MedicalConsultation;
 use App\Models\MedicalPrescription;
 use App\Models\LabTest;
 use DB;
+use Session;
 
 class HistoryClinicController extends Controller
 {
@@ -30,16 +31,53 @@ class HistoryClinicController extends Controller
 
       // $doctores = User::all();
       //$histories = History::all();
-      $nohavePersonHistory = Person::doesntHave('history_clinic')->get(); // Este metodo me retorna las personas que no tienen una historia clinica
-      $havePersonHistory = Person::has('history_clinic')->get();
+      // $nohavePersonHistory = Person::doesntHave('history_clinic')->get(); // Este metodo me retorna las personas que no tienen una historia clinica
+      // $havePersonHistory = Person::has('history_clinic')->get();
+
+      // $variable = Person::join("history_clinics", "history_clinics.person_id", "=", "persons.id")
+      // ->join("persons", "persons.id", "=", "history_clinics.person_id")
+      // ->get();
+
+      // return dd($variable);
+      //return view('clinic_history.index', compact('havePersonHistory', 'nohavePersonHistory'));
+
+      $havePersonHistory = Person::has('history_clinic')->whereHas('user', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
+      $query->where('creator_id','=',auth()->id());
+      })->with('history_clinic:person_id,id')->get(['id', 'name', 'lastname']);
+
+      $nohavePersonHistory = Person::doesntHave('history_clinic')->whereHas('user', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
+      $query->where('creator_id','=',auth()->id());
+      })->get(['name', 'lastname', 'user_id']);
+
+      // $variable = User::has('specialties')->with('specialties')->get();
+
       return view('clinic_history.index', compact('havePersonHistory', 'nohavePersonHistory'));
 
-      // $variable = HistoryClinic::whereHas('person', function($query){
-      //   $query->where('person_id', '=', auth()->user()->person['id']);
-      // })->pluck('history_clinics.id');
-      //
-      //
-      // return  dd($variable);
+      // $variable = $nohavePersonHistory;
+      // $var = $variable
+      // $var = $variable->person();
+
+      // $noHaveHistory = DB::table("persons as p")
+      // ->Join("history_clinics as hc", function($join){
+      // 	$join->on("p.id", "=", "hc.person_id");
+      // })
+      // ->Join("users as u", function($join){
+      // 	$join->on("u.id", "=", "p.user_id");
+      // })
+      // ->where("u.creator_id", "=", auth()->id())
+      // ->where("hc.person_id", "=", "p.id")
+      // ->get();
+
+      // $noHaveHistory = Person::join("history_clinics", "history_clinics.person_id", "=", "persons.id")
+      // ->join("users", "users.id", "=", "persons.user_id")
+      // ->where("history_clinics.person_id", "=", "persons.id")
+      // ->where("users.creator_id", "=", auth()->id())
+      // ->get();
+
+      // $variable = $nohavePersonHistory->with([]);
+
+      //return  $havePersonHistory;
+
     }
 
     /**
@@ -53,8 +91,11 @@ class HistoryClinicController extends Controller
       Gate::authorize('haveaccess','historyclinic.create');
 
       $doctor = User::findOrfail($id);
-      $persons = $doctor->person;
-      return view('clinic_history.create', compact('persons'));
+      $person_id = $doctor->person->id;
+
+      Session::flash('person_id', "$person_id");
+
+      return view('clinic_history.create');
       //return $id;
     }
 
@@ -96,19 +137,18 @@ class HistoryClinicController extends Controller
       // $history->person_id = $request->input('id_person');
       // $history->save(); // Insertar
 
+      //return $request['id_person'];
+
+      $person_id = session('person_id');
+
       $history = HistoryClinic::create([
 
         'personal_history' => $request['personal_history'],
         'family_background' => $request['family_background'],
         'current_illness' => $request['current_illness'],
         'habits' => $request['habits'],
-        'person_id' => $request['id_person']
+        'person_id' => $person_id
       ]);
-
-
-
-
-
 
 
 
@@ -145,13 +185,6 @@ class HistoryClinicController extends Controller
       //   'medical_consultation_id' => $id_med_cons,
       //
       // ]);
-
-
-
-
-
-
-
 
 
 
@@ -255,7 +288,7 @@ class HistoryClinicController extends Controller
 
       Gate::authorize('haveaccess','historyclinic.edit');
 
-      //return view('specialties.edit', compact('specialty'));
+      return view('clinic_history.edit', compact('history'));
     }
 
     /**
@@ -265,9 +298,19 @@ class HistoryClinicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, HistoryClinic $history)
     {
-        //
+      $this->validation($request);
+
+      //  Editar Historia Clinica
+      $history->personal_history = $request->input('personal_history');
+      $history->family_background = $request->input('family_background');
+      $history->current_illness = $request->input('current_illness');
+      $history->habits = $request->input('habits');
+      $history->save(); // Editar
+
+      $success = "La historia clínica se ha actualizado correctamente.";
+      return redirect('/histories')->with(compact('success'));
     }
 
     /**
