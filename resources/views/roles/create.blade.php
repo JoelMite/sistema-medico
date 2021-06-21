@@ -135,7 +135,7 @@
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label>Gestionar Pacientes</label>
-                                <select class="form-control selectpicker" name="permissions[]" id="permissions" data-style="btn-primary" multiple
+                                <select class="form-control selectpicker" name="permissions[]" data-style="btn-primary" multiple
                                   title="Seleccione una o varios permisos">
                                     @foreach ($permissions_patient as $permission_patient)
                                     <option value="{{ $permission_patient->id }}">{{ $permission_patient->name }}</option>
