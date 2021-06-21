@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Models\Permission;
 use Carbon\Carbon;
+use DB;
 
 class RoleController extends Controller
 {
@@ -28,7 +29,7 @@ class RoleController extends Controller
 
       Gate::authorize('haveaccess','role.create');
 
-      $permissions_patient = Permission::all(); // 4 resultados
+      $permissions_patient = DB::table('permissions')->where('name', 'LIKE', '%paciente%')->orWhere('name', 'LIKE', '%perfil%')->get(); // 4 resultados
       $permissions_doctor = Permission::where('name', 'LIKE', '%medico%')->where('name', 'NOT LIKE', '%dashboard%')->orWhere('name', 'LIKE', '%perfil%')->orWhere('name', 'LIKE', '%horario%')->get(); // 6 resultados
       $permissions_role = Permission::where('name', 'LIKE', '%rol%')->get(); // 4 resultados
       $permissions_specialty = Permission::where('name', 'LIKE', '%especialidad%')->get(); // 4 resultados
