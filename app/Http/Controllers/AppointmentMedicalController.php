@@ -35,7 +35,7 @@ class AppointmentMedicalController extends Controller
       ->paginate(10);
 
     // return dd($role);
-    return view('appointments.index', compact('pendingAppointments', 'confirmedAppointments', 'oldAppointments', 'role'));
+    return view('appointments.index', compact('pendingAppointments', 'confirmedAppointments', 'oldAppointments'));
   }
 
   public function indexPatient()
@@ -53,7 +53,7 @@ class AppointmentMedicalController extends Controller
     ->where('patient_id', auth()->id())
     ->paginate(10);
 
-    return view('appointments.index', compact('pendingAppointments', 'confirmedAppointments', 'oldAppointments', 'role'));
+    return view('appointments.index', compact('pendingAppointments', 'confirmedAppointments', 'oldAppointments'));
 
   }
 

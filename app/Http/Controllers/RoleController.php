@@ -29,7 +29,10 @@ class RoleController extends Controller
 
       Gate::authorize('haveaccess','role.create');
 
-      $permissions_patient = DB::table('permissions')->where('name', 'LIKE', '%paciente%')->orWhere('name', 'LIKE', '%perfil%')->get(); // 4 resultados
+      // $permissions_all = Permission::get(['id', 'name']);
+      //return dd($permissions_all);
+      $permissions_patient = Permission::where('name', 'LIKE', '%paciente%')->orWhere('name', 'LIKE', '%perfil%')->get(); // 4 resultados
+      //$permissions_patient = $permissions_all->where('name', 'LIKE', '%paciente%'); // 4 resultados
       $permissions_doctor = Permission::where('name', 'LIKE', '%medico%')->where('name', 'NOT LIKE', '%dashboard%')->orWhere('name', 'LIKE', '%perfil%')->orWhere('name', 'LIKE', '%horario%')->get(); // 6 resultados
       $permissions_role = Permission::where('name', 'LIKE', '%rol%')->get(); // 4 resultados
       $permissions_specialty = Permission::where('name', 'LIKE', '%especialidad%')->get(); // 4 resultados
