@@ -42,8 +42,8 @@ class RoleController extends Controller
       ->where('name', 'NOT LIKE', '%Pacientes%')->get(); // 9 resultados
       $permissions_dashboard = Permission::where('name', 'LIKE', '%dashboard%')->get(); // 2 resultados
 
-      return $permissions_patient;
-      // return view('roles.create', compact('permissions_patient', 'permissions_doctor', 'permissions_role', 'permissions_specialty', 'permissions_user', 'permissions_history_clinic', 'permissions_consultation_appointment_medical', 'permissions_dashboard'));
+      //return $permissions_patient;
+      return view('roles.create', compact('permissions_patient', 'permissions_doctor', 'permissions_role', 'permissions_specialty', 'permissions_user', 'permissions_history_clinic', 'permissions_consultation_appointment_medical', 'permissions_dashboard'));
     }
 
 //  Metodo GET Abrir Editar Formulario de un Rol
