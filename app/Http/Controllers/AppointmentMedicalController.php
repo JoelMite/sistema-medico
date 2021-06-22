@@ -24,7 +24,7 @@ class AppointmentMedicalController extends Controller
 
     Gate::authorize('haveaccess','appointmentmedicalDoctor.index');
 
-      $pendingAppointments = AppointmentMedical::where('status', 'Reservada')
+      $pendingAppointments = AppointmentMedical::where('status', 'LIKE','%Reservada%')
       ->where('doctor_id', auth()->id())
       ->paginate(10);
       $confirmedAppointments = AppointmentMedical::where('status', 'Confirmada')
@@ -43,7 +43,7 @@ class AppointmentMedicalController extends Controller
 
     Gate::authorize('haveaccess','appointmentmedicalPatient.index');
 
-    $pendingAppointments = AppointmentMedical::where('status', 'Reservada')
+    $pendingAppointments = AppointmentMedical::where('status', 'LIKE','%Reservada%')
     ->where('patient_id', auth()->id())
     ->paginate(10);
     $confirmedAppointments = AppointmentMedical::where('status', 'Confirmada')
