@@ -33,12 +33,12 @@ class RoleController extends Controller
       //return dd($permissions_all);
       $permissions_patient = Permission::where('name', 'LIKE', '%Paciente%')->orWhere('name', 'LIKE', '%Perfil%')->get(); // 4 resultados
       //$permissions_patient = $permissions_all->where('name', 'LIKE', '%paciente%')->orWhere('name', 'LIKE', '%perfil%')->get(); // 4 resultados
-      $permissions_doctor = Permission::where('name', 'LIKE', '%Medico%')->where('name', 'NOT LIKE', '%Dashboard%')->orWhere('name', 'LIKE', '%Perfil%')->orWhere('name', 'LIKE', '%Horario%')->get(); // 6 resultados
+      $permissions_doctor = Permission::where('name', 'LIKE', '%Médico%')->where('name', 'NOT LIKE', '%Dashboard%')->orWhere('name', 'LIKE', '%Perfil%')->orWhere('name', 'LIKE', '%Horario%')->get(); // 6 resultados
       $permissions_role = Permission::where('name', 'LIKE', '%Rol%')->get(); // 4 resultados
       $permissions_specialty = Permission::where('name', 'LIKE', '%Especialidad%')->get(); // 4 resultados
       $permissions_user = Permission::where('name', 'LIKE', '%Usuario%')->get(); // 2 resultados
-      $permissions_history_clinic = Permission::where('name', 'LIKE', '%Clinica%')->get(); // 4 resultados
-      $permissions_consultation_appointment_medical = Permission::where('name', 'LIKE', '%Medica%')->where('name', 'NOT LIKE', '%(Paciente)%')
+      $permissions_history_clinic = Permission::where('name', 'LIKE', '%Clínica%')->get(); // 4 resultados
+      $permissions_consultation_appointment_medical = Permission::where('name', 'LIKE', '%Médica%')->where('name', 'NOT LIKE', '%(Paciente)%')
       ->where('name', 'NOT LIKE', '%Pacientes%')->get(); // 9 resultados
       $permissions_dashboard = Permission::where('name', 'LIKE', '%Dashboard%')->get(); // 2 resultados
 
