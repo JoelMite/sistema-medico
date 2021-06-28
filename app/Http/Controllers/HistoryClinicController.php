@@ -10,7 +10,8 @@ use App\Models\User;
 use App\Models\MedicalConsultation;
 use App\Models\MedicalPrescription;
 use App\Models\LabTest;
-use DB;
+use Illuminate\Validation\Rule;
+// use DB;
 use Session;
 
 class HistoryClinicController extends Controller
@@ -41,15 +42,34 @@ class HistoryClinicController extends Controller
       // return dd($variable);
       //return view('clinic_history.index', compact('havePersonHistory', 'nohavePersonHistory'));
 
+
+      // ESTE CODIGO ME SIRVIO DE REFERENCIA PARA PODER HACER CONSULTAS ENTRE MUCHAS TABLAS
+      // $persons = User::whereHas('roles', function($query){
+      //   $query->whereHas('permissions', function($query){
+      //     $query->where('name','=','Crear Paciente');  });
+      // })->get();
+
       $havePersonHistory = Person::has('history_clinic')->whereHas('user', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
-      $query->where('creator_id','=',auth()->id());
+      $query->where('creator_id','=',auth()->id())
+        ->whereHas('roles', function($query){
+          $query->whereHas('permissions', function($query){
+            $query->where('name','=','Crear Cita Médica');
+          });
+        });
       })->with('history_clinic:person_id,id')->get(['id', 'name', 'lastname']);
 
       $nohavePersonHistory = Person::doesntHave('history_clinic')->whereHas('user', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
-      $query->where('creator_id','=',auth()->id());
+        $query->where('creator_id','=',auth()->id())
+          ->whereHas('roles', function($query){
+            $query->whereHas('permissions', function($query){
+              $query->where('name','=','Crear Cita Médica');
+            });
+          });
       })->get(['name', 'lastname', 'user_id']);
 
       // $variable = User::has('specialties')->with('specialties')->get();
+
+      // return $havePersonHistory;
 
       return view('clinic_history.index', compact('havePersonHistory', 'nohavePersonHistory'));
 
@@ -85,13 +105,17 @@ class HistoryClinicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create(User $user)
     {
 
-      Gate::authorize('haveaccess','historyclinic.create');
+      //Gate::authorize('haveaccess','historyclinic.create');
 
-      $doctor = User::findOrfail($id);
-      $person_id = $doctor->person->id;
+      Gate::authorize('haveaccesscreateHistoryClinic', [$user, 'historyclinic.create']);
+
+      // return $user;
+
+      // $doctor = User::findOrfail($id);
+      $person_id = $user->person->id;
 
       Session::flash('person_id', "$person_id");
 
@@ -109,17 +133,23 @@ class HistoryClinicController extends Controller
 //  Metodo Validacion
      private function validation(Request $request){
        //  Validar a los datos del formulario doctor a nivel de servidor
+
+       // $history_id = session('history_id');
+
        $rules = [
          'personal_history' => 'required',
          'family_background' => 'required',
          'current_illness' => 'required',
-         'habits' => 'required'
+         'habits' => 'required',
+         //Rule::unique('history_clinics')->ignore($history_id),
+         //unique:history_clinics,person_id
        ];
        $messages = [
          'personal_history.required' => 'Es necesario ingresar los antecedentes personales.',
          'family_background.required' => 'Es necesario ingresar los antecedentes familiares.',
          'current_illness.required' => 'Es necesario ingresar la enfermedad actual.',
-         'habits.required' => 'Es necesario ingresar los habitos actuales.'
+         'habits.required' => 'Es necesario ingresar los hábitos actuales.',
+         //'person_id.unique' => 'Este paciente ya tiene una historia clínica registrada.',
        ];
        $this->validate($request, $rules, $messages);
      }
@@ -263,7 +293,9 @@ class HistoryClinicController extends Controller
     public function show(HistoryClinic $history) // Aqui utilizo model binding(En base al modelo obtengo el resultado de acuerdo a la variable que se encuentra en la ruta Route::get('/histories/{history}', 'HistoryClinicController@show');)
     {
 
-      Gate::authorize('haveaccess','historyclinic.show');
+      // Gate::authorize('haveaccess','historyclinic.show');
+
+      Gate::authorize('haveaccessHistoryClinic',[$history, 'historyclinic.show']);
 
       //$history = HistoryClinic::findOrfail($id);  //Esto es un solo registro por lo tanto se lo puede imprimir sin ningun problema en la vista sin utilizar for each
       //$medical_consultations = $history->medical_consultations; // ojo Esto es una coleccion por lo tanto se necesita de un for each en la vista
@@ -273,6 +305,7 @@ class HistoryClinicController extends Controller
       //$lab_tests = LabTest::findOrfail($id_medical_prescriptions);
       //$lab_tests = DB::table('lab_tests')->where('medical_consultation_id',$id_medical_prescriptions)->first(); //ojo
       return view('clinic_history.show', compact('history')); // ojo
+      // return $history->person->user->creator_id;
       //return redirect(dd($history, $medical_consultations, $id_medical_prescriptions, $medical_prescriptions, $lab_tests )); //Este codigo me ayuda a ver la coleccion que me trae
       //return(dd($history));
     }
@@ -286,7 +319,13 @@ class HistoryClinicController extends Controller
     public function edit(HistoryClinic $history)
     {
 
-      Gate::authorize('haveaccess','historyclinic.edit');
+      // Gate::authorize('haveaccess','historyclinic.edit');
+
+      Gate::authorize('haveaccessHistoryClinic',[$history, 'historyclinic.edit']);
+
+      $person_id = $history->person_id;
+
+      Session::flash('person_id', "$person_id");
 
       return view('clinic_history.edit', compact('history'));
     }
@@ -300,13 +339,21 @@ class HistoryClinicController extends Controller
      */
     public function update(Request $request, HistoryClinic $history)
     {
+
+      // $history_id = $history->id;
+      //
+      // Session::flash('history_id', "$history_id");
+
       $this->validation($request);
+
+      $person_id = session('person_id');
 
       //  Editar Historia Clinica
       $history->personal_history = $request->input('personal_history');
       $history->family_background = $request->input('family_background');
       $history->current_illness = $request->input('current_illness');
       $history->habits = $request->input('habits');
+      $history->person_id = $person_id;
       $history->save(); // Editar
 
       $success = "La historia clínica se ha actualizado correctamente.";

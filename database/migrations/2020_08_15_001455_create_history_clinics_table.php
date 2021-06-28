@@ -19,7 +19,7 @@ class CreateHistoryClinicsTable extends Migration
             $table->string('family_background'); // Antecedentes Familiares
             $table->string('current_illness'); // Enfermedad Actual
             $table->string('habits'); //Habitos
-            $table->unsignedBigInteger('person_id');
+            $table->unsignedBigInteger('person_id')->unique();
             $table->foreign('person_id')->references('id')->on('persons');
             $table->timestamps();
         });

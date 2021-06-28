@@ -8,6 +8,7 @@ use App\Models\MedicalConsultation;
 use App\Models\HistoryClinic;
 use App\Models\User;
 use App\Models\Person;
+use Session;
 //use DB;
 
 class MedicalConsultationController extends Controller
@@ -22,7 +23,7 @@ class MedicalConsultationController extends Controller
 
       Gate::authorize('haveaccess','medicalconsultation.index');
 
-      $histories = HistoryClinic::all();
+      //$histories = HistoryClinic::all();
       $havePersonHistory = Person::has('history_clinic')->get(); // Este metodo me retorna las personas que no tienen una historia clinica
       return view('medical_consultations.index', compact('havePersonHistory'));
     }
@@ -55,15 +56,17 @@ class MedicalConsultationController extends Controller
       // return dd($variable);
     }
 
-    public function create($id)
+    public function create(Person $person)
     {
 
       Gate::authorize('haveaccess','medicalconsultation.create');
 
-      $persons = Person::findOrfail($id);
-      $histories = $persons->history_clinic;
+      //$persons = Person::findOrfail($id);
+      $history_id = $person->history_clinic->id;
 
-      return view('medical_consultations.create', compact('histories'));
+      Session::flash('history_id', "$history_id");
+
+      return view('medical_consultations.create');
       // return dd($persons->history->medical_consultations);
     }
 
@@ -93,6 +96,8 @@ class MedicalConsultationController extends Controller
 
       //return dd($request);
 
+      $history_id = session('history_id');
+
       $medical_consultations = MedicalConsultation::create([
         'reason' => $request['reason'],
         'diagnosis' => $request['diagnosis'],
@@ -106,7 +111,7 @@ class MedicalConsultationController extends Controller
         'abdominal_perimeter' => $request['abdominal_perimeter'],
         'capillary_glucose' => $request['capillary_glucose'],
         'temperature' => $request['temperature'],
-        'history_id' => $request['id_history'],
+        'history_id' => $history_id,
       ]);
 
       //$id_med_cons = MedicalConsultation::latest('id')->first()->id;

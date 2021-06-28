@@ -32,12 +32,12 @@
           @endif
           <form action="{{url('medical_consultations')}}" method="post">
             @csrf
-            @if($histories != null)
+            {{-- @if($histories != null)
               <div class="form-group" style="display: none;">
                 <label class="form-control-label" for="input-first-name">Identificador</label>
                 <input type="text" name="id_history" class="form-control form-control-alternative" value="{{ $histories->id ? $histories->id:'No hay datos' }}">
               </div>
-            @endif
+            @endif --}}
 
             <div class="accordion" id="acordeon-01">
               <!-- Primer elemento hijo-->

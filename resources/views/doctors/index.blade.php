@@ -131,7 +131,7 @@
                     </td>
                     <td>
                       @foreach ($doctor->roles as $role)
-                        {{ $role->name }}
+                        <span class="badge badge-lg badge-pill badge-default">{{ $role->name }}</span>
                       @endforeach
                     </td>
                     <td>

@@ -62,7 +62,7 @@
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label>Gestionar Pacientes</label>
-                                <select class="form-control selectpicker" name="permissions[]" data-style="btn-primary" multiple
+                                <select class="form-control selectpicker" data-selected-text-format="count" data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
                                   title="Seleccione una o varios permisos">
                                     @foreach ($permissions_patient as $permission_patient)
                                     <option value="{{ $permission_patient->id }}" {{ (collect(old('permissions'))->contains($permission_patient->id)) ? 'selected':'' }}>{{ $permission_patient->name }}</option>
@@ -71,64 +71,64 @@
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label>Gestionar Doctores</label>
-                                <select class="form-control selectpicker" multiple data-selected-text-format="count" multiple data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
+                                <select class="form-control selectpicker" data-selected-text-format="count" data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
                                   title="Seleccione una o varios permisos">
                                     @foreach ($permissions_doctor as $permission_doctor)
-                                    <option value="{{ $permission_doctor->id }}">{{ $permission_doctor->name }}</option>
+                                    <option value="{{ $permission_doctor->id }}" {{ (collect(old('permissions'))->contains($permission_doctor->id)) ? 'selected':'' }}>{{ $permission_doctor->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label>Gestionar Roles</label>
-                                <select class="form-control selectpicker" multiple data-selected-text-format="count" multiple data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
+                                <select class="form-control selectpicker" data-selected-text-format="count" data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
                                   title="Seleccione una o varios permisos">
                                     @foreach ($permissions_role as $permission_role)
-                                    <option value="{{ $permission_role->id }}">{{ $permission_role->name }}</option>
+                                    <option value="{{ $permission_role->id }}" {{ (collect(old('permissions'))->contains($permission_role->id)) ? 'selected':'' }}>{{ $permission_role->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label>Gestionar Especialidades</label>
-                                <select class="form-control selectpicker" multiple data-selected-text-format="count" multiple data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
+                                <select class="form-control selectpicker" data-selected-text-format="count" data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
                                   title="Seleccione una o varios permisos">
                                     @foreach ($permissions_specialty as $permission_specialty)
-                                    <option value="{{ $permission_specialty->id }}">{{ $permission_specialty->name }}</option>
+                                    <option value="{{ $permission_specialty->id }}" {{ (collect(old('permissions'))->contains($permission_specialty->id)) ? 'selected':'' }}>{{ $permission_specialty->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label>Gestionar Estado de Cuenta</label>
-                                <select class="form-control selectpicker" multiple data-selected-text-format="count" multiple data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
+                                <select class="form-control selectpicker" data-selected-text-format="count" data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
                                   title="Seleccione una o varios permisos">
                                     @foreach ($permissions_user as $permission_user)
-                                    <option value="{{ $permission_user->id }}">{{ $permission_user->name }}</option>
+                                    <option value="{{ $permission_user->id }}" {{ (collect(old('permissions'))->contains($permission_user->id)) ? 'selected':'' }}>{{ $permission_user->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label>Gestionar Historia Clinica</label>
-                                <select class="form-control selectpicker" multiple data-selected-text-format="count" multiple data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
+                                <select class="form-control selectpicker" data-selected-text-format="count" data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
                                   title="Seleccione una o varios permisos">
                                     @foreach ($permissions_history_clinic as $permission_history_clinic)
-                                    <option value="{{ $permission_history_clinic->id }}">{{ $permission_history_clinic->name }}</option>
+                                    <option value="{{ $permission_history_clinic->id }}" {{ (collect(old('permissions'))->contains($permission_history_clinic->id)) ? 'selected':'' }}>{{ $permission_history_clinic->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label>Gestionar Consultas y Citas Médicas</label>
-                                <select class="form-control selectpicker" multiple data-selected-text-format="count" multiple data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
+                                <select class="form-control selectpicker" data-selected-text-format="count" data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
                                   title="Seleccione una o varios permisos">
                                     @foreach ($permissions_consultation_appointment_medical as $permission_consultation_appointment_medical)
-                                    <option value="{{ $permission_consultation_appointment_medical->id }}">{{ $permission_consultation_appointment_medical->name }}</option>
+                                    <option value="{{ $permission_consultation_appointment_medical->id }}" {{ (collect(old('permissions'))->contains($permission_consultation_appointment_medical->id)) ? 'selected':'' }}>{{ $permission_consultation_appointment_medical->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-3 mb-2">
                                 <label>Gestionar Dashboard</label>
-                                <select class="form-control selectpicker" multiple data-selected-text-format="count" multiple data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
+                                <select class="form-control selectpicker" data-selected-text-format="count" data-actions-box="true" name="permissions[]" id="permissions" data-style="btn-primary" multiple
                                   title="Seleccione una o varios permisos">
                                     @foreach ($permissions_dashboard as $permission_dashboard)
-                                    <option value="{{ $permission_dashboard->id }}">{{ $permission_dashboard->name }}</option>
+                                    <option value="{{ $permission_dashboard->id }}" {{ (collect(old('permissions'))->contains($permission_dashboard->id)) ? 'selected':'' }}>{{ $permission_dashboard->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

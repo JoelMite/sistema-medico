@@ -51,46 +51,46 @@ class RoleController extends Controller
 
       Gate::authorize('haveaccess','role.edit');
 
-      $permissions_patient = Permission::where('name', 'LIKE', '%paciente%')->orWhere('name', 'LIKE', '%perfil%')->get(); // 4 resultados
-      $permissions_doctor = Permission::where('name', 'LIKE', '%medico%')->where('name', 'NOT LIKE', '%dashboard%')->orWhere('name', 'LIKE', '%perfil%')->orWhere('name', 'LIKE', '%horario%')->get(); // 6 resultados
-      $permissions_role = Permission::where('name', 'LIKE', '%rol%')->get(); // 4 resultados
-      $permissions_specialty = Permission::where('name', 'LIKE', '%especialidad%')->get(); // 4 resultados
-      $permissions_user = Permission::where('name', 'LIKE', '%usuario%')->get(); // 2 resultados
-      $permissions_history_clinic = Permission::where('name', 'LIKE', '%clinica%')->get(); // 4 resultados
-      $permissions_consultation_appointment_medical = Permission::where('name', 'LIKE', '%medica%')->where('name', 'NOT LIKE', '%(Paciente)%')
+      $permissions_patient = Permission::where('name', 'LIKE', '%Paciente%')->orWhere('name', 'LIKE', '%Perfil%')->get(); // 4 resultados
+      $permissions_doctor = Permission::where('name', 'LIKE', '%Médico%')->where('name', 'NOT LIKE', '%Dashboard%')->orWhere('name', 'LIKE', '%Perfil%')->orWhere('name', 'LIKE', '%Horario%')->get(); // 6 resultados
+      $permissions_role = Permission::where('name', 'LIKE', '%Rol%')->get(); // 4 resultados
+      $permissions_specialty = Permission::where('name', 'LIKE', '%Especialidad%')->get(); // 4 resultados
+      $permissions_user = Permission::where('name', 'LIKE', '%Usuario%')->get(); // 2 resultados
+      $permissions_history_clinic = Permission::where('name', 'LIKE', '%Clínica%')->get(); // 4 resultados
+      $permissions_consultation_appointment_medical = Permission::where('name', 'LIKE', '%Médica%')->where('name', 'NOT LIKE', '%(Paciente)%')
       ->where('name', 'NOT LIKE', '%Pacientes%')->get(); // 9 resultados
-      $permissions_dashboard = Permission::where('name', 'LIKE', '%dashboard%')->get(); // 2 resultados
+      $permissions_dashboard = Permission::where('name', 'LIKE', '%Dashboard%')->get(); // 2 resultados
 
       $permissions_patient_id = $role->permissions()->where(function ($query) {
-      $query->where('name', 'LIKE', '%paciente%')
-      ->orWhere('name', 'LIKE', '%perfil%');
+      $query->where('name', 'LIKE', '%Paciente%')
+      ->orWhere('name', 'LIKE', '%Perfil%');
       })->pluck('permissions.id');
 
       $permissions_doctor_id = $role->permissions()->where(function ($query) {
-      $query->where('name', 'LIKE', '%medico%')
-      ->where('name', 'NOT LIKE', '%dashboard%')
-      ->orWhere('name', 'LIKE', '%perfil%')
-      ->orWhere('name', 'LIKE', '%horario%');
+      $query->where('name', 'LIKE', '%Médico%')
+      ->where('name', 'NOT LIKE', '%Dashboard%')
+      ->orWhere('name', 'LIKE', '%Perfil%')
+      ->orWhere('name', 'LIKE', '%Horario%');
       })->pluck('permissions.id');
 
       $permissions_role_id = $role->permissions()->where(function ($query) {
-      $query->where('name', 'LIKE', '%rol%');})->pluck('permissions.id');
+      $query->where('name', 'LIKE', '%Rol%');})->pluck('permissions.id');
 
       $permissions_specialty_id = $role->permissions()->where(function ($query) {
-      $query->where('name', 'LIKE', '%especialidad%');})->pluck('permissions.id');
+      $query->where('name', 'LIKE', '%Especialidad%');})->pluck('permissions.id');
 
       $permissions_user_id = $role->permissions()->where(function ($query) {
-      $query->where('name', 'LIKE', '%usuario%');})->pluck('permissions.id');
+      $query->where('name', 'LIKE', '%Usuario%');})->pluck('permissions.id');
 
       $permissions_history_clinic_id = $role->permissions()->where(function ($query) {
-      $query->where('name', 'LIKE', '%clinica%');})->pluck('permissions.id');
+      $query->where('name', 'LIKE', '%Clínica%');})->pluck('permissions.id');
 
       $permissions_consultation_appointment_medical_id = $role->permissions()->where(function ($query) {
-      $query->where('name', 'LIKE', '%medica%')->where('name', 'NOT LIKE', '%(Paciente)%')
+      $query->where('name', 'LIKE', '%Médica%')->where('name', 'NOT LIKE', '%(Paciente)%')
       ->where('name', 'NOT LIKE', '%Pacientes%');})->pluck('permissions.id');
 
       $permissions_dashboard_id = $role->permissions()->where(function ($query) {
-      $query->where('name', 'LIKE', '%dashboard%');})->pluck('permissions.id');
+      $query->where('name', 'LIKE', '%Dashboard%');})->pluck('permissions.id');
 
       // $permissions_patients = $role::whereHas('permissions')->get();
 

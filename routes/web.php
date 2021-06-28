@@ -68,7 +68,7 @@ Route::middleware(['auth', 'role', 'state'])->group(function () {
 Route::middleware(['auth', 'role', 'state'])->group(function () {
   // Historia Clinica
   Route::get('/histories', 'HistoryClinicController@index');
-  Route::get('/histories/{history}/create', 'HistoryClinicController@create');   // Formulario de Registro de HC
+  Route::get('/histories/{user}/create', 'HistoryClinicController@create');   // Formulario de Registro de HC
   Route::get('/histories/{history}/edit', 'HistoryClinicController@edit');   // Formulario de Edicion de HC
   Route::post('/histories', 'HistoryClinicController@store');    // Envio del Formulario de HC
   Route::put('/histories/{history}', 'HistoryClinicController@update');   // Editar un HC
@@ -79,7 +79,7 @@ Route::middleware(['auth', 'role', 'state'])->group(function () {
   // Consulta Medica
   Route::get('/medical_consultations', 'MedicalConsultationController@index');
   Route::get('/medical_consultations_show', 'MedicalConsultationController@index_show');
-  Route::get('/medical_consultations/{history}/create', 'MedicalConsultationController@create');   // Formulario de Registro de HC
+  Route::get('/medical_consultations/{person}/create', 'MedicalConsultationController@create');   // Formulario de Registro de HC
   Route::get('/medical_consultations/{history}/edit', 'MedicalConsultationController@edit');   // Formulario de Edicion de HC
   Route::post('/medical_consultations', 'MedicalConsultationController@store');    // Envio del Formulario de HC
   Route::put('/medical_consultations/{history}', 'MedicalConsultationController@update');   // Editar un HC

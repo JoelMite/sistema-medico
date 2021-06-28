@@ -173,12 +173,12 @@ class DoctorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $doctor)
     {
 
-        Gate::authorize('haveaccess','doctor.show');
+        Gate::authorize('haveaccessUser',[$doctor, 'doctor.index']);
 
-        $doctor = User::findOrfail($id);
+        //$doctor = User::findOrfail($id);
         $roles = $doctor->roles;                //  Me devuelve el rol que cumple cada usuario(medico o administrador)
         $persons = $doctor->person;
         return view('doctors.show', compact('doctor', 'roles', 'persons'));
@@ -191,12 +191,12 @@ class DoctorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $doctor)
     {
 
-        Gate::authorize('haveaccess','doctor.edit');
+        Gate::authorize('haveaccessUser',[$doctor, 'doctor.edit']);
 
-        $doctor = User::findOrfail($id);
+        //$doctor = User::findOrfail($id);
         $specialties = Specialty::all();
 
         $specialty_ids = $doctor->specialties()->pluck('specialties.id');   // Me devuelve un array de solo los ids de las especialidades que tienen relacion con usuarios
@@ -308,13 +308,13 @@ class DoctorController extends Controller
         //
     }
 
-    public function state($id)
+    public function state(User $doctor)
     {
 
-      Gate::authorize('haveaccess','user.state');
+      Gate::authorize('haveaccessUser',[$doctor, 'user.state']);
 
       //dd($request->all());
-      $doctor = User::findOrfail($id);
+      //$doctor = User::findOrfail($id);
       if($doctor->state == "403"){
         $doctor->state = "200";
         $success = "El usuario a sido activado";
