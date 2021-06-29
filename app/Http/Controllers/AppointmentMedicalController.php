@@ -165,6 +165,8 @@ class AppointmentMedicalController extends Controller
     //
     // Appointment::create($data);
 
+    //return $request;
+
     $created = AppointmentMedical::createForPatient($request, auth()->user()->id);
 
     if ($created) {
@@ -176,7 +178,7 @@ class AppointmentMedicalController extends Controller
     // Notificacion de que se ha creado la cita correctamente
     // $notification = "La cita se ha registrado correctamente.";
 
-    return redirect('/appointmentmedicals')->with(compact('notification'));
+    return redirect('/appointment_medicals/create')->with(compact('notification'));
 
     // return back()->with(compact('notification'));
     // Return back es lo mismo que el redirect sino que aqui no especificamos la ruta, laravel ya hace eso por nosotros

@@ -25,13 +25,12 @@
     </div>
 
     <div class="form-group">
-        <label for="name">Fecha</label>
+        <label class="form-control-label">Fecha</label>
         <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-            </div>
-            <input v-model="selected_date" @change="loadHours" class="form-control datepicker" placeholder="Seleccionar fecha" id="date" name="schedule_date" type="text">
+            <date-picker ref="datepicker" class="col-md-6" v-model="selected_date" @change="loadHours" placeholder="Seleccionar fecha" id="schedule_date" valueType="format" :disabled="disableDatePicker" type="date"></date-picker>
         </div>
+
+        <!-- <date-picker v-model="test_date" valueType="format"></date-picker> -->
     </div>
 
     <div class="form-group">
@@ -69,14 +68,19 @@
 </template>
 
 <script>
+
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+
 export default {
+  components: { DatePicker },
     data() {
         return {
             selected_specialty: '',
             selected_doctor: '',
             selected_date: '',
+            disableDatePicker: '',
             selected_interval: '',
-            date: '',
             boolean: false,
             doctors: [],
             specialties: [],
@@ -89,7 +93,9 @@ export default {
     mounted() {
         document.getElementById("doctor").disabled = true;
 
-        document.getElementById("date").disabled = true;
+        this.disableDatePicker = true;
+        // Cambiar el atributo "name" del datepicker vue2-datepicker - Es la unica forma
+        this.$refs.datepicker.$refs.input.name = 'schedule_date';
 
         // var vm = this
         //   $('#date').datepicker({
@@ -102,9 +108,33 @@ export default {
                 this.specialties = response.data;
             });
 
-        $(document).ready(() => {
-            $('#date').datepicker('val');
-        });
+      //       $('.with-calendar').datepicker({
+      //     weekStart: 1,
+      //     language: 'de',
+      //     bootcssVer: 3,
+      //     format: "yyyy-mm-dd",
+      //     viewformat: "yyyy-mm-dd",
+      //     autoclose: true
+      // }).on('changeDate', function (event) { // Communicate datetimepicker result to vue
+      //     let inputFields = event.target.getElementsByTagName('input'); // depends on your html structure
+      //     for (let i = 0; i < inputFields.length; i++) {
+      //         inputFields[i].dispatchEvent(new Event('input', {'bubbles': true}));
+      //     }
+      // });
+
+        // $('.schedule_date').datepicker({
+        //     weekStart: 1,
+        //     language: 'de',
+        //     bootcssVer: 3,
+        //     format: "yyyy-mm-dd",
+        //     viewformat: "yyyy-mm-dd",
+        //     autoclose: true
+        // }).on('changeDate', function (event) { // Communicate datetimepicker result to vue
+        //     let inputFields = event.target.getElementsByTagName('input'); // depends on your html structure
+        //     for (let i = 0; i < inputFields.length; i++) {
+        //         inputFields[i].dispatchEvent(new Event('input', {'bubbles': true}));
+        //     }
+        // });
     },
 
     methods: {
@@ -122,7 +152,7 @@ export default {
                     .then((response) => {
                         this.doctors = response.data;
                         document.getElementById("doctor").disabled = false;
-                        document.getElementById("date").disabled = false;
+                        this.disableDatePicker = false;
                     });
             }
 

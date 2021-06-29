@@ -20,8 +20,9 @@
   <link href="{{ asset('asset/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet">
   <link href="{{ asset('asset/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}" rel="stylesheet">
   <!-- Argon CSS -->
-  <link href=" {{ asset('asset/css/argon.min.css') }}" rel="stylesheet">
+  <link href=" {{ asset('asset/css/argon.css') }}" rel="stylesheet">
   {{-- <link href=" {{ asset('css/plantilla.css') }} " rel="stylesheet"> --}}
+  {{-- <link href=" {{ asset('css/app.css') }}" rel="stylesheet"> --}}
   @yield('styles')
 </head>
 

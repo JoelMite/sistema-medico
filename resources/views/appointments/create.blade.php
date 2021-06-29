@@ -10,7 +10,7 @@
           </div>
           <div class="col text-right">
             <a href="{{url('patients')}}" class="btn btn-danger">
-              Cancelar y Volver
+              Volver
             </a>
           </div>
         </div>
@@ -34,6 +34,8 @@
             </div>
 
             <create-appointment-component></create-appointment-component>
+
+            {{-- <picker></picker> --}}
 
             <div class="form-group">
               <label for="phone">Tipo de Consulta</label>
@@ -60,5 +62,5 @@
 
 @section('scripts')
 <!-- Latest compiled and minified JavaScript -->
-<script src="{{ asset('vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('asset/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 @endsection
