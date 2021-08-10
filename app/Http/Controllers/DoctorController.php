@@ -90,7 +90,7 @@ class DoctorController extends Controller
          'password.required' => 'Es necesario ingresar una contraseña.',
          'password.min' => 'La contraseña debe tener al menos 6 caracteres.',
          'specialties.required' => 'Es necesario ingresar por lo menos una especialidad.',
-         'phone.required' => 'Es necesario ingresar un telefono.',
+         'phone.required' => 'Es necesario ingresar un teléfono.',
          'phone.max' => 'El número telefónico no puede exceder los 15 dígitos.',
          'address.required' => 'Es necesario ingresar una direccion.',
          'city.required' => 'Es necesario ingresar una ciudad.',

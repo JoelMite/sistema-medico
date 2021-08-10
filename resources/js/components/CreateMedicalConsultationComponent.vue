@@ -30,19 +30,19 @@
 
                             <div class="col-md-12 mb-2">
                                 <div class="form-group">
-                                    <label for="name">Descripción</label>
+                                    <label class="form-control-label">Descripción</label>
                                     <textarea v-model="input_pm.description" name="description[]" class="form-control" required></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-2">
                                 <div class="form-group">
-                                    <label for="name">Posología</label>
+                                    <label class="form-control-label">Posología</label>
                                     <textarea v-model="input_pm.posology" name="posology[]" class="form-control" required></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-2">
                                 <div class="form-group">
-                                    <label for="name">Observaciones</label>
+                                    <label class="form-control-label">Observaciones</label>
                                     <textarea v-model="input_pm.observations_pres" name="observations_pres[]" class="form-control" required></textarea>
                                 </div>
                             </div>
@@ -81,27 +81,27 @@
                         <div class="form-row">
                             <div class="col-md-3 mb-2">
                                 <div class="form-group">
-                                    <label for="name">Tipo de Exámen</label>
+                                    <label class="form-control-label">Tipo de Exámen</label>
                                     <input v-model="input_pl.type_of_exam" type="text" name="type_of_exam[]" class="form-control" required>
 
                                 </div>
                             </div>
                             <div class="col-md-2 mb-2">
                                 <div class="form-group">
-                                    <label for="name">Cantidad</label>
+                                    <label class="form-control-label">Cantidad</label>
                                     <input v-model="input_pl.quantity" type="text" name="quantity[]" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-7 mb-2">
                                 <div class="form-group">
-                                    <label for="name">Valoración</label>
+                                    <label class="form-control-label">Valoración</label>
                                     <textarea v-model="input_pl.assessment" name="assessment[]" class="form-control" rows="4" required></textarea>
 
                                 </div>
                             </div>
                             <div class="col-md-12 mb-2">
                                 <div class="form-group">
-                                    <label for="name">Observaciones</label>
+                                    <label class="form-control-label">Observaciones</label>
                                     <textarea v-model="input_pl.observations_pru" name="observations_pru[]" class="form-control" rows="4" required></textarea>
                                 </div>
                             </div>

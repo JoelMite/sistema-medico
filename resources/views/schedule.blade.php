@@ -1,5 +1,10 @@
 @extends('layouts.panel')
 
+@section('styles')
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+@endsection
+
 @section('content')
 <form action="{{ url('/schedule') }}" method="post">
   @csrf
@@ -10,8 +15,8 @@
               <h3 class="mb-0">Gestionar Horario</h3>
             </div>
             <div class="col text-right">
-              <button type="submit" class="btn btn-sm btn-success">
-                Guardar Cambios
+              <button type="submit" class="btn btn-success">
+                Guardar
               </a>
             </div>
           </div>
@@ -64,7 +69,7 @@
                     <div class="row">
                       <div class="col">
                         {{-- input type="time" class="form-control"> --}}
-                        <select class="form-control" name="morning_start[]">
+                        <select class="form-control selectpicker" data-style="btn-secondary" name="morning_start[]">
                           @for($i=5; $i<=11; $i++)
                           <option value="{{ ($i < 10 ? '0' : ''). $i }}:00" @if($i.':00 AM' == $workDay->morning_start) selected @endif>{{ $i }}:00 AM</option>
                           <option value="{{ ($i < 10 ? '0' : ''). $i }}:30" @if($i.':30 AM' == $workDay->morning_start) selected @endif>{{ $i }}:30 AM</option>
@@ -73,7 +78,7 @@
                       </div>
                       <div class="col">
                         {{-- input type="time" class="form-control"> --}}
-                        <select class="form-control" name="morning_end[]">
+                        <select class="form-control selectpicker" data-style="btn-secondary" name="morning_end[]">
                           @for($i=5; $i<=11; $i++)
                           <option value="{{ ($i < 10 ? '0' : ''). $i }}:00" @if($i.':00 AM' == $workDay->morning_end) selected @endif>{{ $i }}:00 AM</option>
                           <option value="{{ ($i < 10 ? '0' : ''). $i }}:30" @if($i.':30 AM' == $workDay->morning_end) selected @endif>{{ $i }}:30 AM</option>
@@ -85,7 +90,7 @@
                   <td>
                     <div class="row">
                       <div class="col">
-                        <select class="form-control" name="afternoon_start[]">
+                        <select class="form-control selectpicker" data-style="btn-secondary" name="afternoon_start[]">
                           @for($i=1; $i<=11; $i++)
                           <option value="{{ $i+12 }}:00" @if($i.':00 PM' == $workDay->afternoon_start) selected @endif>{{ $i }}:00 PM</option>
                           <option value="{{ $i+12 }}:30" @if($i.':30 PM' == $workDay->afternoon_start) selected @endif>{{ $i }}:30 PM</option>
@@ -93,7 +98,7 @@
                         </select>
                       </div>
                       <div class="col">
-                        <select class="form-control" name="afternoon_end[]">
+                        <select class="form-control selectpicker" data-style="btn-secondary" name="afternoon_end[]">
                           @for($i=1; $i<=11; $i++)
                           <option value="{{ $i+12 }}:00" @if($i.':00 PM' == $workDay->afternoon_end) selected @endif>{{ $i }}:00 PM</option>
                           <option value="{{ $i+12 }}:30" @if($i.':30 PM' == $workDay->afternoon_end) selected @endif>{{ $i }}:30 PM</option>
@@ -162,4 +167,10 @@
       </div>
 
 </form>
+@endsection
+
+@section('scripts')
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
 @endsection

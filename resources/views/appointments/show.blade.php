@@ -22,7 +22,7 @@
             <li>
               <strong>Médico:</strong> {{ $appointment->doctor->person->name }}
             </li>
-          @elseif ($role == 'Medico')
+          @elseif ($role == 'Doctor')
             <li>
               <strong>Paciente:</strong> {{ $appointment->patient->person->name }}
             </li>
@@ -88,7 +88,7 @@
           </div>
         @endif
 
-        <a href="{{ url('/appointment_medicals') }}" class="btn btn-default">Volver</a>
+        <a href="{{ url('/appointment_medicals_doctor') }}" class="btn btn-default">Volver</a>
 
       </div>
     </div>

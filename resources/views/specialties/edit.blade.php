@@ -36,7 +36,8 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                     </div>
-                    <input type="text" name="name" class="form-control" value="{{ old('name', $specialty->name) }}" required>
+                    <input type="text" name="name" class="form-control" value="{{ old('name', $specialty->name) }}"
+                        required>
                 </div>
             </div>
             <div class="form-group">
@@ -45,10 +46,11 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-comments"></i></span>
                     </div>
-                    <input type="text" name="description" class="form-control" value="{{ old('description', $specialty->description) }}" required>
+                    <input type="text" name="description" class="form-control"
+                        value="{{ old('description', $specialty->description) }}" required>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-success">
                 Guardar
             </button>
         </form>

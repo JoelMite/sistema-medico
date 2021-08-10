@@ -14,7 +14,7 @@
                 <h3 class="mb-0">Nuevo Usuario</h3>
             </div>
             <div class="col text-right">
-                <a href="{{url('doctors')}}" class="btn btn-danger">
+                <a href="{{url('doctors')}}" class="btn btn-warning">
                     Volver
                 </a>
             </div>
@@ -151,7 +151,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                         </div>
-                                        <input type="text" name="phone" class="form-control" placeholder="Numero Telefónico o Celular" value="{{ old('phone') }}" required>
+                                        <input type="text" name="phone" class="form-control" placeholder="Número Telefónico o Celular" value="{{ old('phone') }}" required>
                                         <div class="invalid-feedback">Este campo es obligatorio.</div>
                                     </div>
                                 </div>
@@ -163,7 +163,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
                                         </div>
-                                        <input type="text" name="address" class="form-control" placeholder="Direccion Domiciliaria" value="{{ old('address') }}" required>
+                                        <input type="text" name="address" class="form-control" placeholder="Dirección Domiciliaria" value="{{ old('address') }}" required>
                                         <div class="invalid-feedback">Este campo es obligatorio.</div>
                                     </div>
                                 </div>

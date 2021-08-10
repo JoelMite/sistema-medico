@@ -24,7 +24,17 @@ class MedicalConsultationController extends Controller
       Gate::authorize('haveaccess','medicalconsultation.index');
 
       //$histories = HistoryClinic::all();
-      $havePersonHistory = Person::has('history_clinic')->get(); // Este metodo me retorna las personas que no tienen una historia clinica
+      $havePersonHistory = Person::has('history_clinic')->whereHas('user', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
+      $query->where('creator_id','=',auth()->id())
+        ->whereHas('roles', function($query){
+          $query->whereHas('permissions', function($query){
+            $query->where('name','=','Crear Cita Médica');
+          });
+        });
+      })->get(['id', 'name', 'lastname', 'phone', 'address']);
+
+      //return $havePersonHistory;
+
       return view('medical_consultations.index', compact('havePersonHistory'));
     }
 
@@ -59,11 +69,12 @@ class MedicalConsultationController extends Controller
     public function create(Person $person)
     {
 
-      Gate::authorize('haveaccess','medicalconsultation.create');
+      Gate::authorize('haveaccesscreateMedicalConsultations', [$person, 'medicalconsultation.create']);
 
       //$persons = Person::findOrfail($id);
       $history_id = $person->history_clinic->id;
 
+      // TODO Ojo, utilizar una sesion flash no es factible, podemos reemplazar por una sesion normal.
       Session::flash('history_id', "$history_id");
 
       return view('medical_consultations.create');
@@ -77,15 +88,56 @@ class MedicalConsultationController extends Controller
           'reason' => 'required',
           'diagnosis' => 'required',
           'observations' => 'required',
-          'heart_rate' => 'required'
+
+          'blood_pressure' => 'required|max:10',
+          'heart_rate' => 'required|max:10',
+          'breathing_frequency' => 'required|max:10',
+          'weight' => 'required|max:5',
+          'height' => 'required|max:5',
+          'abdominal_perimeter' => 'required|max:5',
+          'capillary_glucose' => 'required|max:10',
+          'temperature' => 'required|max:10',
+
+          'description' => 'required',
+          'posology' => 'required',
+          'observations_pres' => 'required',
+
+          'type_of_exam' => 'required',
+          'quantity' => 'required',
+          'assessment' => 'required',
+          'observations_pru' => 'required',
         ];
         $messages = [
           'reason.required' => 'Es necesario ingresar el motivo de la consulta.',
-          'diagnosis.required' => 'Es necesario ingresar el diagnostico de la consulta.',
-          'observations.required' => 'Es necesario ingresar la observacion de la consulta.',
-          'blood_pressure.required' => 'Es necesario ingresar la presion arterial',
-          'blood_pressure.integer' => 'Es necesario ingresar la presion arterial en valores enteros',
-          'heart_rate.required' => 'Es necesario ingresar la frecuencia cardiaca'
+          'diagnosis.required' => 'Es necesario ingresar el diagnóstico de la consulta.',
+          'observations.required' => 'Es necesario ingresar la observación de la consulta.',
+
+          'blood_pressure.required' => 'Es necesario ingresar la presión arterial.',
+          'blood_pressure.max' => 'La presión arterial no puede exceder los 10 caracteres.',
+          'heart_rate.required' => 'Es necesario ingresar la frecuencia cardíaca',
+          'heart_rate.max' => 'La frecuencia cardíaca no puede exceder los 10 caracteres.',
+          'breathing_frequency.required' => 'Es necesario ingresar la frecuencia respiratoria.',
+          'breathing_frequency.max' => 'La frecuencia respiratoria no puede exceder los 10 caracteres.',
+          'weight.required' => 'Es necesario ingresar el peso.',
+          'weight.max' => 'El peso no puede exceder los 5 caracteres.',
+          'height.required' => 'Es necesario ingresar la altura.',
+          'height.max' => 'La altura no puede exceder los 5 caracteres.',
+          'abdominal_perimeter.required' => 'Es necesario ingresar el perímetro abdominal.',
+          'abdominal_perimeter.max' => 'El perímetro abdominal no puede exceder los 5 caracteres.',
+          'capillary_glucose.required' => 'Es necesario ingresar la glucosa capilar.',
+          'capillary_glucose.max' => 'La glucosa capilar no puede exceder los 10 caracteres.',
+          'temperature.required' => 'Es necesario ingresar la temperatura.',
+          // 'temperature.numeric' => 'La temperatura debe ser de tipo numérico.',
+          'temperature.max' => 'La temperatura no puede exceder los 10 caracteres.',
+
+          'description.required' => 'Es necesario ingresar una descripción a la prescripción médica.',
+          'posology.required' => 'Es necesario ingresar la posología a la prescripción médica.',
+          'observations_pres.required' => 'Es necesario ingresar una observación a la prescripción médica.',
+
+          'type_of_exam.required' => 'Es necesario ingresar un tipo de exámen.',
+          'quantity.required' => 'Es necesario ingresar una cantidad.',
+          'assessment.required' => 'Es necesario ingresar valoración.',
+          'observations_pru.required' => 'Es necesario ingresar una observación a las pruebas de laboratorio.',
         ];
         $this->validate($request, $rules, $messages);
       }
@@ -97,6 +149,7 @@ class MedicalConsultationController extends Controller
       //return dd($request);
 
       $history_id = session('history_id');
+      $imc = $request['weight']/(pow($request['height'], 2)); // IMC = Peso/Estatura^2
 
       $medical_consultations = MedicalConsultation::create([
         'reason' => $request['reason'],
@@ -107,7 +160,7 @@ class MedicalConsultationController extends Controller
         'breathing_frequency' => $request['breathing_frequency'],
         'weight' => $request['weight'],
         'height' => $request['height'],
-        'imc' => $request['imc'],
+        'imc' => $imc,
         'abdominal_perimeter' => $request['abdominal_perimeter'],
         'capillary_glucose' => $request['capillary_glucose'],
         'temperature' => $request['temperature'],

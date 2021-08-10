@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
+  {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
   <title>Sistema de Seguimiento y Control Medico | {{ config('app.name') }}</title>
   <!-- Favicon -->
   <link href="{{ asset('asset/img/brand/favicon.png') }}" rel="icon" type="image/png">
@@ -17,8 +18,8 @@
   <link href=" {{ asset('asset/vendor/animate.css/animate.min.css') }}" rel="stylesheet">
 
   <link href="{{ asset('asset/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('asset/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('asset/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}" rel="stylesheet">
+  {{-- <link href="{{ asset('asset/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet"> --}}
+  {{-- <link href="{{ asset('asset/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}" rel="stylesheet"> --}}
   <!-- Argon CSS -->
   <link href=" {{ asset('asset/css/argon.css') }}" rel="stylesheet">
   {{-- <link href=" {{ asset('css/plantilla.css') }} " rel="stylesheet"> --}}
@@ -98,7 +99,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="#navbar-dashboards" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-dashboards">
-                <i class="ni ni-shop text-primary"></i>
+                <i class="fas fa-paste text-primary"></i>
                 <span class="nav-link-text">Consulta Médica</span>
               </a>
               <div class="collapse show" id="navbar-dashboards">
@@ -242,12 +243,12 @@
                 </div>
               </div>
             </li>
-            <li class="nav-item d-sm-none">
+            {{-- <li class="nav-item d-sm-none">
               <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
                 <i class="ni ni-zoom-split-in"></i>
               </a>
-            </li>
-            <li class="nav-item dropdown">
+            </li> --}}
+            {{-- <li class="nav-item dropdown">
               <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="ni ni-bell-55"></i>
               </a>
@@ -262,7 +263,7 @@
                     <div class="row align-items-center">
                       <div class="col-auto">
                         <!-- Avatar -->
-                        {{-- <img alt="Image placeholder" src="../../assets/img/theme/team-1.jpg" class="avatar rounded-circle"> --}}
+                        <img alt="Image placeholder" src="../../assets/img/theme/team-1.jpg" class="avatar rounded-circle">
                       </div>
                       <div class="col ml--2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -281,7 +282,7 @@
                     <div class="row align-items-center">
                       <div class="col-auto">
                         <!-- Avatar -->
-                        {{-- <img alt="Image placeholder" src="../../assets/img/theme/team-2.jpg" class="avatar rounded-circle"> --}}
+                        <img alt="Image placeholder" src="../../assets/img/theme/team-2.jpg" class="avatar rounded-circle">
                       </div>
                       <div class="col ml--2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -300,7 +301,7 @@
                     <div class="row align-items-center">
                       <div class="col-auto">
                         <!-- Avatar -->
-                        {{-- <img alt="Image placeholder" src="../../assets/img/theme/team-3.jpg" class="avatar rounded-circle"> --}}
+                        <img alt="Image placeholder" src="../../assets/img/theme/team-3.jpg" class="avatar rounded-circle">
                       </div>
                       <div class="col ml--2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -319,7 +320,7 @@
                     <div class="row align-items-center">
                       <div class="col-auto">
                         <!-- Avatar -->
-                        {{-- <img alt="Image placeholder" src="../../assets/img/theme/team-4.jpg" class="avatar rounded-circle"> --}}
+                        <img alt="Image placeholder" src="../../assets/img/theme/team-4.jpg" class="avatar rounded-circle">
                       </div>
                       <div class="col ml--2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -338,7 +339,7 @@
                     <div class="row align-items-center">
                       <div class="col-auto">
                         <!-- Avatar -->
-                        {{-- <img alt="Image placeholder" src="../../assets/img/theme/team-5.jpg" class="avatar rounded-circle"> --}}
+                        <img alt="Image placeholder" src="../../assets/img/theme/team-5.jpg" class="avatar rounded-circle">
                       </div>
                       <div class="col ml--2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -357,7 +358,7 @@
                 <!-- View all -->
                 <a href="#!" class="dropdown-item text-center text-primary font-weight-bold py-3">View all</a>
               </div>
-            </li>
+            </li> --}}
             {{-- <li class="nav-item dropdown">
               <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="ni ni-ungroup"></i>
@@ -620,12 +621,12 @@
 
   <script src=" {{ asset('asset/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
   <script src=" {{ asset('asset/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-  <script src=" {{ asset('asset/vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+  {{-- <script src=" {{ asset('asset/vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
   <script src=" {{ asset('asset/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script>
   <script src=" {{ asset('asset/vendor/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
   <script src=" {{ asset('asset/vendor/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
   <script src=" {{ asset('asset/vendor/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
-  <script src=" {{ asset('asset/vendor/datatables.net-select/js/dataTables.select.min.js') }}"></script>
+  <script src=" {{ asset('asset/vendor/datatables.net-select/js/dataTables.select.min.js') }}"></script> --}}
 
   @yield('scripts')
   <!-- Argon JS -->

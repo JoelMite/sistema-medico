@@ -1,21 +1,16 @@
 @extends('layouts.panel')
 
-@section('styles')
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-@endsection
-
 @section('content')
 
     <div class="card shadow">
       <div class="card-header border-0">
         <div class="row align-items-center">
           <div class="col">
-            <h3 class="mb-0">Crear Consulta Médica</h3>
+            <h3 class="mb-0">Nueva Consulta Médica</h3>
           </div>
           <div class="col text-right">
-            <a href="{{url('medical_consultations')}}" class="btn btn-danger">
-              Cancelar y Volver
+            <a href="{{url('medical_consultations')}}" class="btn btn-warning">
+              Volver
             </a>
           </div>
         </div>
@@ -55,26 +50,26 @@
                 <div class="collapse show" id="contenido-btn-1" aria-labelledby="boton-collapse-1"
                 data-parent="#acordeon-01">
                   <div class="form-row">
-                    <div class="col-md-12 mb-3">
+                    <div class="col-md-4 mb-3">
                       <div class="form-group">
-                        <label for="name">Motivo</label>
-                        <textarea name="reason" class="form-control" value="{{ old('reason') }}" required></textarea>
+                        <label class="form-control-label">Motivo</label>
+                        <textarea name="reason" class="form-control" value="{{ old('reason') }}" rows="4" required></textarea>
                       </div>
                     </div>
                 {{-- </div> --}}
                 {{-- <div class="form-group"> --}}
-                    <div class="col-md-12 mb-3">
+                    <div class="col-md-4 mb-3">
                       <div class="form-group">
-                        <label for="name">Diagnóstico</label>
-                        <textarea name="diagnosis" class="form-control" value="{{ old('diagnosis') }}" required></textarea>
+                        <label class="form-control-label">Diagnóstico</label>
+                        <textarea name="diagnosis" class="form-control" value="{{ old('diagnosis') }}" rows="4" required></textarea>
                       </div>
                     </div>
                 {{-- </div> --}}
                 {{-- <div class="form-group"> --}}
-                    <div class="col-md-12 mb-3">
+                    <div class="col-md-4 mb-3">
                       <div class="form-group">
-                        <label for="name">Observaciones</label>
-                        <textarea name="observations" class="form-control" value="{{ old('observations') }}" required></textarea>
+                        <label class="form-control-label">Observaciones</label>
+                        <textarea name="observations" class="form-control" value="{{ old('observations') }}" rows="4" required></textarea>
                       </div>
                     </div>
                 {{-- </div> --}}
@@ -96,16 +91,26 @@
                       <div class="col-md-2 mb-3">
                         <div class="form-group">
                       {{-- <div class="form-group"> --}}
-                          <label for="name">Presión Arterial</label>
-                          <input type="text" name="blood_pressure" class="form-control" value="{{ old('blood_pressure') }}" required>
+                          <label class="form-control-label">Presión Arterial</label>
+                          <div class="input-group">
+                            <input type="text" name="blood_pressure" class="form-control" value="{{ old('blood_pressure') }}" required>
+                            <div class="input-group-append">
+                              <span class="input-group-text">mm Hg</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                       {{-- </div> --}}
                       {{-- <div class="form-group"> --}}
                       <div class="col-md-2 mb-3">
                         <div class="form-group">
-                          <label for="name">Frecuencia Cardíaca</label>
-                          <input type="text" name="heart_rate" class="form-control" value="{{ old('heart_rate') }}" required>
+                          <label class="form-control-label">Frecuencia Cardíaca</label>
+                          <div class="input-group">
+                            <input type="text" name="heart_rate" class="form-control" value="{{ old('heart_rate') }}" required>
+                            <div class="input-group-append">
+                              <span class="input-group-text">lpm</span>
+                            </div>
+                          </div>
                           {{-- <textarea name="heart_rate" class="form-control" value="{{ old('heart_rate') }}" required></textarea> --}}
                         </div>
                       </div>
@@ -113,44 +118,58 @@
                       {{-- <div class="form-group"> --}}
                       <div class="col-md-2 mb-3">
                         <div class="form-group">
-                          <label for="name">Frecuencia Respiratoria</label>
-                          <input type="text" name="breathing_frequency" class="form-control" value="{{ old('breathing_frequency') }}" required>
+                          <label class="form-control-label">Frecuencia Respiratoria</label>
+                          <div class="input-group">
+                            <input type="text" name="breathing_frequency" class="form-control" value="{{ old('breathing_frequency') }}" required>
+                            <div class="input-group-append">
+                              <span class="input-group-text">rpm</span>
+                            </div>
+                          </div>
                           {{-- <textarea name="breathing_frequency" class="form-control" value="{{ old('breathing_frequency') }}" required></textarea> --}}
                         </div>
                       </div>
                       {{-- </div> --}}
                       {{-- <div class="form-group"> --}}
-                      <div class="col-md-2 mb-3">
+                      <div class="col-md-1 mb-3">
                         <div class="form-group">
-                          <label for="name">Peso</label>
-                          <input type="text" name="weight" class="form-control" value="{{ old('weight') }}" required>
+                          <label class="form-control-label">Peso</label>
+                          <div class="input-group">
+                            <input type="text" name="weight" class="form-control" value="{{ old('weight') }}" required>
+                            <div class="input-group-append">
+                              <span class="input-group-text">kg</span>
+                            </div>
+                          </div>
                           {{-- <textarea name="weight" class="form-control" value="{{ old('weight') }}" required></textarea> --}}
                         </div>
                       </div>
                       {{-- </div> --}}
                       {{-- <div class="form-group"> --}}
-                      <div class="col-md-2 mb-3">
+                      <div class="col-md-1 mb-3">
                         <div class="form-group">
-                          <label for="name">Altura</label>
-                          <input type="text" name="height" class="form-control" value="{{ old('height') }}" required>
+                          <label class="form-control-label">Estatura</label>
+                          <div class="input-group">
+                            <input type="text" name="height" class="form-control" value="{{ old('height') }}" required>
+                            <div class="input-group-append">
+                              <span class="input-group-text">m</span>
+                            </div>
+                          </div>
                           {{-- <textarea name="height" class="form-control" value="{{ old('height') }}" required></textarea> --}}
                         </div>
                       </div>
                       {{-- </div> --}}
                       {{-- <div class="form-group"> --}}
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="name">IMC</label>
-                          <input type="text" name="imc" class="form-control" value="{{ old('imc') }}" required>
-                          {{-- <textarea name="imc" class="form-control" value="{{ old('imc') }}" required></textarea> --}}
-                        </div>
-                      </div>
+
                       {{-- </div> --}}
                       {{-- <div class="form-group"> --}}
                       <div class="col-md-2 mb-3">
                         <div class="form-group">
-                          <label for="name">Perímetro Abdominal</label>
-                          <input type="text" name="abdominal_perimeter" class="form-control" value="{{ old('abdominal_perimeter') }}" required>
+                          <label class="form-control-label">Perímetro Abdominal</label>
+                          <div class="input-group">
+                            <input type="text" name="abdominal_perimeter" class="form-control" value="{{ old('abdominal_perimeter') }}" required>
+                            <div class="input-group-append">
+                              <span class="input-group-text">cm</span>
+                            </div>
+                          </div>
                           {{-- <textarea name="abdominal_perimeter" class="form-control" value="{{ old('abdominal_perimeter') }}" required></textarea> --}}
                       {{-- </div> --}}
                       {{-- <div class="form-group"> --}}
@@ -158,17 +177,27 @@
                       </div>
                       <div class="col-md-2 mb-3">
                         <div class="form-group">
-                          <label for="name">Glucemia Capilar</label>
-                          <input type="text" name="capillary_glucose" class="form-control" value="{{ old('capillary_glucose') }}" required>
+                          <label class="form-control-label">Glucemia Capilar</label>
+                          <div class="input-group">
+                            <input type="text" name="capillary_glucose" class="form-control" value="{{ old('capillary_glucose') }}" required>
+                            <div class="input-group-append">
+                              <span class="input-group-text">mg/dL</span>
+                            </div>
+                          </div>
                           {{-- <textarea name="capillary_glucose" class="form-control" value="{{ old('capillary_glucose') }}" required></textarea> --}}
                         </div>
                       </div>
                       {{-- </div> --}}
                       {{-- <div class="form-group"> --}}
-                      <div class="col-md-2 mb-3">
+                      <div class="col-md-1 mb-3">
                         <div class="form-group">
-                          <label for="name">Temperatura</label>
-                          <input type="text" name="temperature" class="form-control" value="{{ old('temperature') }}" required>
+                          <label class="form-control-label">Temperatura</label>
+                          <div class="input-group">
+                            <input type="text" name="temperature" class="form-control" value="{{ old('temperature') }}" required>
+                            <div class="input-group-append">
+                              <span class="input-group-text">°C</span>
+                            </div>
+                          </div>
                           {{-- <textarea name="temperature" class="form-control" value="{{ old('temperature') }}" required></textarea> --}}
                         </div>
                       </div>
@@ -188,9 +217,4 @@
       </div>
       </div>
 
-@endsection
-
-@section('scripts')
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 @endsection

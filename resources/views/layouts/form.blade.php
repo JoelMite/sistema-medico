@@ -20,47 +20,49 @@
 </head>
 
 <body class="bg-default">
-    <!-- Navbar -->
-    <nav id="navbar-main" class="navbar navbar-horizontal navbar-transparent navbar-main navbar-expand-lg navbar-light">
-      <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
-           {{-- <img src="{{ asset('img/brand/white.png') }}" /> --}}
-          {{ config('app.name') }}
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse navbar-custom-collapse collapse" id="navbar-collapse">
-          <!-- Collapse header -->
-          <div class="navbar-collapse-header">
-            <div class="row">
-              <div class="col-6 collapse-brand">
-                <a href="../index.html">
-                  <img src="{{ asset('img/brand/blue.png') }}">
-                </a>
-              </div>
-              <div class="col-6 collapse-close">
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
-                  <span></span>
-                  <span></span>
-                </button>
-              </div>
+  <!-- Navbar -->
+  <nav id="navbar-main" class="navbar navbar-horizontal navbar-transparent navbar-main navbar-expand-lg navbar-light">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url('/') }}">
+        {{-- <img src="{{ asset('img/brand/white.png') }}" /> --}}
+        {{ config('app.name') }}
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse"
+        aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse navbar-custom-collapse collapse" id="navbar-collapse">
+        <!-- Collapse header -->
+        <div class="navbar-collapse-header">
+          <div class="row">
+            <div class="col-6 collapse-brand">
+              <a href="../index.html">
+                <img src="{{ asset('img/brand/Brand-Medical.png') }}">
+              </a>
+            </div>
+            <div class="col-6 collapse-close">
+              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse"
+                aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+              </button>
             </div>
           </div>
-          <!-- Navbar items -->
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="{{ route('loginUser') }}">
-                <i class="ni ni-key-25"></i>
-                <span class="nav-link-inner--text">Ingresar</span>
-              </a>
-            </li>
-          </ul>
         </div>
+        <!-- Navbar items -->
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link nav-link-icon" href="{{ route('loginUser') }}">
+              <i class="ni ni-key-25"></i>
+              <span class="nav-link-inner--text">Ingresar</span>
+            </a>
+          </li>
+        </ul>
       </div>
-    </nav>
-    <!-- Header -->
-    <div class="main-content">
+    </div>
+  </nav>
+  <!-- Header -->
+  <div class="main-content">
     <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
       <div class="container">
         <div class="header-body text-center mb-7">
@@ -77,7 +79,8 @@
         </div>
       </div>
       <div class="separator separator-bottom separator-skew zindex-100">
-        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+          xmlns="http://www.w3.org/2000/svg">
           <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
         </svg>
       </div>
@@ -92,7 +95,8 @@
       <div class="row align-items-center justify-content-xl-between">
         <div class="col-xl-6">
           <div class="copyright text-center text-xl-left text-muted">
-            &copy; 2019 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+            &copy; 2019 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative
+              Tim</a>
           </div>
         </div>
         <div class="col-xl-6">
@@ -122,7 +126,7 @@
   <script src="{{ asset('vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
   <script src="{{ asset('vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"></script>
   <!-- Argon JS -->
-  <script src="{{ asset('js/argon.js') }}" ></script>
+  <script src="{{ asset('js/argon.js') }}"></script>
   {{-- <script src=" {{ asset('js/app.js') }} "></script> --}}
   {{-- <script src=" {{ asset('js/plantilla.js') }} "></script> --}}
 </body>

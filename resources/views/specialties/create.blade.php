@@ -47,7 +47,7 @@
                     <input type="text" name="description" class="form-control" value="{{ old('description') }}" required>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-success">
                 Guardar
             </button>
         </form>

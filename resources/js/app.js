@@ -25,6 +25,9 @@ Vue.component('create-medical-consultation-component', require('./components/Cre
 Vue.component('home-dashboard-doctor-component', require('./components/HomeDashboardDoctorComponent.vue').default);
 Vue.component('home-dashboard-administrator-component', require('./components/HomeDashboardAdministratorComponent.vue').default);
 Vue.component('create-doctor-component', require('./components/CreateDoctorComponent.vue').default);
+Vue.component('table-pending-appointment-component', require('./components/TablePendingAppointmentComponent.vue').default);
+Vue.component('table-confirmed-appointment-component', require('./components/TableConfirmedAppointmentComponent.vue').default);
+Vue.component('table-old-appointment-component', require('./components/TableOldAppointmentComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

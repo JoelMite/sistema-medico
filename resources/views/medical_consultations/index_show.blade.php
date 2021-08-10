@@ -20,9 +20,9 @@
       @endif
 
 
-      <div class="table-responsive">
+      <div class="table-responsive py-4">
         <!-- doctores table -->
-        <table class="table align-items-center table-flush">
+        <table class="table table-striped table-bordered" id="datatable">
           <thead class="thead-light">
             <tr>
               <!-- <th scope="col">Nombre</th> -->
@@ -45,8 +45,8 @@
                       {{ $person->created_at ?? "No hay datos"}}
                     </td>
                     <td>
-                      <a href="{{ url('medical_consultations_pdf/'.$person->medical_consultations_id) }}" class="btn btn-sm btn-warning">Ver Consulta Médica PDF</a>
-                      <a href="{{ url('medical_consultations_export_pdf/'.$person->medical_consultations_id) }}" class="btn btn-sm btn-success">Exportar Consulta Médica PDF</a>
+                      <a href="{{ url('medical_consultations_pdf/'.$person->medical_consultations_id) }}" target="_blank" class="btn btn-sm btn-warning">Ver Consulta Médica PDF</a>
+                      <a href="{{ url('medical_consultations_export_pdf/'.$person->medical_consultations_id) }}" target="_blank" class="btn btn-sm btn-success">Exportar Consulta Médica PDF</a>
                     </td>
                   </tr>
             @endforeach
@@ -54,5 +54,12 @@
         </table>
       </div>
     </div>
+
+@endsection
+
+
+@section('scripts')
+
+<script src="{{ asset('/js/datatable/table.js') }}"></script>
 
 @endsection

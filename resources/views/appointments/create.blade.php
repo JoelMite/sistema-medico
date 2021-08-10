@@ -59,8 +59,3 @@
       </div>
 
 @endsection
-
-@section('scripts')
-<!-- Latest compiled and minified JavaScript -->
-<script src="{{ asset('asset/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
-@endsection

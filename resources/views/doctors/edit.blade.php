@@ -14,7 +14,7 @@
                 <h3 class="mb-0">Editar Usuario</h3>
             </div>
             <div class="col text-right">
-                <a href="{{url('doctors')}}" class="btn btn-danger">
+                <a href="{{url('doctors')}}" class="btn btn-warning">
                     Volver
                 </a>
             </div>

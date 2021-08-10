@@ -120,7 +120,7 @@
           <thead class="thead-light">
             <tr>
               <th scope="col">Nombre</th>
-              <th scope="col">Descripcion</th>
+              <th scope="col">Descripción</th>
               <th scope="col">Opciones</th>
               {{-- <th scope="col">Permisos</th> --}}
             </tr>
@@ -128,7 +128,7 @@
           <tbody>
             @foreach ($roles as $role)
             <tr>
-              <td>
+              <th scope="row">
                 {{ $role->name }}
               </th>
               <td>

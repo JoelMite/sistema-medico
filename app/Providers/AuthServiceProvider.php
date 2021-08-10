@@ -6,7 +6,9 @@ use Laravel\Passport\Passport;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\User;
+use App\Models\Person;
 use App\Models\HistoryClinic;
+use App\Models\AppointmentMedical;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -54,6 +56,22 @@ class AuthServiceProvider extends ServiceProvider
               return $usera->id == $user->creator_id;
             }
             return false;
+        });
+
+        Gate::define('haveaccesscreateMedicalConsultations', function (User $usera, Person $person, $perm){
+
+            if ($usera->havePermission($perm) && $person->user->havePermission('appointmentmedical.create')) {
+              return $usera->id == $person->user->creator_id;
+            }
+            return false;
+        });
+
+        Gate::define('haveaccessshowAppointmentMedical', function (User $user, AppointmentMedical $appointment, $perm){
+
+          if ($user->havePermission($perm[0]) && $user->havePermission($perm[1])) {
+            return $user->id == $appointment->doctor_id;
+          }
+          return false;
         });
 
         Passport::routes();

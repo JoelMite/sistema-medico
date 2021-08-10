@@ -26,10 +26,26 @@
 
     <div class="form-group">
         <label class="form-control-label">Fecha</label>
-        <div class="input-group">
+        
+         <!-- <div class="input-group">
             <date-picker ref="datepicker" class="col-md-6" v-model="selected_date" @change="loadHours" placeholder="Seleccionar fecha" id="schedule_date" valueType="format" :disabled="disableDatePicker" type="date"></date-picker>
-        </div>
+        </div> -->
 
+        <!-- <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+            </div>
+            <input @change="loadHours" v-model="selected_date" class="form-control datepicker" placeholder="Seleccionar fecha"
+            v-bind:id="'schedule_date'" name="schedule_date" type="text">
+        </div> -->
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+            </div>
+            <date-picker class="form-control" id="schedule_date" name="schedule_date" @input="loadHours" placeholder="Seleccionar fecha" v-model="selected_date" :disabled="disableDatePicker" :config="options"></date-picker>
+        </div>
+        
         <!-- <date-picker v-model="test_date" valueType="format"></date-picker> -->
     </div>
 
@@ -69,8 +85,13 @@
 
 <script>
 
-import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
+/* import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css'; */
+
+/* import DatePicker from 'bootstrap-datepicker'; */
+
+import DatePicker from 'vue-bootstrap-datetimepicker';
+import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
 
 export default {
   components: { DatePicker },
@@ -87,15 +108,21 @@ export default {
             intervals: [],
             afternoon: [],
             morning: [],
+            options: {
+                format: 'YYYY-MM-DD',
+                useCurrent: false,
+            },
         };
     },
 
     mounted() {
         document.getElementById("doctor").disabled = true;
 
-        this.disableDatePicker = true;
+     
+
+         this.disableDatePicker = true; 
         // Cambiar el atributo "name" del datepicker vue2-datepicker - Es la unica forma
-        this.$refs.datepicker.$refs.input.name = 'schedule_date';
+        // this.$refs.datepicker.$refs.input.name = 'schedule_date';
 
         // var vm = this
         //   $('#date').datepicker({

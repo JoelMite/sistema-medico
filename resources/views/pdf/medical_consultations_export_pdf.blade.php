@@ -106,7 +106,7 @@
                             <tr>
                                 <td>
                                     <strong>Diagnóstico</strong>
-                                    <pre> {{ $medical_consultations->diagnosis }} </pre>
+                                    <p> {{ $medical_consultations->diagnosis }} </p>
                                 </td>
                                 {{-- <td class="text-right">$600</td> --}}
                             </tr>
@@ -140,7 +140,7 @@
                             <td class="tg-c3ow"><strong>Frecuencia Cardíaca</strong></td>
                             <td class="tg-c3ow"><strong>Frecuencia Respiratoria</strong></td>
                             <td class="tg-c3ow"><strong>Peso</strong></td>
-                            <td class="tg-c3ow"><strong>Altura</strong></td>
+                            <td class="tg-c3ow"><strong>Estatura</strong></td>
                         </tr>
                         <tr>
                             <td class="tg-c3ow">{{ $medical_consultations->blood_pressure }}</td>
@@ -190,7 +190,7 @@
                                     <p> {{ $medical_prescription->description }} </p>
                                 </td>
                                 <td class="tg-c3ow">
-                                    <pre> {{ $medical_prescription->posology }} </pre>
+                                    <p> {{ $medical_prescription->posology }} </p>
                                 </td>
                                 <td class="tg-c3ow">
                                     <p> {{ $medical_prescription->observations_pres }} </p>

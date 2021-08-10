@@ -82,14 +82,14 @@
             <h3 class="mb-0">Pacientes</h3>
           </div>
           <div class="col text-right">
-            <a href="{{url('patients/create')}}" class="btn btn-sm btn-success">
+            <a href="{{url('patients/create')}}" class="btn btn-success">
               Nuevo Paciente
             </a>
           </div>
         </div>
       </div>
 
-      @if(session('notification'))
+      {{-- @if(session('notification'))
       <div class="card-body">
         <div class="alert alert-success" role="alert">
           {{ session('notification') }}
@@ -103,10 +103,10 @@
           {{ session('warning') }}
         </div>
       </div>
-      @endif
+      @endif --}}
 
-      <div class="table-responsive">
-        <table class="table align-items-center table-flush">
+      <div class="table-responsive py-4">
+        <table class="table table-striped table-bordered" id="datatable">
           <thead class="thead-light">
             <tr>
               <th scope="col">Nombres</th>
@@ -151,9 +151,46 @@
           </tbody>
         </table>
       </div>
-      <div class="card-body">
+      {{-- <div class="card-body">
         {{ $patients->links() }}
-      </div>
+      </div> --}}
     </div>
 
 @endsection
+
+@section('scripts')
+  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script> --}}
+
+<script src="{{ asset('/js/datatable/table.js') }}"></script>
+
+  @if(session('warning'))
+    <script>
+    $.notify({
+    	title: '<strong>Error!</strong><br>',
+    	message: '{{ session('warning') }}'
+    },{
+    	type: 'danger',
+      animate: {
+    		enter: 'animated bounceInDown',
+    		exit: 'animated bounceOutUp'
+  	  }
+    });
+    </script>
+  @endif
+
+  @if(session('success'))
+      <script>
+      $.notify({
+      	title: '<strong>Exito!</strong><br>',
+      	message: '{{ session('success') }}'
+      },{
+      	type: 'success',
+        animate: {
+      		enter: 'animated fadeInRight',
+      		exit: 'animated fadeOutRight'
+      	}
+      });
+      </script>
+  @endif
+@endsection
+

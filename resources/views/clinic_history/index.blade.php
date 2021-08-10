@@ -129,9 +129,9 @@
           @foreach ($havePersonHistory as $person)
             {{-- @if ($person->user->creator_id == auth()->id()) --}}
                 <tr>
-                  <td>
+                  <th scope="row">
                     {{ $person->name }}
-                  </td>
+                  </th>
                   <td>
                     {{ $person->lastname }}
                   </td>
@@ -147,9 +147,9 @@
             @foreach ($nohavePersonHistory as $person)
               {{-- @if ($person->user->creator_id == auth()->id()) --}}
                   <tr>
-                    <td>
+                    <th scope="row">
                       {{ $person->name }}
-                    </td>
+                    </th>
                     <td>
                       {{ $person->lastname }}
                     </td>
@@ -163,6 +163,8 @@
         </table>
       </div>
     </div>
+
+    <table-appointment-doctor-component></table-appointment-doctor-component>
 
 @endsection
 

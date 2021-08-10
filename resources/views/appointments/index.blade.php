@@ -56,3 +56,9 @@
     </div>
 
 @endsection
+
+@section('scripts')
+
+<script src="{{ asset('/js/datatable/table.js') }}"></script>
+
+@endsection

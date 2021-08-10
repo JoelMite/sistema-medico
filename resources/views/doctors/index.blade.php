@@ -120,9 +120,9 @@
                     {{-- <td>
                       {{ $doctor->email }}
                     </td> --}}
-                    <td>
+                    <th scope="row">
                       {{ $doctor->person['name'] }}
-                    </td>
+                    </th>
                     <td>
                       {{ $doctor->person['lastname'] }}
                     </td>
