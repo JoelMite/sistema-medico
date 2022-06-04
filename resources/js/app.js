@@ -23,6 +23,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('create-appointment-component', require('./components/CreateAppointmentComponent.vue').default);
 Vue.component('create-medical-consultation-component', require('./components/CreateMedicalConsultationComponent.vue').default);
 Vue.component('home-dashboard-doctor-component', require('./components/HomeDashboardDoctorComponent.vue').default);
+Vue.component('home-dashboard-patient-component', require('./components/HomeDashboardPatientComponent.vue').default);
 Vue.component('home-dashboard-administrator-component', require('./components/HomeDashboardAdministratorComponent.vue').default);
 Vue.component('create-doctor-component', require('./components/CreateDoctorComponent.vue').default);
 Vue.component('table-pending-appointment-component', require('./components/TablePendingAppointmentComponent.vue').default);

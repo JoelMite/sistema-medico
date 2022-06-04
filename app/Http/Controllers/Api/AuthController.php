@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use Carbon\Carbon;
+use App\Models\User;
 
 class AuthController extends Controller
 {
   /**
    * Registro de usuario
    */
+
+  // Todo Este ya no funcionaria porque es para registrar usuarios desde el movil. 
   public function signUp(Request $request)
   {
       $request->validate([
@@ -57,7 +60,16 @@ class AuthController extends Controller
           return compact('success', 'message');
       }
 
-      $user = $request->user();
+      $user = User::find(auth()->id());
+      $name = User::find(auth()->id())->person->name;
+      $patient = Auth::user()->havePermission('appointmentmedical.create');
+      
+      /* $patient = auth()->user()->whereHas('roles', function($query){
+        $query->whereHas('permissions', function($query){
+            $query->where('name','=','Crear Cita Médica');
+        });
+      })->get(); */
+
       $tokenResult = $user->createToken('Personal Access Token');
 
       $token = $tokenResult->token;
@@ -70,7 +82,7 @@ class AuthController extends Controller
       //$rols = $user->rols;                //  Me devuelve el rol que cumple cada usuario(medico o administrador)
       //$persons = $user->persons;
 
-      return compact('success', 'user', 'access_token');
+      return compact('user', 'patient', 'name', 'access_token', 'success');
 
       // return response()->json([
       //     'access_token' => $tokenResult->accessToken,
@@ -92,10 +104,10 @@ class AuthController extends Controller
   }
 
   /**
-   * Obtener el objeto User como json
+   * Obtener el objeto Person como json
    */
-  public function user(Request $request)
+  /* public function show()
   {
-      return response()->json($request->user());
-  }
+      return Auth::guard('api')->user()->person()->first();
+  } */
 }

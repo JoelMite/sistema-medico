@@ -247,7 +247,7 @@
 
                 <hr>
 
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-lg-8">
                         <div class="invbody-terms">
                             Thank you for your business. <br>
@@ -258,7 +258,7 @@
                             </p>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

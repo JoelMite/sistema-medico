@@ -333,7 +333,7 @@ class DoctorController extends Controller
 
       Gate::authorize('haveaccess','administrator.dashboard');
 
-      $user = User::whereHas('roles', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
+      $user = User::whereHas('roles', function($query){ //  Me devuelve solo usuarios asociados al rol medico
       $query->where('name', 'Medico')->where('creator_id','=',auth()->id());
       })->count();
       return response()->json($user);
@@ -344,7 +344,7 @@ class DoctorController extends Controller
 
       Gate::authorize('haveaccess','administrator.dashboard');
 
-      $user = User::whereHas('roles', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
+      $user = User::whereHas('roles', function($query){ 
       $query->where('name', 'Medico')->where('creator_id','=',auth()->id())->where('state', '200');
       })->count();
       return response()->json($user);

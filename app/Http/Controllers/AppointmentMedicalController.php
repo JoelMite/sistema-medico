@@ -204,13 +204,19 @@ class AppointmentMedicalController extends Controller
         return response()->json($oldAppointments);
     }
 
-    public function create(ScheduleServiceInterface $scheduleService)
+    // public function create(ScheduleServiceInterface $scheduleService)
+    public function create()
     {
 
         Gate::authorize('haveaccess', 'appointmentmedical.create');
 
-        $specialties = Specialty::all();
-        //Esta parte de aqui no funciona porque no tengo los valores que se envian en la variable doctor name y lastname no estan en la tabla users.
+        // Todo Esta parte de aqui, funciona con blade y no con javascript.
+        // Todo Por lo tanto hay que comentarlo y solo enviar el create.blade.php de appointmentmedical.
+
+        // $specialties = Specialty::all();
+
+        // ! Esta parte de aqui no funciona porque no tengo los valores que se envian en la variable doctor name y lastname no estan en la tabla users.
+        
         /*$specialtyId = old('specialty_id');
         if ($specialtyId) {
         $specialty = Specialty::find($specialtyId);
@@ -219,15 +225,20 @@ class AppointmentMedicalController extends Controller
         $doctors = collect();
         }*/
 
-        $date = old('schedule_date');
+        // ! Hasta Aqui.
+
+        /* $date = old('schedule_date');
         $doctorId = old('doctor_id');
         if ($date && $doctorId) {
             $intervals = $scheduleService->getAvailableIntervals($date, $doctorId);
         } else {
             $intervals = null;
-        }
+        } */
 
-        return view('appointments.create', compact('specialties', 'intervals'));
+        // Todo Hasta Aqui.
+
+        // return view('appointments.create', compact('specialties', 'intervals'));
+        return view('appointments.create');
     }
 
     // public function test(ScheduleServiceInterface $scheduleService)
@@ -316,15 +327,15 @@ class AppointmentMedicalController extends Controller
         $created = AppointmentMedical::createForPatient($request, auth()->user()->id);
 
         if ($created) {
-            $notification = "La cita se ha registrado correctamente.";
+            $success = "La cita se ha registrado correctamente.";
         } else {
-            $notification = "Ocurrio un problema al registrar la cita médica";
+            $warning = "Ocurrio un problema al registrar la cita médica";
         }
 
         // Notificacion de que se ha creado la cita correctamente
         // $notification = "La cita se ha registrado correctamente.";
 
-        return redirect('/appointment_medicals/create')->with(compact('notification'));
+        return redirect('/appointment_medicals/create')->with(compact('success', 'warning'));
 
         // return back()->with(compact('notification'));
         // Return back es lo mismo que el redirect sino que aqui no especificamos la ruta, laravel ya hace eso por nosotros
@@ -419,7 +430,7 @@ class AppointmentMedicalController extends Controller
         // return redirect('/appointment_medicals_doctor')->with(compact('notification'));
     }
 
-    public function show(AppointmentMedical $appointment) // YA NO FUNCIONARIA PORQUE YA ES REACTIVO CON VUE
+    /* public function show(AppointmentMedical $appointment) // YA NO FUNCIONARIA PORQUE YA ES REACTIVO CON VUE
     {
 
         Gate::authorize('haveaccess', 'appointmentmedical.show');
@@ -461,38 +472,72 @@ class AppointmentMedicalController extends Controller
 
         return view('appointments.show', compact('appointment', 'role'));
         //return dd($appointment);
-    }
+    } */
 
-    public function pendingAppointments()
+    public function pendingAppointments(Request $request)
     {
 
-        Gate::authorize('haveaccess', 'doctor.dashboard');
+        if ($request->ajax() && $request->role == 'patient') {
 
-        $pendingAppointments = AppointmentMedical::where('status', 'Reservada')
-            ->where('doctor_id', auth()->id())->count();
-        return response()->json($pendingAppointments);
+            Gate::authorize('haveaccess', 'patient.dashboard');
 
+            $pendingAppointments = AppointmentMedical::where('status', 'Reservada')
+                ->where('patient_id', auth()->id())->count();
+            return response()->json($pendingAppointments);
+
+        }elseif($request->ajax() && $request->role == 'doctor'){
+
+            Gate::authorize('haveaccess', 'doctor.dashboard');
+
+            $pendingAppointments = AppointmentMedical::where('status', 'Reservada')
+                ->where('doctor_id', auth()->id())->count();
+            return response()->json($pendingAppointments);
+
+        }
     }
 
-    public function confirmedAppointments()
+    public function confirmedAppointments(Request $request)
     {
 
-        Gate::authorize('haveaccess', 'doctor.dashboard');
+        if ($request->ajax() && $request->role == 'patient') {
 
-        $confirmedAppointments = AppointmentMedical::where('status', 'Confirmada')
-            ->where('doctor_id', auth()->id())->count();
-        return response()->json($confirmedAppointments);
+            Gate::authorize('haveaccess', 'patient.dashboard');
 
+            $confirmedAppointments = AppointmentMedical::where('status', 'Confirmada')
+                ->where('patient_id', auth()->id())->count();
+            return response()->json($confirmedAppointments);
+
+        }elseif($request->ajax() && $request->role == 'doctor'){
+
+            Gate::authorize('haveaccess', 'doctor.dashboard');
+
+            $confirmedAppointments = AppointmentMedical::where('status', 'Confirmada')
+                ->where('doctor_id', auth()->id())->count();
+            return response()->json($confirmedAppointments);
+
+        }
     }
 
-    public function attendedAppointments()
+    public function attendedAppointments(Request $request)
     {
 
-        Gate::authorize('haveaccess', 'doctor.dashboard');
+        if ($request->ajax() && $request->role == 'patient') {
 
-        $attendedAppointments = AppointmentMedical::where('status', 'Atendida')
-            ->where('doctor_id', auth()->id())->count();
-        return response()->json($attendedAppointments);
+            Gate::authorize('haveaccess', 'patient.dashboard');
+
+            $attendedAppointments = AppointmentMedical::where('status', 'Atendida')
+                ->where('patient_id', auth()->id())->count();
+            return response()->json($attendedAppointments);
+
+        }elseif($request->ajax() && $request->role == 'doctor'){
+
+            Gate::authorize('haveaccess', 'doctor.dashboard');
+
+            $attendedAppointments = AppointmentMedical::where('status', 'Atendida')
+                ->where('doctor_id', auth()->id())->count();
+            return response()->json($attendedAppointments);
+
+        }
 
     }
 }

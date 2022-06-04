@@ -31,7 +31,7 @@ class RoleController extends Controller
 
       //$permissions_all = Permission::get(['id', 'name']);
       //return dd($permissions_all);
-      $permissions_patient = Permission::where('name', 'LIKE', '%Paciente%')->orWhere('name', 'LIKE', '%Perfil%')->get(); // 4 resultados
+      $permissions_patient = Permission::where('name', 'LIKE', '%Paciente%')->where('name', 'NOT LIKE', '%Dashboard%')->orWhere('name', 'LIKE', '%Perfil%')->get(); // 4 resultados
       //$permissions_patient = $permissions_all->where('name', 'LIKE', '%paciente%')->orWhere('name', 'LIKE', '%perfil%')->get(); // 4 resultados
       $permissions_doctor = Permission::where('name', 'LIKE', '%Médico%')->where('name', 'NOT LIKE', '%Dashboard%')->orWhere('name', 'LIKE', '%Perfil%')->orWhere('name', 'LIKE', '%Horario%')->get(); // 6 resultados
       $permissions_role = Permission::where('name', 'LIKE', '%Rol%')->get(); // 4 resultados
@@ -51,7 +51,7 @@ class RoleController extends Controller
 
       Gate::authorize('haveaccess','role.edit');
 
-      $permissions_patient = Permission::where('name', 'LIKE', '%Paciente%')->orWhere('name', 'LIKE', '%Perfil%')->get(); // 4 resultados
+      $permissions_patient = Permission::where('name', 'LIKE', '%Paciente%')->where('name', 'NOT LIKE', '%Dashboard%')->orWhere('name', 'LIKE', '%Perfil%')->get(); // 4 resultados
       $permissions_doctor = Permission::where('name', 'LIKE', '%Médico%')->where('name', 'NOT LIKE', '%Dashboard%')->orWhere('name', 'LIKE', '%Perfil%')->orWhere('name', 'LIKE', '%Horario%')->get(); // 6 resultados
       $permissions_role = Permission::where('name', 'LIKE', '%Rol%')->get(); // 4 resultados
       $permissions_specialty = Permission::where('name', 'LIKE', '%Especialidad%')->get(); // 4 resultados
@@ -63,6 +63,7 @@ class RoleController extends Controller
 
       $permissions_patient_id = $role->permissions()->where(function ($query) {
       $query->where('name', 'LIKE', '%Paciente%')
+      ->where('name', 'NOT LIKE', '%Dashboard%')
       ->orWhere('name', 'LIKE', '%Perfil%');
       })->pluck('permissions.id');
 

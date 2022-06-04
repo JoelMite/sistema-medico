@@ -2,12 +2,12 @@
     <div>
         <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-                <h6 class="h2 d-inline-block mb-0">Administrador</h6>
+                <h6 class="h2 d-inline-block mb-0">Paciente</h6>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-3">
-                <div class="card bg-gradient-info border-0">
+                <div class="card bg-gradient-primary border-0">
                     <!-- Card body -->
                     <div class="card-body">
                         <div class="row">
@@ -15,19 +15,19 @@
                                 <h5
                                     class="card-title text-uppercase text-muted mb-0 text-white"
                                 >
-                                    Usuarios
+                                    Citas Reservadas
                                 </h5>
                                 <span
                                     class="h2 font-weight-bold mb-0 text-white"
-                                    v-bind:value="count_users"
-                                    >{{ count_users }}</span
+                                    v-bind:value="pendingAppointments"
+                                    >{{ pendingAppointments }}</span
                                 >
                             </div>
                             <div class="col-auto">
                                 <div
                                     class="icon icon-shape bg-white text-dark rounded-circle shadow"
                                 >
-                                    <i class="ni ni-single-02"></i>
+                                    <i class="ni ni-bell-55"></i>
                                 </div>
                             </div>
                         </div>
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="col-lg-3">
-                <div class="card bg-gradient-success border-0">
+                <div class="card bg-gradient-warning border-0">
                     <!-- Card body -->
                     <div class="card-body">
                         <div class="row">
@@ -43,19 +43,19 @@
                                 <h5
                                     class="card-title text-uppercase text-muted mb-0 text-white"
                                 >
-                                    Activos
+                                    Citas Confirmadas
                                 </h5>
                                 <span
                                     class="h2 font-weight-bold mb-0 text-white"
-                                    v-bind:value="activeUsers"
-                                    >{{ activeUsers }}</span
+                                    v-bind:value="confirmedAppointments"
+                                    >{{ confirmedAppointments }}</span
                                 >
                             </div>
                             <div class="col-auto">
                                 <div
                                     class="icon icon-shape bg-white text-dark rounded-circle shadow"
                                 >
-                                    <i class="fas fa-user-check"></i>
+                                    <i class="ni ni-collection"></i>
                                 </div>
                             </div>
                         </div>
@@ -71,19 +71,19 @@
                                 <h5
                                     class="card-title text-uppercase text-muted mb-0 text-white"
                                 >
-                                    Baneados
+                                    Citas Atendidas
                                 </h5>
                                 <span
                                     class="h2 font-weight-bold mb-0 text-white"
-                                    v-bind:value="bannedUsers"
-                                    >{{ bannedUsers }}</span
+                                    v-bind:value="attendedAppointments"
+                                    >{{ attendedAppointments }}</span
                                 >
                             </div>
                             <div class="col-auto">
                                 <div
                                     class="icon icon-shape bg-white text-dark rounded-circle shadow"
                                 >
-                                    <i class="fas fa-user-times"></i>
+                                    <i class="ni ni-check-bold"></i>
                                 </div>
                             </div>
                         </div>
@@ -98,24 +98,42 @@
 export default {
     data() {
         return {
-            count_users: "",
-            bannedUsers: "",
-            activeUsers: ""
+            pendingAppointments: "",
+            confirmedAppointments: "",
+            attendedAppointments: ""
         };
     },
 
     mounted() {
-        axios.get("count_users").then(response => {
-            this.count_users = response.data;
-        });
+        axios
+            .get("pendingAppointments", {
+                params: {
+                    role: "patient"
+                }
+            })
+            .then(response => {
+                this.pendingAppointments = response.data;
+            });
 
-        axios.get("bannedUsers").then(response => {
-            this.bannedUsers = response.data;
-        });
+        axios
+            .get("confirmedAppointments", {
+                params: {
+                    role: "patient"
+                }
+            })
+            .then(response => {
+                this.confirmedAppointments = response.data;
+            });
 
-        axios.get("activeUsers").then(response => {
-            this.activeUsers = response.data;
-        });
+        axios
+            .get("attendedAppointments", {
+                params: {
+                    role: "patient"
+                }
+            })
+            .then(response => {
+                this.attendedAppointments = response.data;
+            });
     }
 };
 </script>

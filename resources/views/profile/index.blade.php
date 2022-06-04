@@ -2,7 +2,7 @@
 
 @section('content')
 
-      {{-- <div class="row">
+{{-- <div class="row">
         <div class="col-lg-6">
           <div class="card bg-gradient-info border-0">
             <!-- Card body -->
@@ -48,78 +48,135 @@
           </div>
         </div>
       </div> --}}
-      <div class="card">
-        <div class="card-header">
-          <div class="row align-items-center">
-            <div class="col-8">
-              <h3 class="mb-0">Mi Perfil</h3>
+<form class="need-validation" action="{{ url('profile'.$user->id) }}" method="post" novalidate>
+  @csrf
+  @method('PUT')
+  <div class="card">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col-8">
+          <h3 class="mb-0">Mi Perfil</h3>
+        </div>
+        <div class="col-4 text-right">
+          <a href="#!" class="btn btn-success">Guardar</a>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <h6 class="heading-small text-muted mb-4">Información del Usuario</h6>
+      <div class="pl-lg-4">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Email</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                </div>
+                <input type="email" name="email" class="form-control" placeholder="test@example.com"
+                  value="{{ $user->email }}" disabled>
+                <div class="invalid-feedback">Este campo es obligatorio.</div>
+              </div>
             </div>
-            <div class="col-4 text-right">
-              <a href="#!" class="btn btn-sm btn-primary">Editar</a>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Nombres</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-single-02"></i></span>
+                </div>
+                <input type="text" name="name" class="form-control" placeholder="First name"
+                  value="{{ $user->person->name }}" disabled>
+                <div class="invalid-feedback">Este campo es obligatorio.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Apellidos</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-single-02"></i></span>
+                </div>
+                <input type="text" name="lastname" class="form-control" placeholder="Last name"
+                  value="{{ $user->person->lastname }}" disabled>
+                <div class="invalid-feedback">Este campo es obligatorio.</div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="card-body">
-          <form>
-            <h6 class="heading-small text-muted mb-4">Información del Usuario</h6>
-            <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-lg-4">
-                  <div class="form-group">
-                    <label class="form-control-label" for="email">Email</label>
-                    <input type="email" name="email" class="form-control" placeholder="test@example.com" value="{{ $user->email }}">
-                  </div>
+      </div>
+      <hr class="my-4" />
+      <!-- Address -->
+      <h6 class="heading-small text-muted mb-4">Información Adicional</h6>
+      <div class="pl-lg-4">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="form-control-label">Dirección</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
                 </div>
-                <div class="col-lg-4">
-                  <div class="form-group">
-                    <label class="form-control-label" for="name">Nombres</label>
-                    <input type="text" name="name" class="form-control" placeholder="First name" value="{{ $user->person->name }}">
-                  </div>
-                </div>
-                <div class="col-lg-4">
-                  <div class="form-group">
-                    <label class="form-control-label" for="lastname">Apellidos</label>
-                    <input type="text" name="lastname" class="form-control" placeholder="Last name" value="{{ $user->person->lastname }}">
-                  </div>
-                </div>
+                <input name="address" class="form-control" placeholder="Home Address"
+                  value="{{ $user->person->address }}" type="text">
+                <div class="invalid-feedback">Este campo es obligatorio.</div>
               </div>
             </div>
-            <hr class="my-4" />
-            <!-- Address -->
-            <h6 class="heading-small text-muted mb-4">Información Adicional</h6>
-            <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="form-control-label" for="address">Dirección</label>
-                    <input name="address" class="form-control" placeholder="Home Address" value="{{ $user->person->address }}" type="text">
-                  </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Ciudad</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-city"></i></span>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-4">
-                  <div class="form-group">
-                    <label class="form-control-label" for="city">Ciudad</label>
-                    <input type="text" name="city" class="form-control" placeholder="City" value="{{ $user->person->city }}">
-                  </div>
-                </div>
-                <div class="col-lg-4">
-                  <div class="form-group">
-                    <label class="form-control-label" for="phone">Teléfono</label>
-                    <input type="text" name="phone" class="form-control" placeholder="Country" value="{{ $user->person->phone }}">
-                  </div>
-                </div>
-                <div class="col-lg-4">
-                  <div class="form-group">
-                    <label class="form-control-label" for="date_birth">Fecha de Nacimiento</label>
-                    <input type="text" name="date_birth" class="form-control" placeholder="Fecha de Nacimiento" value="{{ $date_birth }}">
-                  </div>
-                </div>
+                <input type="text" name="city" class="form-control" placeholder="City"
+                  value="{{ $user->person->city }}">
+                <div class="invalid-feedback">Este campo es obligatorio.</div>
               </div>
             </div>
-          </form>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Teléfono</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                </div>
+                <input type="text" name="phone" class="form-control" placeholder="Country"
+                  value="{{ $user->person->phone }}">
+                <div class="invalid-feedback">Este campo es obligatorio.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Fecha de Nacimiento</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                </div>
+                <input type="text" name="date_birth" class="form-control" placeholder="Fecha de Nacimiento"
+                  value="{{ $date_birth }}">
+                <div class="invalid-feedback">Este campo es obligatorio.</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+</form>
+</div>
+</div>
 
+@endsection
+
+@section('scripts')
+
+<script src="{{ asset('/js/validate/validation.js') }}"></script>
 
 @endsection

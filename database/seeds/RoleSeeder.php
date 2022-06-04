@@ -32,12 +32,15 @@ class RoleSeeder extends Seeder
             'description' => Str::random(20),
           ]);
 
-        if ($role->id == 1) {
-          $role->permissions()->sync([16,17,18,19,24,25,26,27,28,29,30,31,32,33,34,36]);
-        }elseif ($role->id == 2) {
-          $role->permissions()->sync([1,2,3,4,5,6,7,8,9,10,11,13,14,15,20,21,22,23,24,37]);
-        }else {
-          $role->permissions()->sync([12,13,14,24,35]);
+
+        
+
+        if ($role->id == 1) { // Administrador
+          $role->permissions()->sync([15,16,17,18,23,24,25,26,27,28,29,30,31,32,33,34]);
+        }elseif ($role->id == 2) { // Medico
+          $role->permissions()->sync([1,2,3,4,5,6,7,8,9,11,13,14,19,20,21,22,23,35]);
+        }else { // Paciente
+          $role->permissions()->sync([10,12,14,23,36]);
         }
 
         // Rol::create([

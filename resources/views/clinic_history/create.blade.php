@@ -158,7 +158,7 @@
     <textarea name="observations_pru" class="form-control" value="{{ old('observations_pru') }}" required></textarea>
 </div> --}}
 
-<button type="submit" class="btn btn-primary">
+<button type="submit" class="btn btn-success">
     Guardar
 </button>
 </form>

@@ -98,6 +98,7 @@ Route::middleware(['auth', 'role', 'state'])->group(function () {
     Route::put('/patients/{patient}', 'PatientController@update'); // Editar un Rol
     Route::get('/patients/{patient}', 'PatientController@show'); // Mostrar un HC
     Route::delete('/patients/{patient}', 'PatientController@destroy'); // Eliminar un Rol
+    Route::get('/patients/{patient}/state', 'PatientController@state');
 
     // Ruta de Prueba para probarlo con vue
     Route::get('/count_patients', 'PatientController@count_patients');
@@ -171,5 +172,6 @@ Route::middleware(['auth', 'role', 'state'])->group(function () {
 
     // Ruta del Perfil del Usuario
     Route::get('/profile', 'ProfileController@show');
+    Route::put('/profile/{profile}', 'ProfileController@update');
 
 });

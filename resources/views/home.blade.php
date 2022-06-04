@@ -1,6 +1,6 @@
 @extends('layouts.panel')
 
-@section('content')
+@section('dashboard')
     <!-- <div class="row justify-content-center">
 
     </div> -->
@@ -29,12 +29,23 @@
     <home-dashboard-administrator-component></home-dashboard-administrator-component>
   @endcan
 
+  @can('haveaccess','patient.dashboard')
+
+    <home-dashboard-patient-component></home-dashboard-patient-component>
+
+  @endcan
+
   {{-- @elseif(auth()->user()->rols()->first()->name == 'Medico') --}}
 
   @can('haveaccess','doctor.dashboard')
 
     <home-dashboard-doctor-component></home-dashboard-doctor-component>
 
+    <div class="row align-items-center py-4">
+      <div class="col-lg-6 col-7">
+          <h6 class="h2 d-inline-block mb-0">Médico</h6>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col-xl-12 mb-5 mb-xl-0">
@@ -43,27 +54,28 @@
             <div class="row align-items-center">
               <div class="col">
                 <h6 class="text-uppercase ls-1 mb-1">Notificación General</h6>
-                <h5 class="h3 mb-0">Enviar a todos los pacientes</h5>
+                <h5 class="h3 mb-0">Enviar a todos mis pacientes</h5>
               </div>
             </div>
           </div>
           <div class="card-body">
-            @if(session('notification'))
+            {{-- @if(session('success'))
               <div class="alert alert-success" role="alert">
-                {{ session('notification') }}
+                {{ session('success') }}
               </div>
-            @endif
+            @endif --}}
             <form action="{{ url('/fcm/send') }}" method="post">
               @csrf
               <div class="form-group">
                 <label for="title">Título</label>
-                <input value="{{ config('app.name') }}" type="text" class="form-control" name="title" id="title" required>
+                {{-- <input value="{{ config('app.name') }}" type="text" class="form-control" name="title" id="title" required> --}}
+                <input placeholder="Ingresa un título." type="text" class="form-control" name="title" id="title" required>
               </div>
               <div class="form-group">
                 <label for="body">Mensaje</label>
-                <textarea name="body" id="body" rows="2" class="form-control" required></textarea>
+                <textarea name="body" id="body" rows="2" class="form-control" placeholder="Escribe un breve mensaje para tus pacientes." required></textarea>
               </div>
-              <button class="btn btn-primary">Enviar Notificación</button>
+              <button class="btn btn-success">Enviar Notificación</button>
             </form>
           </div>
         </div>
@@ -90,6 +102,21 @@
     </div>
   @endcan
   {{-- @endif --}}
+@endsection
 
-
+@section('scripts')
+@if(session('success'))
+    <script>
+      $.notify({
+        title: '<strong>Exito!</strong><br>',
+        message: ' {{ session('success') }} '
+      },{
+        type: 'success',
+        animate: {
+          enter: 'animated fadeInRight',
+          exit: 'animated fadeOutRight'
+        }
+      });
+    </script>
+@endif
 @endsection

@@ -49,7 +49,15 @@ class FirebaseController extends Controller
       // curl_close($ch);
       // return $result;
 
-      $recipients = User::whereNotNull('device_token')->pluck('device_token')->toArray();
+      $recipients = User::whereNotNull('device_token')
+      ->where('creator_id', '=', auth()->id())
+      ->whereHas('roles', function($query){
+        $query->whereHas('permissions', function($query){
+          $query->where('name','=','Crear Cita Médica');
+        });
+      })
+      ->pluck('device_token')->toArray();
+      
         fcm()
         ->to($recipients)
         ->notification([
@@ -58,7 +66,9 @@ class FirebaseController extends Controller
         ])
         ->send();
 
-        $notification = 'Notificación enviada a todos los usuarios (Android).';
-        return back()->with(compact('notification'));
+        // return $recipients;
+
+        $success = 'Notificación enviada a todos mis pacientes (Android).';
+        return back()->with(compact('success'));
     }
 }

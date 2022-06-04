@@ -126,23 +126,28 @@
                       {{ $patient->email }}
                     </td> --}}
                     <td>
-                      {{ $patient->person['name'] }}
+                      {{ $patient->person->name }}
                     </td>
                     <td>
-                      {{ $patient->person['lastname'] }}
+                      {{ $patient->person->lastname }}
                     </td>
                     <td>
-                      {{ $patient->person['phone'] }}
+                      {{ $patient->person->phone }}
                     </td>
                     <td>
-                      {{ $patient->person['address'] }}
+                      {{ $patient->person->address }}
                     </td>
                     <td>
-                      {{ $patient->person['city'] }}
+                      {{ $patient->person->city }}
                     </td>
                     <td>
                       <a href="{{ url('/patients/'.$patient->id.'/edit') }}" class="btn btn-sm btn-primary">Editar</a>
                       <a href="{{ url('/patients/'.$patient->id) }}" class="btn btn-sm btn-warning">Ver</a>
+                      @if($patient->state == '403')
+                        <a href="{{ url('/patients/'.$patient->id.'/state') }}" class="btn btn-sm btn-success">Activar</a>
+                      @elseif($patient->state == '200')
+                        <a href="{{ url('/patients/'.$patient->id.'/state') }}" class="btn btn-sm btn-danger">Banear</a>
+                      @endif
                     </td>
                   </tr>
                   {{-- @endif --}}

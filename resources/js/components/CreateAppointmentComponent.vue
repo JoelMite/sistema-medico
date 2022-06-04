@@ -1,8 +1,8 @@
 <template>
 <div>
     <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="specialty">Especialidad</label>
+        <div class="form-group col-md-4">
+            <label class="form-control-label">Especialidad</label>
             <select v-model="selected_specialty" @change="loadDoctors" class="form-control selectpicker" name="specialty_id" id="specialty" data-style="btn-secondary" required>
                 <option value="">Seleccione una especialidad</option>
                 <option v-for="specialty in specialties" v-bind:value="specialty.id">
@@ -12,8 +12,8 @@
             </select>
         </div>
 
-        <div class="form-group col-md-6">
-            <label for="doctor">Medico</label>
+        <div class="form-group col-md-4">
+            <label class="form-control-label">Médico</label>
             <select v-model="selected_doctor" class="form-control" name="doctor_id" id="doctor" required>
                 <option value="">Seleccione un médico</option>
                 <option v-for="(doctor) in doctors" v-bind:value="doctor.id">
@@ -22,9 +22,8 @@
 
             </select>
         </div>
-    </div>
 
-    <div class="form-group">
+    <div class="form-group col-md-4">
         <label class="form-control-label">Fecha</label>
         
          <!-- <div class="input-group">
@@ -48,9 +47,10 @@
         
         <!-- <date-picker v-model="test_date" valueType="format"></date-picker> -->
     </div>
+    </div>
 
     <div class="form-group">
-        <label for="address">Hora de Atención</label>
+        <label class="form-control-label">Hora de Atención</label>
         <div v-if="intervals.length == 0 && boolean == false" class="alert alert-info" role="alert">
             Seleccione un médico y una fecha para ver sus horarios disponibles.
         </div>
@@ -58,9 +58,9 @@
             <strong>Lo sentimos!</strong> No se encontraron horas disponibles para el medico en el dia seleccionado.
         </div>
         <div v-else>
-            <div class="row">
-                <div class="col-sm">
-                    <label>Turno-Tarde</label>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label class="form-control-label">Turno-Tarde</label>
                     <div v-for="(item, index) in afternoon" class="custom-control custom-radio mb-3">
                         <input name="schedule_time" v-model="selected_interval" v-bind:value="item.start" class="custom-control-input" v-bind:id="'afternoon'+index" type="radio" required>
                         <label class="custom-control-label" v-bind:for="'afternoon'+index">
@@ -68,8 +68,8 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-sm">
-                    <label>Turno-Mañana</label>
+                <div class="col-md-6">
+                    <label class="form-control-label">Turno-Mañana</label>
                     <div v-for="(item, index) in morning" class="custom-control custom-radio mb-3">
                         <input name="schedule_time" v-model="selected_interval" v-bind:value="item.start" class="custom-control-input" v-bind:id="'morning'+index" type="radio" required>
                         <label class="custom-control-label" v-bind:for="'morning'+index">

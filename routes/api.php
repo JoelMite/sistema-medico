@@ -24,7 +24,8 @@ Route::namespace('Api')->group(function () {
 
   Route::middleware('auth:api')->group(function () {
     Route::post('logout', 'AuthController@logout');
-    Route::get('user', 'AuthController@user');
+    Route::get('person', 'PatientController@show');
+    Route::post('person', 'PatientController@update');
 
     // Post Appointment
     Route::post('/appointments', 'AppointmentController@store');

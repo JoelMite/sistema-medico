@@ -256,11 +256,32 @@ class PatientController extends Controller
       //
   }
 
+  public function state(User $patient)
+  {
+
+    Gate::authorize('haveaccessUser',[$patient, 'user.state']);
+
+    //dd($request->all());
+    //$doctor = User::findOrfail($id);
+    if($patient->state == "403"){
+      $patient->state = "200";
+      $success = "El usuario a sido activado";
+    }
+    elseif($patient->state == "200"){
+      $patient->state = "403";
+      $success = "El usuario a sido baneado";
+    }
+      if ($patient->save()){ // Editar
+      return redirect('/patients')->with(compact('success'));
+      // return dd($notification);
+    }
+  }
+
   public function count_patients(){
 
     Gate::authorize('haveaccess','doctor.dashboard');
 
-      $patients = User::whereHas('roles', function($query){ //  Me devuelve solo usuarios asociados al rol administrador y medico
+      $patients = User::whereHas('roles', function($query){ //  Me devuelve solo usuarios asociados al rol paciente.
       $query->where('name', 'Paciente')->where('creator_id','=',auth()->id());
       })->count();
       return response()->json($patients);

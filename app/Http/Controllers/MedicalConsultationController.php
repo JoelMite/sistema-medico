@@ -208,22 +208,9 @@ class MedicalConsultationController extends Controller
         ]);
       }
 
-      $notification = "La consulta médica se ha registrado correctamente en la base de datos.";
-      return redirect('/medical_consultations')->with(compact('notification'));
+      $success = "La consulta médica se ha registrado correctamente.";
+      return redirect('/medical_consultations')->with(compact('success'));
 
-    }
-
-    public function edit($id)
-    {
-
-      Gate::authorize('haveaccess','medicalconsultation.edit');
-
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
     }
 
 }

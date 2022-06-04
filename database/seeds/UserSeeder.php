@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
           'email' => $user_email,
           'email_verified_at' => now(),
           'password' => bcrypt('12345678'),
+          'state' => '200',
           'remember_token' => Str::random(10),
         ]);
 

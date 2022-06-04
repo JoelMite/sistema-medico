@@ -33,7 +33,7 @@
     <div class="scrollbar-inner">
       <!-- Brand -->
       <div class="sidenav-header d-flex align-items-center">
-        <a class="navbar-brand" href="../../pages/dashboards/dashboard.html">
+        <a class="navbar-brand" href="/home">
           <img src="{{ asset('img/brand/Brand-Medical.png') }}" class="navbar-brand-img" alt="...">
         </a>
         <div class="ml-auto">
@@ -212,7 +212,7 @@
     </div>
   </nav>
   <!-- Main content -->
-  <div class="main-content">
+  <div id="app" class="main-content">
     <!-- Topnav -->
     <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
       <div class="container-fluid">
@@ -460,25 +460,11 @@
     </nav>
     <!-- Header -->
     <!-- Header -->
-    <div class="header bg-primary pb-6">
+    <div class="header pb-6">
       <div class="container-fluid">
         <div class="header-body">
-          <div class="row align-items-center py-4">
-            {{-- <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Default</h6>
-              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="#">Dashboards</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Default</li>
-                </ol>
-              </nav>
-            </div> --}}
-            {{-- <div class="col-lg-6 col-5 text-right">
-              <a href="#" class="btn btn-sm btn-neutral">New</a>
-              <a href="#" class="btn btn-sm btn-neutral">Filters</a>
-            </div> --}}
-          </div>
+          
+          @yield('dashboard')
           <!-- Card stats -->
           {{-- <div class="row">
             <div class="col-xl-3 col-md-6">
@@ -575,7 +561,23 @@
     </div>
     <!-- Page content -->
 
-    <div id="app" class="container-fluid mt--6">
+    <div class="container-fluid mt--6">
+      <div class="row align-items-center py-4">
+        {{-- <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">Default</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+              <li class="breadcrumb-item"><a href="#">Dashboards</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Default</li>
+            </ol>
+          </nav>
+        </div> --}}
+        {{-- <div class="col-lg-6 col-5 text-right">
+          <a href="#" class="btn btn-sm btn-neutral">New</a>
+          <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+        </div> --}}
+      </div>
       @yield('content')
 
       <!-- Footer -->
